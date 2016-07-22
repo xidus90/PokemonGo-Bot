@@ -1,5 +1,5 @@
 # Pokemon-Go-Rocket-API
-![alt tag](https://github.com/DetectiveSquirrel/Pokemon-Go-Rocket-API/blob/master/screenshot.jpg)
+![alt tag](https://github.com/Sen66/PokemonGo-Bot/blob/master/screenshot.jpg)
 
 A Pokemon Go bot in C#
 
@@ -13,14 +13,13 @@ A Pokemon Go bot in C#
 * Transfer Pokémon
 * Auto-Recycle uneeded items
 * Output level and needed XP for levelup
-* Output Username, Level, Stardust in Console Title
+* Output Username, Level, Stardust, XP/hour, Pokemon/hour in Console Title
 * German/English pokemon names
 * Automatic use of Razzberries
 
 ## Getting Started
 
 Go to PokemonGo\RocketAPI\Console\App.config -> Edit the Settings you like -> Build and Run (CTRL+F5)
-If you use the Google login, build the application and start the Console etc. from the folder direct. NOT FROM VISUAL STUDIO!
 
 # Settings
 ## AuthType
@@ -46,6 +45,10 @@ If you use the Google login, build the application and start the Console etc. fr
 
 ## LevelTimeInterval
 * *seconds* - After X seconds it will print the current level and experience needed for levelup when using *time* mode.
+
+## Recycler
+* *false* Recycler not active.
+* *true* Recycler active.
 
 ## RecycleItemsInterval
 * *seconds* After X seconds it recycles items from the filter in *Settings.cs*.
