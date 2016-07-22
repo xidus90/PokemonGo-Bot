@@ -60,11 +60,8 @@ namespace PokemonGo.RocketAPI.Console
                     ColoredConsoleWrite(ConsoleColor.Yellow, "Awesome! You have already got the newest version! " + Assembly.GetExecutingAssembly().GetName().Version);
                     return;
                 }
-                ;
 
-                ColoredConsoleWrite(ConsoleColor.White, "There is a new Version available: " + gitVersion + " downloading.. ");
-                Thread.Sleep(1000);
-                Process.Start("");
+                ColoredConsoleWrite(ConsoleColor.White, "There is a new Version available: " + gitVersion);
             }
             catch (Exception)
             {
@@ -77,7 +74,7 @@ namespace PokemonGo.RocketAPI.Console
             using (var wC = new WebClient())
                 return
                     wC.DownloadString(
-                        "");
+                        "https://raw.githubusercontent.com/Sen66/PokemonGo-Bot/master/PokemonGo/RocketAPI/Console/Properties/AssemblyInfo.cs");
         }
 
         public static void ColoredConsoleWrite(ConsoleColor color, string text)
@@ -317,7 +314,7 @@ namespace PokemonGo.RocketAPI.Console
                 try
                 {
                     //ColoredConsoleWrite(ConsoleColor.White, "Coded by Ferox - edited by NecronomiconCoding");
-                    //CheckVersion();
+                    CheckVersion();
                     Execute();
                 }
                 catch (PtcOfflineException)
@@ -417,6 +414,7 @@ namespace PokemonGo.RocketAPI.Console
                     string pokemonName;
                     if (ClientSettings.Language == "german")
                     {
+                        ColoredConsoleWrite(ConsoleColor.DarkCyan, "german");
                         string name_english = Convert.ToString(pokemon.PokemonId);
                         var request = (HttpWebRequest)WebRequest.Create("http://boosting-service.de/pokemon/index.php?pokeName=" + name_english);
                         var response = (HttpWebResponse)request.GetResponse();
@@ -462,8 +460,18 @@ namespace PokemonGo.RocketAPI.Console
                     if (dubpokemon.Favorite == 0)
                     {
                         var transfer = await client.TransferPokemon(dubpokemon.Id);
+                        string pokemonName;
+                        if (ClientSettings.Language == "german")
+                        {
+                            string name_english = Convert.ToString(dubpokemon.PokemonId);
+                            var request = (HttpWebRequest)WebRequest.Create("http://boosting-service.de/pokemon/index.php?pokeName=" + name_english);
+                            var response = (HttpWebResponse)request.GetResponse();
+                            pokemonName = new StreamReader(response.GetResponseStream()).ReadToEnd();
+                        }
+                        else
+                            pokemonName = Convert.ToString(dubpokemon.PokemonId);
                         ColoredConsoleWrite(ConsoleColor.DarkGreen,
-                            $"[{DateTime.Now.ToString("HH:mm:ss")}] Transferred {dubpokemon.PokemonId} with {dubpokemon.Cp} CP (Highest is {dupes.ElementAt(i).Last().value.Cp})");
+                            $"[{DateTime.Now.ToString("HH:mm:ss")}] Transferred {pokemonName} with {dubpokemon.Cp} CP (Highest is {dupes.ElementAt(i).Last().value.Cp})");
 
                     }
                 }
