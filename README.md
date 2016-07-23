@@ -16,6 +16,7 @@ A Pokemon Go bot in C#
 * Output Username, Level, Stardust, XP/hour, Pokemon/hour in Console Title
 * German/English pokemon names
 * Automatic use of Razzberries
+* Automatic Update checker
 
 ## Getting Started
 
