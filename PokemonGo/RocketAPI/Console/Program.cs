@@ -307,28 +307,6 @@ namespace PokemonGo.RocketAPI.Console
                     .Aggregate((a, b) => $"{a}, {b}");
         }
 
-        private static void Main(string[] args)
-        {
-            Task.Run(() =>
-            {
-                try
-                {
-                    //ColoredConsoleWrite(ConsoleColor.White, "Coded by Ferox - edited by NecronomiconCoding");
-                    CheckVersion();
-                    Execute();
-                }
-                catch (PtcOfflineException)
-                {
-                    ColoredConsoleWrite(ConsoleColor.Red, "PTC Servers are probably down OR your credentials are wrong. Try google");
-                }
-                catch (Exception ex)
-                {
-                    ColoredConsoleWrite(ConsoleColor.Red, $"[{DateTime.Now.ToString("HH:mm:ss")}] Unhandled exception: {ex}");
-                }
-            });
-            System.Console.ReadLine();
-        }
-
         private static async Task TransferAllButStrongestUnwantedPokemon(Client client)
         {
             //ColoredConsoleWrite(ConsoleColor.White, $"[{DateTime.Now.ToString("HH:mm:ss")}] Firing up the meat grinder");
@@ -341,7 +319,6 @@ namespace PokemonGo.RocketAPI.Console
                 PokemonId.Zubat,
                 PokemonId.Caterpie,
                 PokemonId.Pidgeotto,
-                PokemonId.NidoranFemale,
                 PokemonId.Paras,
                 PokemonId.Venonat,
                 PokemonId.Psyduck,
@@ -544,6 +521,7 @@ namespace PokemonGo.RocketAPI.Console
                         if (Currentlevel != v.Level)
                         {
                             Currentlevel = v.Level;
+                            
                             ColoredConsoleWrite(ConsoleColor.Magenta, $"[{DateTime.Now.ToString("HH:mm:ss")}] Current Level: " + v.Level + ". XP needed for next Level: " + (v.NextLevelXp - v.Experience));
                         }
                 }
