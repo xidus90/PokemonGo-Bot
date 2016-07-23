@@ -341,7 +341,6 @@ namespace PokemonGo.RocketAPI.Console
                 PokemonId.Zubat,
                 PokemonId.Caterpie,
                 PokemonId.Pidgeotto,
-                PokemonId.NidoranFemale,
                 PokemonId.Paras,
                 PokemonId.Venonat,
                 PokemonId.Psyduck,
@@ -501,7 +500,7 @@ namespace PokemonGo.RocketAPI.Console
                 //PokemonId.Goldeen,
                 //PokemonId.Staryu,
                 PokemonId.Magikarp,
-                PokemonId.Eevee//,
+                PokemonId.Eevee,
                 //PokemonId.Dratini
             };
 
