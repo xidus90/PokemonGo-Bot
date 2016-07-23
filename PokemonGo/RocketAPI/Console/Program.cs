@@ -414,7 +414,6 @@ namespace PokemonGo.RocketAPI.Console
                     string pokemonName;
                     if (ClientSettings.Language == "german")
                     {
-                        ColoredConsoleWrite(ConsoleColor.DarkCyan, "german");
                         string name_english = Convert.ToString(pokemon.PokemonId);
                         try
                         {
