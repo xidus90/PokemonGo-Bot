@@ -19,10 +19,11 @@ using System.Text;
 using Google.Protobuf;
 using PokemonGo.RocketAPI.Helpers;
 using System.IO;
+using System.Windows.Media;
 
 #endregion
 
-namespace PokemonGo.RocketAPI.Console
+namespace PokemonGo.RocketAPI.GUI
 {
     internal class Program
     {
@@ -79,11 +80,14 @@ namespace PokemonGo.RocketAPI.Console
 
         public static void ColoredConsoleWrite(ConsoleColor color, string text)
         {
+            // apfelkuchen
             ConsoleColor originalColor = System.Console.ForegroundColor;
             System.Console.ForegroundColor = color;
-            System.Console.WriteLine(text);
+            System.Console.Write(text + "\n");
             System.Console.ForegroundColor = originalColor;
         }
+
+
 
         private static async Task EvolveAllGivenPokemons(Client client, IEnumerable<PokemonData> pokemonToEvolve)
         {
@@ -136,7 +140,7 @@ namespace PokemonGo.RocketAPI.Console
             }
         }
 
-        private static async void Execute()
+        public static async void Execute()
         {
             var client = new Client(ClientSettings);
             try
@@ -185,7 +189,7 @@ namespace PokemonGo.RocketAPI.Console
 
                 await Task.Delay(5000);
                 PrintLevel(client);
-                ConsoleLevelTitle(profile.Profile.Username, client);
+                //ConsoleLevelTitle(profile.Profile.Username, client);
                 await ExecuteFarmingPokestopsAndPokemons(client);
                 ColoredConsoleWrite(ConsoleColor.Red, $"[{DateTime.Now.ToString("HH:mm:ss")}] No nearby usefull locations found. Please wait 10 seconds.");
                 await Task.Delay(10000);
@@ -307,29 +311,6 @@ namespace PokemonGo.RocketAPI.Console
                     .Aggregate((a, b) => $"{a}, {b}");
         }
 
-        private static void Main(string[] args)
-        {
-            Task.Run(() =>
-            {
-                try
-                {
-                     //ColoredConsoleWrite(ConsoleColor.White, "Coded by Ferox - edited by NecronomiconCoding");		
-                     CheckVersion();
-                    Execute();
-                }
-                catch (PtcOfflineException)
-                {
-                    ColoredConsoleWrite(ConsoleColor.Red, "PTC Servers are probably down OR your credentials are wrong. Try google");
-                }
-                catch (Exception ex)
-                {
-                    ColoredConsoleWrite(ConsoleColor.Red, $"[{DateTime.Now.ToString("HH:mm:ss")}] Unhandled exception: {ex}");
-                }
-            });
-            System.Console.ReadLine();
-        }
-
-
         private static async Task TransferAllButStrongestUnwantedPokemon(Client client)
         {
             //ColoredConsoleWrite(ConsoleColor.White, $"[{DateTime.Now.ToString("HH:mm:ss")}] Firing up the meat grinder");
@@ -342,6 +323,7 @@ namespace PokemonGo.RocketAPI.Console
                 PokemonId.Zubat,
                 PokemonId.Caterpie,
                 PokemonId.Pidgeotto,
+                PokemonId.NidoranFemale,
                 PokemonId.Paras,
                 PokemonId.Venonat,
                 PokemonId.Psyduck,
@@ -416,13 +398,9 @@ namespace PokemonGo.RocketAPI.Console
                     {
                         ColoredConsoleWrite(ConsoleColor.DarkCyan, "german");
                         string name_english = Convert.ToString(pokemon.PokemonId);
-                        try
-                        {
-                            var request = (HttpWebRequest)WebRequest.Create("http://boosting-service.de/pokemon/index.php?pokeName=" + name_english);
-                            var response = (HttpWebResponse)request.GetResponse();
-                            pokemonName = new StreamReader(response.GetResponseStream()).ReadToEnd();
-                        }
-                        catch (Exception) { pokemonName = Convert.ToString(pokemon.PokemonId) + "(Language server offline)"; }
+                        var request = (HttpWebRequest)WebRequest.Create("http://boosting-service.de/pokemon/index.php?pokeName=" + name_english);
+                        var response = (HttpWebResponse)request.GetResponse();
+                        pokemonName = new StreamReader(response.GetResponseStream()).ReadToEnd();
                     }
                     else
                         pokemonName = Convert.ToString(pokemon.PokemonId);
@@ -467,15 +445,10 @@ namespace PokemonGo.RocketAPI.Console
                         string pokemonName;
                         if (ClientSettings.Language == "german")
                         {
-                            ColoredConsoleWrite(ConsoleColor.DarkCyan, "german");
                             string name_english = Convert.ToString(dubpokemon.PokemonId);
-                            try
-                            {
-                                var request = (HttpWebRequest)WebRequest.Create("http://boosting-service.de/pokemon/index.php?pokeName=" + name_english);
-                                var response = (HttpWebResponse)request.GetResponse();
-                                pokemonName = new StreamReader(response.GetResponseStream()).ReadToEnd();
-                            }
-                            catch (Exception e) { pokemonName = Convert.ToString(dubpokemon.PokemonId) + "(Language server offline)"; }
+                            var request = (HttpWebRequest)WebRequest.Create("http://boosting-service.de/pokemon/index.php?pokeName=" + name_english);
+                            var response = (HttpWebResponse)request.GetResponse();
+                            pokemonName = new StreamReader(response.GetResponseStream()).ReadToEnd();
                         }
                         else
                             pokemonName = Convert.ToString(dubpokemon.PokemonId);
@@ -509,9 +482,9 @@ namespace PokemonGo.RocketAPI.Console
                 //PokemonId.Gastly,
                 //PokemonId.Goldeen,
                 //PokemonId.Staryu,
-                //PokemonId.Dratini
                 PokemonId.Magikarp,
-                PokemonId.Eevee
+                PokemonId.Eevee//,
+                //PokemonId.Dratini
             };
 
             var inventory = await client.GetInventory();
@@ -553,7 +526,7 @@ namespace PokemonGo.RocketAPI.Console
                         if (Currentlevel != v.Level)
                         {
                             Currentlevel = v.Level;
-
+                            
                             ColoredConsoleWrite(ConsoleColor.Magenta, $"[{DateTime.Now.ToString("HH:mm:ss")}] Current Level: " + v.Level + ". XP needed for next Level: " + (v.NextLevelXp - v.Experience));
                         }
                 }
