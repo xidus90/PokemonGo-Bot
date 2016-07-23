@@ -57,7 +57,7 @@ namespace PokemonGo.RocketAPI.Console
                             match.Groups[4]));
                 if (gitVersion <= Assembly.GetExecutingAssembly().GetName().Version)
                 {
-                    ColoredConsoleWrite(ConsoleColor.Yellow, "Awesome! You have already got the newest version! " + Assembly.GetExecutingAssembly().GetName().Version);
+                    //ColoredConsoleWrite(ConsoleColor.Yellow, "Awesome! You have already got the newest version! " + Assembly.GetExecutingAssembly().GetName().Version);
                     return;
                 }
 
@@ -141,6 +141,7 @@ namespace PokemonGo.RocketAPI.Console
             var client = new Client(ClientSettings);
             try
             {
+            	CheckVersion();
                 if (ClientSettings.AuthType == AuthType.Ptc)
                     await client.DoPtcLogin(ClientSettings.PtcUsername, ClientSettings.PtcPassword);
                 else if (ClientSettings.AuthType == AuthType.Google)
@@ -314,7 +315,6 @@ namespace PokemonGo.RocketAPI.Console
                 try
                 {
                      //ColoredConsoleWrite(ConsoleColor.White, "Coded by Ferox - edited by NecronomiconCoding");		
-                     CheckVersion();
                     Execute();
                 }
                 catch (PtcOfflineException)
