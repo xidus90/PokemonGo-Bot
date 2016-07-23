@@ -307,6 +307,29 @@ namespace PokemonGo.RocketAPI.Console
                     .Aggregate((a, b) => $"{a}, {b}");
         }
 
+        private static void Main(string[] args)
+        {
+            Task.Run(() =>
+            {
+                try
+                {
+                     //ColoredConsoleWrite(ConsoleColor.White, "Coded by Ferox - edited by NecronomiconCoding");		
+                     CheckVersion();
+                    Execute();
+                }
+                catch (PtcOfflineException)
+                {
+                    ColoredConsoleWrite(ConsoleColor.Red, "PTC Servers are probably down OR your credentials are wrong. Try google");
+                }
+                catch (Exception ex)
+                {
+                    ColoredConsoleWrite(ConsoleColor.Red, $"[{DateTime.Now.ToString("HH:mm:ss")}] Unhandled exception: {ex}");
+                }
+            });
+            System.Console.ReadLine();
+        }
+
+
         private static async Task TransferAllButStrongestUnwantedPokemon(Client client)
         {
             //ColoredConsoleWrite(ConsoleColor.White, $"[{DateTime.Now.ToString("HH:mm:ss")}] Firing up the meat grinder");
@@ -393,9 +416,13 @@ namespace PokemonGo.RocketAPI.Console
                     {
                         ColoredConsoleWrite(ConsoleColor.DarkCyan, "german");
                         string name_english = Convert.ToString(pokemon.PokemonId);
-                        var request = (HttpWebRequest)WebRequest.Create("http://boosting-service.de/pokemon/index.php?pokeName=" + name_english);
-                        var response = (HttpWebResponse)request.GetResponse();
-                        pokemonName = new StreamReader(response.GetResponseStream()).ReadToEnd();
+                        try
+                        {
+                            var request = (HttpWebRequest)WebRequest.Create("http://boosting-service.de/pokemon/index.php?pokeName=" + name_english);
+                            var response = (HttpWebResponse)request.GetResponse();
+                            pokemonName = new StreamReader(response.GetResponseStream()).ReadToEnd();
+                        }
+                        catch (Exception e) { pokemonName = Convert.ToString(pokemon.PokemonId) + "(Language server offline)"; }
                     }
                     else
                         pokemonName = Convert.ToString(pokemon.PokemonId);
@@ -440,10 +467,15 @@ namespace PokemonGo.RocketAPI.Console
                         string pokemonName;
                         if (ClientSettings.Language == "german")
                         {
+                            ColoredConsoleWrite(ConsoleColor.DarkCyan, "german");
                             string name_english = Convert.ToString(dubpokemon.PokemonId);
-                            var request = (HttpWebRequest)WebRequest.Create("http://boosting-service.de/pokemon/index.php?pokeName=" + name_english);
-                            var response = (HttpWebResponse)request.GetResponse();
-                            pokemonName = new StreamReader(response.GetResponseStream()).ReadToEnd();
+                            try
+                            {
+                                var request = (HttpWebRequest)WebRequest.Create("http://boosting-service.de/pokemon/index.php?pokeName=" + name_english);
+                                var response = (HttpWebResponse)request.GetResponse();
+                                pokemonName = new StreamReader(response.GetResponseStream()).ReadToEnd();
+                            }
+                            catch (Exception e) { pokemonName = Convert.ToString(dubpokemon.PokemonId) + "(Language server offline)"; }
                         }
                         else
                             pokemonName = Convert.ToString(dubpokemon.PokemonId);
@@ -521,7 +553,7 @@ namespace PokemonGo.RocketAPI.Console
                         if (Currentlevel != v.Level)
                         {
                             Currentlevel = v.Level;
-                            
+
                             ColoredConsoleWrite(ConsoleColor.Magenta, $"[{DateTime.Now.ToString("HH:mm:ss")}] Current Level: " + v.Level + ". XP needed for next Level: " + (v.NextLevelXp - v.Experience));
                         }
                 }
