@@ -477,9 +477,9 @@ namespace PokemonGo.RocketAPI.Console
                 //PokemonId.Gastly,
                 //PokemonId.Goldeen,
                 //PokemonId.Staryu,
-                PokemonId.Magikarp,
-                PokemonId.Eevee//,
                 //PokemonId.Dratini
+                PokemonId.Magikarp,
+                PokemonId.Eevee
             };
 
             var inventory = await client.GetInventory();
