@@ -30,6 +30,7 @@ namespace PokemonGo.RocketAPI.Console
         private static int Currentlevel = -1;
         private static int TotalExperience = 0;
         private static int TotalPokemon = 0;
+        private static double TotalKmWalked = 0;
         private static DateTime TimeStarted = DateTime.Now;
 
         public static double GetRuntime()
@@ -83,7 +84,7 @@ namespace PokemonGo.RocketAPI.Console
             System.Console.ForegroundColor = color;
             System.Console.WriteLine(text);
             System.Console.ForegroundColor = originalColor;
-            File.AppendAllText(AppDomain.CurrentDomain.BaseDirectory + @"\Logs.txt", text);
+            File.AppendAllText(AppDomain.CurrentDomain.BaseDirectory + @"\Logs.txt", text + Environment.NewLine);
         }
 
         private static async Task EvolveAllGivenPokemons(Client client, IEnumerable<PokemonData> pokemonToEvolve)
@@ -156,6 +157,10 @@ namespace PokemonGo.RocketAPI.Console
                 var pokemons =
                     inventory.InventoryDelta.InventoryItems.Select(i => i.InventoryItemData?.Pokemon)
                         .Where(p => p != null && p?.PokemonId > 0);
+                var stats = inventory.InventoryDelta.InventoryItems.Select(i => i.InventoryItemData.PlayerStats).ToArray();
+                foreach (var v in stats)
+                    if (v != null)
+                        TotalKmWalked = v.KmWalked;
 
                 ColoredConsoleWrite(ConsoleColor.Yellow, "----------------------------");
                 if (ClientSettings.AuthType == AuthType.Ptc)
@@ -169,6 +174,7 @@ namespace PokemonGo.RocketAPI.Console
                 ColoredConsoleWrite(ConsoleColor.DarkGray, "Name: " + profile.Profile.Username);
                 ColoredConsoleWrite(ConsoleColor.DarkGray, "Team: " + profile.Profile.Team);
                 ColoredConsoleWrite(ConsoleColor.DarkGray, "Stardust: " + profile.Profile.Currency.ToArray()[1].Amount);
+                ColoredConsoleWrite(ConsoleColor.DarkGray, "Total km walked: " + TotalKmWalked);
                 ColoredConsoleWrite(ConsoleColor.Yellow, "----------------------------");
                 if (ClientSettings.TransferType == "leaveStrongest")
                     await TransferAllButStrongestUnwantedPokemon(client);
@@ -187,6 +193,8 @@ namespace PokemonGo.RocketAPI.Console
 
                 await Task.Delay(5000);
                 PrintLevel(client);
+                if (ClientSettings.EggHatchedOutput)
+                    await CheckEggsHatched(client);
                 ConsoleLevelTitle(profile.Profile.Username, client);
                 await ExecuteFarmingPokestopsAndPokemons(client);
                 ColoredConsoleWrite(ConsoleColor.Red, $"[{DateTime.Now.ToString("HH:mm:ss")}] No nearby usefull locations found. Please wait 10 seconds.");
@@ -539,7 +547,6 @@ namespace PokemonGo.RocketAPI.Console
                         if (Currentlevel != v.Level)
                         {
                             Currentlevel = v.Level;
-
                             ColoredConsoleWrite(ConsoleColor.Magenta, $"[{DateTime.Now.ToString("HH:mm:ss")}] Current Level: " + v.Level + ". XP needed for next Level: " + (v.NextLevelXp - v.Experience));
                         }
                 }
@@ -548,6 +555,20 @@ namespace PokemonGo.RocketAPI.Console
             else
                 await Task.Delay(ClientSettings.LevelTimeInterval * 1000);
             PrintLevel(client);
+        }
+
+        public static async Task CheckEggsHatched(Client client)
+        {
+            try
+            {
+                var inventory = await client.GetInventory();
+                var eggkmwalked = inventory.InventoryDelta.InventoryItems.Select(i => i.InventoryItemData?.EggIncubators.EggIncubator).ToArray();
+                foreach (var v in eggkmwalked)
+                    if (v != null)
+                        if (v.TargetKmWalked > TotalKmWalked)
+                            ColoredConsoleWrite(ConsoleColor.DarkYellow, "One of your eggs is hatched");
+            }
+            catch (Exception) { }
         }
 
         public static async Task ConsoleLevelTitle(string Username, Client client)
