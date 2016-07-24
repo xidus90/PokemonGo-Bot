@@ -1,5 +1,3 @@
-#region
-
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -20,13 +18,11 @@ using Google.Protobuf;
 using PokemonGo.RocketAPI.Helpers;
 using System.IO;
 
-#endregion
-
 namespace PokemonGo.RocketAPI.Console
 {
     internal class Program
     {
-        private static ISettings ClientSettings = new Settings();
+        private static ISettings ClientSettings = new bhelper.Settings();
         private static int Currentlevel = -1;
         private static int TotalExperience = 0;
         private static int TotalPokemon = 0;
