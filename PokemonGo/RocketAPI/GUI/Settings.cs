@@ -7,6 +7,7 @@ using PokemonGo.RocketAPI.Enums;
 using System.Collections.Generic;
 using AllEnum;
 using System;
+using System.Linq;
 
 #endregion
 
@@ -74,11 +75,17 @@ namespace PokemonGo.RocketAPI.GUI
 
         public double RazzBerrySetting => GetSetting() != string.Empty ? double.Parse(GetSetting(), CultureInfo.InvariantCulture) : 500;
 
+        public bool EggHatchedOutput => GetSetting() != string.Empty ? System.Convert.ToBoolean(GetSetting(), CultureInfo.InvariantCulture) : false;
+
+        public string UseLuckyEggMode => GetSetting() != string.Empty ? GetSetting() : "always";
+
         public string GoogleRefreshToken
         {
             get { return GetSetting() != string.Empty ? GetSetting() : string.Empty; }
             set { SetSetting(value); }
         }
+
+        public bool CatchOnlySpecific => GetSetting() != string.Empty ? System.Convert.ToBoolean(GetSetting(), CultureInfo.InvariantCulture) : false;
 
         private string GetSetting([CallerMemberName] string key = null)
         {
