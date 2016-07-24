@@ -65,7 +65,7 @@ namespace PokemonGo.RocketAPI.GUI
 
         private void WriteLogMessage()
         {
-            richTextBox.AppendText(Regex.Replace(content.ToString(), @"\r\n?|\n", "\r"));
+            richTextBox.AppendText(Regex.Replace(content.ToString(), @"\r\n?|\n", Environment.NewLine));
             /*
             // TODO: Find a better way
             for (int i = 0; richTextBox.Lines() > 10; i--)

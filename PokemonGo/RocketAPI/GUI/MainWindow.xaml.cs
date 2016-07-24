@@ -32,8 +32,8 @@ namespace PokemonGo.RocketAPI.GUI
         {
             InitializeComponent();
             logger = new Logger(Output);
-            System.Console.SetOut(logger);
-            System.Console.SetError(logger);
+            Console.SetOut(logger);
+            Console.SetError(logger);
 
         }
 

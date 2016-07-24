@@ -15,45 +15,16 @@
             <TabItem Header="Output">
                 <Grid Background="#FFE5E5E5">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="23*"/>
-                        <ColumnDefinition Width="197*"/>
+                        <ColumnDefinition Width="220*"/>
                         <ColumnDefinition Width="313*"/>
                     </Grid.ColumnDefinitions>
-                    <RichTextBox x:Name="Output" HorizontalAlignment="Left" Height="470" VerticalAlignment="Top" Width="533" IsReadOnly="True" SelectionBrush="#FFF6FF33" Grid.ColumnSpan="3">
+                    <RichTextBox x:Name="Output" HorizontalAlignment="Left" Height="470" VerticalAlignment="Top" Width="533" Grid.ColumnSpan="2" IsReadOnly="True" SelectionBrush="#FFF6FF33">
                         <FlowDocument/>
                     </RichTextBox>
                 </Grid>
             </TabItem>
             <TabItem Header="Stats (WIP)">
-                <Grid Background="#FFE5E5E5">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="421*"/>
-                        <ColumnDefinition Width="112*"/>
-                    </Grid.ColumnDefinitions>
-                    <GroupBox x:Name="groupBox_Startedwith" Header="Started:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="215" Width="222">
-                        <Grid HorizontalAlignment="Left" Height="205" VerticalAlignment="Top" Width="212" Margin="0,0,-2,-12">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="105*"/>
-                                <ColumnDefinition Width="107*"/>
-                            </Grid.ColumnDefinitions>
-                            <Label x:Name="started_latitude" Content="Latitude:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="192"/>
-                            <Label x:Name="started_longitude" Content="Longitude:" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="192"/>
-                        </Grid>
-                    </GroupBox>
-                    <GroupBox x:Name="groupBox_Current" Header="Current:" HorizontalAlignment="Left" Margin="10,230,0,0" VerticalAlignment="Top" Height="215" Width="222">
-                        <Grid HorizontalAlignment="Left" Height="205" VerticalAlignment="Top" Width="212" Margin="0,0,-2,-12">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="105*"/>
-                                <ColumnDefinition Width="107*"/>
-                            </Grid.ColumnDefinitions>
-                            <Label x:Name="current_latitude" Content="Latitude:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="192"/>
-                            <Label x:Name="current_longitude" Content="Longitude:" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="192"/>
-                        </Grid>
-                    </GroupBox>
-                </Grid>
-            </TabItem>
-            <TabItem Header="Settings (WIP)">
-                <Grid HorizontalAlignment="Left" Height="22" Margin="8,6,0,0" VerticalAlignment="Top" Width="18"/>
+                <Grid Background="#FFE5E5E5"/>
             </TabItem>
         </TabControl>
         <Button x:Name="buttonStart" Grid.ColumnSpan="2" Content="Start" HorizontalAlignment="Left" Margin="10,617,0,0" VerticalAlignment="Top" Width="100" Height="30" Click="buttonStart_Click"/>
