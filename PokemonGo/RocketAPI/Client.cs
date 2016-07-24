@@ -21,13 +21,13 @@ namespace PokemonGo.RocketAPI
     public class Client
     {
         private readonly HttpClient _httpClient;
-        private ISettings _settings;
+        private static ISettings _settings;
         private string _accessToken;
         private string _apiUrl;
         private AuthType _authType = AuthType.Google;
 
-        private double _currentLat;
-        private double _currentLng;
+        private static double _currentLat;
+        private static double _currentLng;
         private Request.Types.UnknownAuth _unknownAuth;
         public static string AccessToken { get; set; } = string.Empty;
 
@@ -352,6 +352,17 @@ namespace PokemonGo.RocketAPI
             _currentLng = lng;
 //            _settings.DefaultLatitude = lat;
 //            _settings.DefaultLongitude = lng;
+        }
+
+        public static double GetLatitude(bool current)
+        {
+
+            return current ? _currentLat : _settings.DefaultLatitude;
+        }
+
+        public static double GetLongitude(bool current)
+        {
+            return current ? _currentLng : _settings.DefaultLongitude;
         }
 
         public async Task SetServer()

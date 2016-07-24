@@ -83,6 +83,7 @@ namespace PokemonGo.RocketAPI.Console
             System.Console.ForegroundColor = color;
             System.Console.WriteLine(text);
             System.Console.ForegroundColor = originalColor;
+            File.AppendAllText(AppDomain.CurrentDomain.BaseDirectory + @"\Logs.txt", text);
         }
 
         private static async Task EvolveAllGivenPokemons(Client client, IEnumerable<PokemonData> pokemonToEvolve)
@@ -212,8 +213,24 @@ namespace PokemonGo.RocketAPI.Console
                 .Where(p => p != null && p?.PokemonId > 0)
                 .ToArray();
 
+            PokemonId[] CatchOnlyThesePokemon = new[]
+            {
+                PokemonId.Rattata
+            };
+
             foreach (var pokemon in pokemons)
             {
+                string pokemonName;
+                if (ClientSettings.Language == "german")
+                    pokemonName = Convert.ToString((PokemonId_german)(int)pokemon.PokemonId);
+                else
+                    pokemonName = Convert.ToString(pokemon.PokemonId);
+
+                if (!CatchOnlyThesePokemon.Contains(pokemon.PokemonId))
+                {
+                    ColoredConsoleWrite(ConsoleColor.DarkYellow, $"[{DateTime.Now.ToString("HH:mm:ss")}] We didnt try to catch {pokemonName} because it is filtered");
+                    return;
+                }
                 var update = await client.UpdatePlayerLocation(pokemon.Latitude, pokemon.Longitude);
                 var encounterPokemonResponse = await client.EncounterPokemon(pokemon.EncounterId, pokemon.SpawnpointId);
                 var pokemonCP = encounterPokemonResponse?.WildPokemon?.PokemonData?.Cp;
@@ -228,12 +245,6 @@ namespace PokemonGo.RocketAPI.Console
                             await client.UseRazzBerry(client, pokemon.EncounterId, pokemon.SpawnpointId);
                     caughtPokemonResponse = await client.CatchPokemon(pokemon.EncounterId, pokemon.SpawnpointId, pokemon.Latitude, pokemon.Longitude, MiscEnums.Item.ITEM_POKE_BALL, pokemonCP); ; //note: reverted from settings because this should not be part of settings but part of logic
                 } while (caughtPokemonResponse.Status == CatchPokemonResponse.Types.CatchStatus.CatchMissed || caughtPokemonResponse.Status == CatchPokemonResponse.Types.CatchStatus.CatchEscape);
-
-                string pokemonName;
-                if (ClientSettings.Language == "german")
-                    pokemonName = Convert.ToString((PokemonId_german)(int)pokemon.PokemonId);
-                else
-                    pokemonName = Convert.ToString(pokemon.PokemonId);
                 if (caughtPokemonResponse.Status == CatchPokemonResponse.Types.CatchStatus.CatchSuccess)
                 {
                     ColoredConsoleWrite(ConsoleColor.Green, $"[{DateTime.Now.ToString("HH:mm:ss")}] We caught a {pokemonName} with {encounterPokemonResponse?.WildPokemon?.PokemonData?.Cp} CP");
@@ -329,7 +340,7 @@ namespace PokemonGo.RocketAPI.Console
         {
             //ColoredConsoleWrite(ConsoleColor.White, $"[{DateTime.Now.ToString("HH:mm:ss")}] Firing up the meat grinder");
 
-            var unwantedPokemonTypes = new[]
+            PokemonId[] unwantedPokemonTypes = new[]
             {
                 PokemonId.Pidgey,
                 PokemonId.Rattata,

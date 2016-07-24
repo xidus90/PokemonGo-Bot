@@ -7,6 +7,7 @@ using PokemonGo.RocketAPI.Enums;
 using System.Collections.Generic;
 using AllEnum;
 using System;
+using System.Linq;
 
 #endregion
 
@@ -79,6 +80,8 @@ namespace PokemonGo.RocketAPI.Console
             get { return GetSetting() != string.Empty ? GetSetting() : string.Empty; }
             set { SetSetting(value); }
         }
+
+        public bool CatchOnlySpecific => GetSetting() != string.Empty ? System.Convert.ToBoolean(GetSetting(), CultureInfo.InvariantCulture) : false;
 
         private string GetSetting([CallerMemberName] string key = null)
         {
