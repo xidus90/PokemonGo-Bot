@@ -490,17 +490,49 @@ namespace PokemonGo.RocketAPI
             return await _httpClient.PostProtoPayload<Request, UseItemCaptureRequest>($"https://{_apiUrl}/rpc", useItemRequest);
         }
 
+        public async Task<UseItemRequest> UseItem(ItemId itemId)
+        {
+            var customRequest = new UseItemRequest
+            {
+                ItemId = itemId,
+            };
+
+            var useItemRequest = RequestBuilder.GetRequest(_unknownAuth, _currentLat, _currentLng, 30,
+                new Request.Types.Requests
+                {
+                    Type = (int)RequestType.USE_ITEM_XP_BOOST,
+                    Message = customRequest.ToByteString()
+                });
+            return
+                await
+                    _httpClient.PostProtoPayload<Request, UseItemRequest>($"https://{_apiUrl}/rpc",
+                        useItemRequest);
+        }
+
         public async Task UseRazzBerry(Client client, ulong encounterId, string spawnPointGuid)
         {
             IEnumerable<Item> myItems = await GetItems(client);
             IEnumerable<Item> RazzBerries = myItems.Where(i => (ItemId)i.Item_ == ItemId.ItemRazzBerry);
             Item RazzBerry = RazzBerries.FirstOrDefault();
-            if (RazzBerry != null)
+            if (RazzBerry != null && RazzBerry.Count > 0)
             {
                 UseItemCaptureRequest useRazzBerry = await client.UseCaptureItem(encounterId, AllEnum.ItemId.ItemRazzBerry, spawnPointGuid);
                 ColoredConsoleWrite(ConsoleColor.Green, $"[{DateTime.Now.ToString("HH:mm:ss")}] Used Rasperry. Remaining: {RazzBerry.Count}");
                 await Task.Delay(2000);
             }
         }
+
+        public async Task UseLuckyEgg(Client client)
+        {
+            IEnumerable<Item> myItems = await GetItems(client);
+            IEnumerable<Item> LuckyEggs = myItems.Where(i => (ItemId)i.Item_ == ItemId.ItemLuckyEgg);
+            Item LuckyEgg = LuckyEggs.FirstOrDefault();
+            if (LuckyEgg != null && LuckyEgg.Count > 0)
+            {
+                UseItemRequest useLuckyEgg = await client.UseItem(ItemId.ItemLuckyEgg);
+                ColoredConsoleWrite(ConsoleColor.Green, $"[{DateTime.Now.ToString("HH:mm:ss")}] Used Lucky Egg. Remaining: {LuckyEgg.Count}");
+            }
+        }
+
     }
 }

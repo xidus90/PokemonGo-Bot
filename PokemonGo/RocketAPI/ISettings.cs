@@ -27,5 +27,7 @@ namespace PokemonGo.RocketAPI
         string RazzBerryMode { get; }
         double RazzBerrySetting { get; }
         bool CatchOnlySpecific { get; }
+        bool EggHatchedOutput { get; }
+        string UseLuckyEggMode { get; }
     }
 }

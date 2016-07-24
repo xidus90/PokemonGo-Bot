@@ -195,6 +195,8 @@ namespace PokemonGo.RocketAPI.Console
                 PrintLevel(client);
                 if (ClientSettings.EggHatchedOutput)
                     await CheckEggsHatched(client);
+                if (ClientSettings.UseLuckyEggMode == "always")
+                    await client.UseLuckyEgg(client);
                 ConsoleLevelTitle(profile.Profile.Username, client);
                 await ExecuteFarmingPokestopsAndPokemons(client);
                 ColoredConsoleWrite(ConsoleColor.Red, $"[{DateTime.Now.ToString("HH:mm:ss")}] No nearby usefull locations found. Please wait 10 seconds.");

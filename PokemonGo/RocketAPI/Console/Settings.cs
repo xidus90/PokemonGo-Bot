@@ -77,6 +77,8 @@ namespace PokemonGo.RocketAPI.Console
 
         public bool EggHatchedOutput => GetSetting() != string.Empty ? System.Convert.ToBoolean(GetSetting(), CultureInfo.InvariantCulture) : false;
 
+        public string UseLuckyEggMode => GetSetting() != string.Empty ? GetSetting() : "always";
+
         public string GoogleRefreshToken
         {
             get { return GetSetting() != string.Empty ? GetSetting() : string.Empty; }
