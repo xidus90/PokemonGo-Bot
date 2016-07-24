@@ -343,7 +343,7 @@ namespace AllEnum
                     "VkVNRU5UX0hPVkVSSU5HEAYqNQoMUG9rZW1vbkNsYXNzEgoKBk5PUk1BTBAA",
                     "Eg0KCUxFR0VOREFSWRABEgoKBk1ZVEhJQxACYgZwcm90bzM="));
             descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-                new pbr::FileDescriptor[] {},
+                new pbr::FileDescriptor[] { },
                 new pbr::GeneratedClrTypeInfo(
                     new[]
                     {
@@ -369,788 +369,1786 @@ namespace AllEnum
 
     public enum RpcDirection
     {
-        [pbr::OriginalName("UNKNOWN")] Unknown = 0,
-        [pbr::OriginalName("RESPONSE")] Response = 1,
-        [pbr::OriginalName("REQUEST")] Request = 2,
+        [pbr::OriginalName("UNKNOWN")]
+        Unknown = 0,
+        [pbr::OriginalName("RESPONSE")]
+        Response = 1,
+        [pbr::OriginalName("REQUEST")]
+        Request = 2,
     }
 
     public enum TeamColor
     {
-        [pbr::OriginalName("NEUTRAL")] Neutral = 0,
-        [pbr::OriginalName("BLUE")] Blue = 1,
-        [pbr::OriginalName("RED")] Red = 2,
-        [pbr::OriginalName("YELLOW")] Yellow = 3,
+        [pbr::OriginalName("NEUTRAL")]
+        Neutral = 0,
+        [pbr::OriginalName("BLUE")]
+        Blue = 1,
+        [pbr::OriginalName("RED")]
+        Red = 2,
+        [pbr::OriginalName("YELLOW")]
+        Yellow = 3,
     }
 
     public enum RequestMethod
     {
-        [pbr::OriginalName("METHOD_UNSET")] MethodUnset = 0,
-        [pbr::OriginalName("PLAYER_UPDATE")] PlayerUpdate = 1,
-        [pbr::OriginalName("GET_PLAYER")] GetPlayer = 2,
-        [pbr::OriginalName("GET_INVENTORY")] GetInventory = 4,
-        [pbr::OriginalName("DOWNLOAD_SETTINGS")] DownloadSettings = 5,
-        [pbr::OriginalName("DOWNLOAD_ITEM_TEMPLATES")] DownloadItemTemplates = 6,
-        [pbr::OriginalName("DOWNLOAD_REMOTE_CONFIG_VERSION")] DownloadRemoteConfigVersion = 7,
-        [pbr::OriginalName("FORT_SEARCH")] FortSearch = 101,
-        [pbr::OriginalName("ENCOUNTER")] Encounter = 102,
-        [pbr::OriginalName("CATCH_POKEMON")] CatchPokemon = 103,
-        [pbr::OriginalName("FORT_DETAILS")] FortDetails = 104,
-        [pbr::OriginalName("ITEM_USE")] ItemUse = 105,
-        [pbr::OriginalName("GET_MAP_OBJECTS")] GetMapObjects = 106,
-        [pbr::OriginalName("FORT_DEPLOY_POKEMON")] FortDeployPokemon = 110,
-        [pbr::OriginalName("FORT_RECALL_POKEMON")] FortRecallPokemon = 111,
-        [pbr::OriginalName("RELEASE_POKEMON")] ReleasePokemon = 112,
-        [pbr::OriginalName("USE_ITEM_POTION")] UseItemPotion = 113,
-        [pbr::OriginalName("USE_ITEM_CAPTURE")] UseItemCapture = 114,
-        [pbr::OriginalName("USE_ITEM_FLEE")] UseItemFlee = 115,
-        [pbr::OriginalName("USE_ITEM_REVIVE")] UseItemRevive = 116,
-        [pbr::OriginalName("TRADE_SEARCH")] TradeSearch = 117,
-        [pbr::OriginalName("TRADE_OFFER")] TradeOffer = 118,
-        [pbr::OriginalName("TRADE_RESPONSE")] TradeResponse = 119,
-        [pbr::OriginalName("TRADE_RESULT")] TradeResult = 120,
-        [pbr::OriginalName("GET_PLAYER_PROFILE")] GetPlayerProfile = 121,
-        [pbr::OriginalName("GET_ITEM_PACK")] GetItemPack = 122,
-        [pbr::OriginalName("BUY_ITEM_PACK")] BuyItemPack = 123,
-        [pbr::OriginalName("BUY_GEM_PACK")] BuyGemPack = 124,
-        [pbr::OriginalName("EVOLVE_POKEMON")] EvolvePokemon = 125,
-        [pbr::OriginalName("GET_HATCHED_EGGS")] GetHatchedEggs = 126,
-        [pbr::OriginalName("ENCOUNTER_TUTORIAL_COMPLETE")] EncounterTutorialComplete = 127,
-        [pbr::OriginalName("LEVEL_UP_REWARDS")] LevelUpRewards = 128,
-        [pbr::OriginalName("CHECK_AWARDED_BADGES")] CheckAwardedBadges = 129,
-        [pbr::OriginalName("USE_ITEM_GYM")] UseItemGym = 133,
-        [pbr::OriginalName("GET_GYM_DETAILS")] GetGymDetails = 134,
-        [pbr::OriginalName("START_GYM_BATTLE")] StartGymBattle = 135,
-        [pbr::OriginalName("ATTACK_GYM")] AttackGym = 136,
-        [pbr::OriginalName("RECYCLE_INVENTORY_ITEM")] RecycleInventoryItem = 137,
-        [pbr::OriginalName("COLLECT_DAILY_BONUS")] CollectDailyBonus = 138,
-        [pbr::OriginalName("USE_ITEM_XP_BOOST")] UseItemXpBoost = 139,
-        [pbr::OriginalName("USE_ITEM_EGG_INCUBATOR")] UseItemEggIncubator = 140,
-        [pbr::OriginalName("USE_INCENSE")] UseIncense = 141,
-        [pbr::OriginalName("GET_INCENSE_POKEMON")] GetIncensePokemon = 142,
-        [pbr::OriginalName("INCENSE_ENCOUNTER")] IncenseEncounter = 143,
-        [pbr::OriginalName("ADD_FORT_MODIFIER")] AddFortModifier = 144,
-        [pbr::OriginalName("DISK_ENCOUNTER")] DiskEncounter = 145,
-        [pbr::OriginalName("COLLECT_DAILY_DEFENDER_BONUS")] CollectDailyDefenderBonus = 146,
-        [pbr::OriginalName("UPGRADE_POKEMON")] UpgradePokemon = 147,
-        [pbr::OriginalName("SET_FAVORITE_POKEMON")] SetFavoritePokemon = 148,
-        [pbr::OriginalName("NICKNAME_POKEMON")] NicknamePokemon = 149,
-        [pbr::OriginalName("EQUIP_BADGE")] EquipBadge = 150,
-        [pbr::OriginalName("SET_CONTACT_SETTINGS")] SetContactSettings = 151,
-        [pbr::OriginalName("GET_ASSET_DIGEST")] GetAssetDigest = 300,
-        [pbr::OriginalName("GET_DOWNLOAD_URLS")] GetDownloadUrls = 301,
-        [pbr::OriginalName("GET_SUGGESTED_CODENAMES")] GetSuggestedCodenames = 401,
-        [pbr::OriginalName("CHECK_CODENAME_AVAILABLE")] CheckCodenameAvailable = 402,
-        [pbr::OriginalName("CLAIM_CODENAME")] ClaimCodename = 403,
-        [pbr::OriginalName("SET_AVATAR")] SetAvatar = 404,
-        [pbr::OriginalName("SET_PLAYER_TEAM")] SetPlayerTeam = 405,
-        [pbr::OriginalName("MARK_TUTORIAL_COMPLETE")] MarkTutorialComplete = 406,
-        [pbr::OriginalName("LOAD_SPAWN_POINTS")] LoadSpawnPoints = 500,
-        [pbr::OriginalName("ECHO")] Echo = 666,
-        [pbr::OriginalName("DEBUG_UPDATE_INVENTORY")] DebugUpdateInventory = 700,
-        [pbr::OriginalName("DEBUG_DELETE_PLAYER")] DebugDeletePlayer = 701,
-        [pbr::OriginalName("SFIDA_REGISTRATION")] SfidaRegistration = 800,
-        [pbr::OriginalName("SFIDA_ACTION_LOG")] SfidaActionLog = 801,
-        [pbr::OriginalName("SFIDA_CERTIFICATION")] SfidaCertification = 802,
-        [pbr::OriginalName("SFIDA_UPDATE")] SfidaUpdate = 803,
-        [pbr::OriginalName("SFIDA_ACTION")] SfidaAction = 804,
-        [pbr::OriginalName("SFIDA_DOWSER")] SfidaDowser = 805,
-        [pbr::OriginalName("SFIDA_CAPTURE")] SfidaCapture = 806,
+        [pbr::OriginalName("METHOD_UNSET")]
+        MethodUnset = 0,
+        [pbr::OriginalName("PLAYER_UPDATE")]
+        PlayerUpdate = 1,
+        [pbr::OriginalName("GET_PLAYER")]
+        GetPlayer = 2,
+        [pbr::OriginalName("GET_INVENTORY")]
+        GetInventory = 4,
+        [pbr::OriginalName("DOWNLOAD_SETTINGS")]
+        DownloadSettings = 5,
+        [pbr::OriginalName("DOWNLOAD_ITEM_TEMPLATES")]
+        DownloadItemTemplates = 6,
+        [pbr::OriginalName("DOWNLOAD_REMOTE_CONFIG_VERSION")]
+        DownloadRemoteConfigVersion = 7,
+        [pbr::OriginalName("FORT_SEARCH")]
+        FortSearch = 101,
+        [pbr::OriginalName("ENCOUNTER")]
+        Encounter = 102,
+        [pbr::OriginalName("CATCH_POKEMON")]
+        CatchPokemon = 103,
+        [pbr::OriginalName("FORT_DETAILS")]
+        FortDetails = 104,
+        [pbr::OriginalName("ITEM_USE")]
+        ItemUse = 105,
+        [pbr::OriginalName("GET_MAP_OBJECTS")]
+        GetMapObjects = 106,
+        [pbr::OriginalName("FORT_DEPLOY_POKEMON")]
+        FortDeployPokemon = 110,
+        [pbr::OriginalName("FORT_RECALL_POKEMON")]
+        FortRecallPokemon = 111,
+        [pbr::OriginalName("RELEASE_POKEMON")]
+        ReleasePokemon = 112,
+        [pbr::OriginalName("USE_ITEM_POTION")]
+        UseItemPotion = 113,
+        [pbr::OriginalName("USE_ITEM_CAPTURE")]
+        UseItemCapture = 114,
+        [pbr::OriginalName("USE_ITEM_FLEE")]
+        UseItemFlee = 115,
+        [pbr::OriginalName("USE_ITEM_REVIVE")]
+        UseItemRevive = 116,
+        [pbr::OriginalName("TRADE_SEARCH")]
+        TradeSearch = 117,
+        [pbr::OriginalName("TRADE_OFFER")]
+        TradeOffer = 118,
+        [pbr::OriginalName("TRADE_RESPONSE")]
+        TradeResponse = 119,
+        [pbr::OriginalName("TRADE_RESULT")]
+        TradeResult = 120,
+        [pbr::OriginalName("GET_PLAYER_PROFILE")]
+        GetPlayerProfile = 121,
+        [pbr::OriginalName("GET_ITEM_PACK")]
+        GetItemPack = 122,
+        [pbr::OriginalName("BUY_ITEM_PACK")]
+        BuyItemPack = 123,
+        [pbr::OriginalName("BUY_GEM_PACK")]
+        BuyGemPack = 124,
+        [pbr::OriginalName("EVOLVE_POKEMON")]
+        EvolvePokemon = 125,
+        [pbr::OriginalName("GET_HATCHED_EGGS")]
+        GetHatchedEggs = 126,
+        [pbr::OriginalName("ENCOUNTER_TUTORIAL_COMPLETE")]
+        EncounterTutorialComplete = 127,
+        [pbr::OriginalName("LEVEL_UP_REWARDS")]
+        LevelUpRewards = 128,
+        [pbr::OriginalName("CHECK_AWARDED_BADGES")]
+        CheckAwardedBadges = 129,
+        [pbr::OriginalName("USE_ITEM_GYM")]
+        UseItemGym = 133,
+        [pbr::OriginalName("GET_GYM_DETAILS")]
+        GetGymDetails = 134,
+        [pbr::OriginalName("START_GYM_BATTLE")]
+        StartGymBattle = 135,
+        [pbr::OriginalName("ATTACK_GYM")]
+        AttackGym = 136,
+        [pbr::OriginalName("RECYCLE_INVENTORY_ITEM")]
+        RecycleInventoryItem = 137,
+        [pbr::OriginalName("COLLECT_DAILY_BONUS")]
+        CollectDailyBonus = 138,
+        [pbr::OriginalName("USE_ITEM_XP_BOOST")]
+        UseItemXpBoost = 139,
+        [pbr::OriginalName("USE_ITEM_EGG_INCUBATOR")]
+        UseItemEggIncubator = 140,
+        [pbr::OriginalName("USE_INCENSE")]
+        UseIncense = 141,
+        [pbr::OriginalName("GET_INCENSE_POKEMON")]
+        GetIncensePokemon = 142,
+        [pbr::OriginalName("INCENSE_ENCOUNTER")]
+        IncenseEncounter = 143,
+        [pbr::OriginalName("ADD_FORT_MODIFIER")]
+        AddFortModifier = 144,
+        [pbr::OriginalName("DISK_ENCOUNTER")]
+        DiskEncounter = 145,
+        [pbr::OriginalName("COLLECT_DAILY_DEFENDER_BONUS")]
+        CollectDailyDefenderBonus = 146,
+        [pbr::OriginalName("UPGRADE_POKEMON")]
+        UpgradePokemon = 147,
+        [pbr::OriginalName("SET_FAVORITE_POKEMON")]
+        SetFavoritePokemon = 148,
+        [pbr::OriginalName("NICKNAME_POKEMON")]
+        NicknamePokemon = 149,
+        [pbr::OriginalName("EQUIP_BADGE")]
+        EquipBadge = 150,
+        [pbr::OriginalName("SET_CONTACT_SETTINGS")]
+        SetContactSettings = 151,
+        [pbr::OriginalName("GET_ASSET_DIGEST")]
+        GetAssetDigest = 300,
+        [pbr::OriginalName("GET_DOWNLOAD_URLS")]
+        GetDownloadUrls = 301,
+        [pbr::OriginalName("GET_SUGGESTED_CODENAMES")]
+        GetSuggestedCodenames = 401,
+        [pbr::OriginalName("CHECK_CODENAME_AVAILABLE")]
+        CheckCodenameAvailable = 402,
+        [pbr::OriginalName("CLAIM_CODENAME")]
+        ClaimCodename = 403,
+        [pbr::OriginalName("SET_AVATAR")]
+        SetAvatar = 404,
+        [pbr::OriginalName("SET_PLAYER_TEAM")]
+        SetPlayerTeam = 405,
+        [pbr::OriginalName("MARK_TUTORIAL_COMPLETE")]
+        MarkTutorialComplete = 406,
+        [pbr::OriginalName("LOAD_SPAWN_POINTS")]
+        LoadSpawnPoints = 500,
+        [pbr::OriginalName("ECHO")]
+        Echo = 666,
+        [pbr::OriginalName("DEBUG_UPDATE_INVENTORY")]
+        DebugUpdateInventory = 700,
+        [pbr::OriginalName("DEBUG_DELETE_PLAYER")]
+        DebugDeletePlayer = 701,
+        [pbr::OriginalName("SFIDA_REGISTRATION")]
+        SfidaRegistration = 800,
+        [pbr::OriginalName("SFIDA_ACTION_LOG")]
+        SfidaActionLog = 801,
+        [pbr::OriginalName("SFIDA_CERTIFICATION")]
+        SfidaCertification = 802,
+        [pbr::OriginalName("SFIDA_UPDATE")]
+        SfidaUpdate = 803,
+        [pbr::OriginalName("SFIDA_ACTION")]
+        SfidaAction = 804,
+        [pbr::OriginalName("SFIDA_DOWSER")]
+        SfidaDowser = 805,
+        [pbr::OriginalName("SFIDA_CAPTURE")]
+        SfidaCapture = 806,
     }
 
     public enum PokemonMove
     {
-        [pbr::OriginalName("MOVE_UNSET")] MoveUnset = 0,
-        [pbr::OriginalName("THUNDER_SHOCK")] ThunderShock = 1,
-        [pbr::OriginalName("QUICK_ATTACK")] QuickAttack = 2,
-        [pbr::OriginalName("SCRATCH")] Scratch = 3,
-        [pbr::OriginalName("EMBER")] Ember = 4,
-        [pbr::OriginalName("VINE_WHIP")] VineWhip = 5,
-        [pbr::OriginalName("TACKLE")] Tackle = 6,
-        [pbr::OriginalName("RAZOR_LEAF")] RazorLeaf = 7,
-        [pbr::OriginalName("TAKE_DOWN")] TakeDown = 8,
-        [pbr::OriginalName("WATER_GUN")] WaterGun = 9,
-        [pbr::OriginalName("BITE")] Bite = 10,
-        [pbr::OriginalName("POUND")] Pound = 11,
-        [pbr::OriginalName("DOUBLE_SLAP")] DoubleSlap = 12,
-        [pbr::OriginalName("WRAP")] Wrap = 13,
-        [pbr::OriginalName("HYPER_BEAM")] HyperBeam = 14,
-        [pbr::OriginalName("LICK")] Lick = 15,
-        [pbr::OriginalName("DARK_PULSE")] DarkPulse = 16,
-        [pbr::OriginalName("SMOG")] Smog = 17,
-        [pbr::OriginalName("SLUDGE")] Sludge = 18,
-        [pbr::OriginalName("METAL_CLAW")] MetalClaw = 19,
-        [pbr::OriginalName("VICE_GRIP")] ViceGrip = 20,
-        [pbr::OriginalName("FLAME_WHEEL")] FlameWheel = 21,
-        [pbr::OriginalName("MEGAHORN")] Megahorn = 22,
-        [pbr::OriginalName("WING_ATTACK")] WingAttack = 23,
-        [pbr::OriginalName("FLAMETHROWER")] Flamethrower = 24,
-        [pbr::OriginalName("SUCKER_PUNCH")] SuckerPunch = 25,
-        [pbr::OriginalName("DIG")] Dig = 26,
-        [pbr::OriginalName("LOW_KICK")] LowKick = 27,
-        [pbr::OriginalName("CROSS_CHOP")] CrossChop = 28,
-        [pbr::OriginalName("PSYCHO_CUT")] PsychoCut = 29,
-        [pbr::OriginalName("PSYBEAM")] Psybeam = 30,
-        [pbr::OriginalName("EARTHQUAKE")] Earthquake = 31,
-        [pbr::OriginalName("STONE_EDGE")] StoneEdge = 32,
-        [pbr::OriginalName("ICE_PUNCH")] IcePunch = 33,
-        [pbr::OriginalName("HEART_STAMP")] HeartStamp = 34,
-        [pbr::OriginalName("DISCHARGE")] Discharge = 35,
-        [pbr::OriginalName("FLASH_CANNON")] FlashCannon = 36,
-        [pbr::OriginalName("PECK")] Peck = 37,
-        [pbr::OriginalName("DRILL_PECK")] DrillPeck = 38,
-        [pbr::OriginalName("ICE_BEAM")] IceBeam = 39,
-        [pbr::OriginalName("BLIZZARD")] Blizzard = 40,
-        [pbr::OriginalName("AIR_SLASH")] AirSlash = 41,
-        [pbr::OriginalName("HEAT_WAVE")] HeatWave = 42,
-        [pbr::OriginalName("TWINEEDLE")] Twineedle = 43,
-        [pbr::OriginalName("POISON_JAB")] PoisonJab = 44,
-        [pbr::OriginalName("AERIAL_ACE")] AerialAce = 45,
-        [pbr::OriginalName("DRILL_RUN")] DrillRun = 46,
-        [pbr::OriginalName("PETAL_BLIZZARD")] PetalBlizzard = 47,
-        [pbr::OriginalName("MEGA_DRAIN")] MegaDrain = 48,
-        [pbr::OriginalName("BUG_BUZZ")] BugBuzz = 49,
-        [pbr::OriginalName("POISON_FANG")] PoisonFang = 50,
-        [pbr::OriginalName("NIGHT_SLASH")] NightSlash = 51,
-        [pbr::OriginalName("SLASH")] Slash = 52,
-        [pbr::OriginalName("BUBBLE_BEAM")] BubbleBeam = 53,
-        [pbr::OriginalName("SUBMISSION")] Submission = 54,
-        [pbr::OriginalName("KARATE_CHOP")] KarateChop = 55,
-        [pbr::OriginalName("LOW_SWEEP")] LowSweep = 56,
-        [pbr::OriginalName("AQUA_JET")] AquaJet = 57,
-        [pbr::OriginalName("AQUA_TAIL")] AquaTail = 58,
-        [pbr::OriginalName("SEED_BOMB")] SeedBomb = 59,
-        [pbr::OriginalName("PSYSHOCK")] Psyshock = 60,
-        [pbr::OriginalName("ROCK_THROW")] RockThrow = 61,
-        [pbr::OriginalName("ANCIENT_POWER")] AncientPower = 62,
-        [pbr::OriginalName("ROCK_TOMB")] RockTomb = 63,
-        [pbr::OriginalName("ROCK_SLIDE")] RockSlide = 64,
-        [pbr::OriginalName("POWER_GEM")] PowerGem = 65,
-        [pbr::OriginalName("SHADOW_SNEAK")] ShadowSneak = 66,
-        [pbr::OriginalName("SHADOW_PUNCH")] ShadowPunch = 67,
-        [pbr::OriginalName("SHADOW_CLAW")] ShadowClaw = 68,
-        [pbr::OriginalName("OMINOUS_WIND")] OminousWind = 69,
-        [pbr::OriginalName("SHADOW_BALL")] ShadowBall = 70,
-        [pbr::OriginalName("BULLET_PUNCH")] BulletPunch = 71,
-        [pbr::OriginalName("MAGNET_BOMB")] MagnetBomb = 72,
-        [pbr::OriginalName("STEEL_WING")] SteelWing = 73,
-        [pbr::OriginalName("IRON_HEAD")] IronHead = 74,
-        [pbr::OriginalName("PARABOLIC_CHARGE")] ParabolicCharge = 75,
-        [pbr::OriginalName("SPARK")] Spark = 76,
-        [pbr::OriginalName("THUNDER_PUNCH")] ThunderPunch = 77,
-        [pbr::OriginalName("THUNDER")] Thunder = 78,
-        [pbr::OriginalName("THUNDERBOLT")] Thunderbolt = 79,
-        [pbr::OriginalName("TWISTER")] Twister = 80,
-        [pbr::OriginalName("DRAGON_BREATH")] DragonBreath = 81,
-        [pbr::OriginalName("DRAGON_PULSE")] DragonPulse = 82,
-        [pbr::OriginalName("DRAGON_CLAW")] DragonClaw = 83,
-        [pbr::OriginalName("DISARMING_VOICE")] DisarmingVoice = 84,
-        [pbr::OriginalName("DRAINING_KISS")] DrainingKiss = 85,
-        [pbr::OriginalName("DAZZLING_GLEAM")] DazzlingGleam = 86,
-        [pbr::OriginalName("MOONBLAST")] Moonblast = 87,
-        [pbr::OriginalName("PLAY_ROUGH")] PlayRough = 88,
-        [pbr::OriginalName("CROSS_POISON")] CrossPoison = 89,
-        [pbr::OriginalName("SLUDGE_BOMB")] SludgeBomb = 90,
-        [pbr::OriginalName("SLUDGE_WAVE")] SludgeWave = 91,
-        [pbr::OriginalName("GUNK_SHOT")] GunkShot = 92,
-        [pbr::OriginalName("MUD_SHOT")] MudShot = 93,
-        [pbr::OriginalName("BONE_CLUB")] BoneClub = 94,
-        [pbr::OriginalName("BULLDOZE")] Bulldoze = 95,
-        [pbr::OriginalName("MUD_BOMB")] MudBomb = 96,
-        [pbr::OriginalName("FURY_CUTTER")] FuryCutter = 97,
-        [pbr::OriginalName("BUG_BITE")] BugBite = 98,
-        [pbr::OriginalName("SIGNAL_BEAM")] SignalBeam = 99,
-        [pbr::OriginalName("X_SCISSOR")] XScissor = 100,
-        [pbr::OriginalName("FLAME_CHARGE")] FlameCharge = 101,
-        [pbr::OriginalName("FLAME_BURST")] FlameBurst = 102,
-        [pbr::OriginalName("FIRE_BLAST")] FireBlast = 103,
-        [pbr::OriginalName("BRINE")] Brine = 104,
-        [pbr::OriginalName("WATER_PULSE")] WaterPulse = 105,
-        [pbr::OriginalName("SCALD")] Scald = 106,
-        [pbr::OriginalName("HYDRO_PUMP")] HydroPump = 107,
-        [pbr::OriginalName("PSYCHIC")] Psychic = 108,
-        [pbr::OriginalName("PSYSTRIKE")] Psystrike = 109,
-        [pbr::OriginalName("ICE_SHARD")] IceShard = 110,
-        [pbr::OriginalName("ICY_WIND")] IcyWind = 111,
-        [pbr::OriginalName("FROST_BREATH")] FrostBreath = 112,
-        [pbr::OriginalName("ABSORB")] Absorb = 113,
-        [pbr::OriginalName("GIGA_DRAIN")] GigaDrain = 114,
-        [pbr::OriginalName("FIRE_PUNCH")] FirePunch = 115,
-        [pbr::OriginalName("SOLAR_BEAM")] SolarBeam = 116,
-        [pbr::OriginalName("LEAF_BLADE")] LeafBlade = 117,
-        [pbr::OriginalName("POWER_WHIP")] PowerWhip = 118,
-        [pbr::OriginalName("SPLASH")] Splash = 119,
-        [pbr::OriginalName("ACID")] Acid = 120,
-        [pbr::OriginalName("AIR_CUTTER")] AirCutter = 121,
-        [pbr::OriginalName("HURRICANE")] Hurricane = 122,
-        [pbr::OriginalName("BRICK_BREAK")] BrickBreak = 123,
-        [pbr::OriginalName("CUT")] Cut = 124,
-        [pbr::OriginalName("SWIFT")] Swift = 125,
-        [pbr::OriginalName("HORN_ATTACK")] HornAttack = 126,
-        [pbr::OriginalName("STOMP")] Stomp = 127,
-        [pbr::OriginalName("HEADBUTT")] Headbutt = 128,
-        [pbr::OriginalName("HYPER_FANG")] HyperFang = 129,
-        [pbr::OriginalName("SLAM")] Slam = 130,
-        [pbr::OriginalName("BODY_SLAM")] BodySlam = 131,
-        [pbr::OriginalName("REST")] Rest = 132,
-        [pbr::OriginalName("STRUGGLE")] Struggle = 133,
-        [pbr::OriginalName("SCALD_BLASTOISE")] ScaldBlastoise = 134,
-        [pbr::OriginalName("HYDRO_PUMP_BLASTOISE")] HydroPumpBlastoise = 135,
-        [pbr::OriginalName("WRAP_GREEN")] WrapGreen = 136,
-        [pbr::OriginalName("WRAP_PINK")] WrapPink = 137,
-        [pbr::OriginalName("FURY_CUTTER_FAST")] FuryCutterFast = 200,
-        [pbr::OriginalName("BUG_BITE_FAST")] BugBiteFast = 201,
-        [pbr::OriginalName("BITE_FAST")] BiteFast = 202,
-        [pbr::OriginalName("SUCKER_PUNCH_FAST")] SuckerPunchFast = 203,
-        [pbr::OriginalName("DRAGON_BREATH_FAST")] DragonBreathFast = 204,
-        [pbr::OriginalName("THUNDER_SHOCK_FAST")] ThunderShockFast = 205,
-        [pbr::OriginalName("SPARK_FAST")] SparkFast = 206,
-        [pbr::OriginalName("LOW_KICK_FAST")] LowKickFast = 207,
-        [pbr::OriginalName("KARATE_CHOP_FAST")] KarateChopFast = 208,
-        [pbr::OriginalName("EMBER_FAST")] EmberFast = 209,
-        [pbr::OriginalName("WING_ATTACK_FAST")] WingAttackFast = 210,
-        [pbr::OriginalName("PECK_FAST")] PeckFast = 211,
-        [pbr::OriginalName("LICK_FAST")] LickFast = 212,
-        [pbr::OriginalName("SHADOW_CLAW_FAST")] ShadowClawFast = 213,
-        [pbr::OriginalName("VINE_WHIP_FAST")] VineWhipFast = 214,
-        [pbr::OriginalName("RAZOR_LEAF_FAST")] RazorLeafFast = 215,
-        [pbr::OriginalName("MUD_SHOT_FAST")] MudShotFast = 216,
-        [pbr::OriginalName("ICE_SHARD_FAST")] IceShardFast = 217,
-        [pbr::OriginalName("FROST_BREATH_FAST")] FrostBreathFast = 218,
-        [pbr::OriginalName("QUICK_ATTACK_FAST")] QuickAttackFast = 219,
-        [pbr::OriginalName("SCRATCH_FAST")] ScratchFast = 220,
-        [pbr::OriginalName("TACKLE_FAST")] TackleFast = 221,
-        [pbr::OriginalName("POUND_FAST")] PoundFast = 222,
-        [pbr::OriginalName("CUT_FAST")] CutFast = 223,
-        [pbr::OriginalName("POISON_JAB_FAST")] PoisonJabFast = 224,
-        [pbr::OriginalName("ACID_FAST")] AcidFast = 225,
-        [pbr::OriginalName("PSYCHO_CUT_FAST")] PsychoCutFast = 226,
-        [pbr::OriginalName("ROCK_THROW_FAST")] RockThrowFast = 227,
-        [pbr::OriginalName("METAL_CLAW_FAST")] MetalClawFast = 228,
-        [pbr::OriginalName("BULLET_PUNCH_FAST")] BulletPunchFast = 229,
-        [pbr::OriginalName("WATER_GUN_FAST")] WaterGunFast = 230,
-        [pbr::OriginalName("SPLASH_FAST")] SplashFast = 231,
-        [pbr::OriginalName("WATER_GUN_FAST_BLASTOISE")] WaterGunFastBlastoise = 232,
-        [pbr::OriginalName("MUD_SLAP_FAST")] MudSlapFast = 233,
-        [pbr::OriginalName("ZEN_HEADBUTT_FAST")] ZenHeadbuttFast = 234,
-        [pbr::OriginalName("CONFUSION_FAST")] ConfusionFast = 235,
-        [pbr::OriginalName("POISON_STING_FAST")] PoisonStingFast = 236,
-        [pbr::OriginalName("BUBBLE_FAST")] BubbleFast = 237,
-        [pbr::OriginalName("FEINT_ATTACK_FAST")] FeintAttackFast = 238,
-        [pbr::OriginalName("STEEL_WING_FAST")] SteelWingFast = 239,
-        [pbr::OriginalName("FIRE_FANG_FAST")] FireFangFast = 240,
-        [pbr::OriginalName("ROCK_SMASH_FAST")] RockSmashFast = 241,
+        [pbr::OriginalName("MOVE_UNSET")]
+        MoveUnset = 0,
+        [pbr::OriginalName("THUNDER_SHOCK")]
+        ThunderShock = 1,
+        [pbr::OriginalName("QUICK_ATTACK")]
+        QuickAttack = 2,
+        [pbr::OriginalName("SCRATCH")]
+        Scratch = 3,
+        [pbr::OriginalName("EMBER")]
+        Ember = 4,
+        [pbr::OriginalName("VINE_WHIP")]
+        VineWhip = 5,
+        [pbr::OriginalName("TACKLE")]
+        Tackle = 6,
+        [pbr::OriginalName("RAZOR_LEAF")]
+        RazorLeaf = 7,
+        [pbr::OriginalName("TAKE_DOWN")]
+        TakeDown = 8,
+        [pbr::OriginalName("WATER_GUN")]
+        WaterGun = 9,
+        [pbr::OriginalName("BITE")]
+        Bite = 10,
+        [pbr::OriginalName("POUND")]
+        Pound = 11,
+        [pbr::OriginalName("DOUBLE_SLAP")]
+        DoubleSlap = 12,
+        [pbr::OriginalName("WRAP")]
+        Wrap = 13,
+        [pbr::OriginalName("HYPER_BEAM")]
+        HyperBeam = 14,
+        [pbr::OriginalName("LICK")]
+        Lick = 15,
+        [pbr::OriginalName("DARK_PULSE")]
+        DarkPulse = 16,
+        [pbr::OriginalName("SMOG")]
+        Smog = 17,
+        [pbr::OriginalName("SLUDGE")]
+        Sludge = 18,
+        [pbr::OriginalName("METAL_CLAW")]
+        MetalClaw = 19,
+        [pbr::OriginalName("VICE_GRIP")]
+        ViceGrip = 20,
+        [pbr::OriginalName("FLAME_WHEEL")]
+        FlameWheel = 21,
+        [pbr::OriginalName("MEGAHORN")]
+        Megahorn = 22,
+        [pbr::OriginalName("WING_ATTACK")]
+        WingAttack = 23,
+        [pbr::OriginalName("FLAMETHROWER")]
+        Flamethrower = 24,
+        [pbr::OriginalName("SUCKER_PUNCH")]
+        SuckerPunch = 25,
+        [pbr::OriginalName("DIG")]
+        Dig = 26,
+        [pbr::OriginalName("LOW_KICK")]
+        LowKick = 27,
+        [pbr::OriginalName("CROSS_CHOP")]
+        CrossChop = 28,
+        [pbr::OriginalName("PSYCHO_CUT")]
+        PsychoCut = 29,
+        [pbr::OriginalName("PSYBEAM")]
+        Psybeam = 30,
+        [pbr::OriginalName("EARTHQUAKE")]
+        Earthquake = 31,
+        [pbr::OriginalName("STONE_EDGE")]
+        StoneEdge = 32,
+        [pbr::OriginalName("ICE_PUNCH")]
+        IcePunch = 33,
+        [pbr::OriginalName("HEART_STAMP")]
+        HeartStamp = 34,
+        [pbr::OriginalName("DISCHARGE")]
+        Discharge = 35,
+        [pbr::OriginalName("FLASH_CANNON")]
+        FlashCannon = 36,
+        [pbr::OriginalName("PECK")]
+        Peck = 37,
+        [pbr::OriginalName("DRILL_PECK")]
+        DrillPeck = 38,
+        [pbr::OriginalName("ICE_BEAM")]
+        IceBeam = 39,
+        [pbr::OriginalName("BLIZZARD")]
+        Blizzard = 40,
+        [pbr::OriginalName("AIR_SLASH")]
+        AirSlash = 41,
+        [pbr::OriginalName("HEAT_WAVE")]
+        HeatWave = 42,
+        [pbr::OriginalName("TWINEEDLE")]
+        Twineedle = 43,
+        [pbr::OriginalName("POISON_JAB")]
+        PoisonJab = 44,
+        [pbr::OriginalName("AERIAL_ACE")]
+        AerialAce = 45,
+        [pbr::OriginalName("DRILL_RUN")]
+        DrillRun = 46,
+        [pbr::OriginalName("PETAL_BLIZZARD")]
+        PetalBlizzard = 47,
+        [pbr::OriginalName("MEGA_DRAIN")]
+        MegaDrain = 48,
+        [pbr::OriginalName("BUG_BUZZ")]
+        BugBuzz = 49,
+        [pbr::OriginalName("POISON_FANG")]
+        PoisonFang = 50,
+        [pbr::OriginalName("NIGHT_SLASH")]
+        NightSlash = 51,
+        [pbr::OriginalName("SLASH")]
+        Slash = 52,
+        [pbr::OriginalName("BUBBLE_BEAM")]
+        BubbleBeam = 53,
+        [pbr::OriginalName("SUBMISSION")]
+        Submission = 54,
+        [pbr::OriginalName("KARATE_CHOP")]
+        KarateChop = 55,
+        [pbr::OriginalName("LOW_SWEEP")]
+        LowSweep = 56,
+        [pbr::OriginalName("AQUA_JET")]
+        AquaJet = 57,
+        [pbr::OriginalName("AQUA_TAIL")]
+        AquaTail = 58,
+        [pbr::OriginalName("SEED_BOMB")]
+        SeedBomb = 59,
+        [pbr::OriginalName("PSYSHOCK")]
+        Psyshock = 60,
+        [pbr::OriginalName("ROCK_THROW")]
+        RockThrow = 61,
+        [pbr::OriginalName("ANCIENT_POWER")]
+        AncientPower = 62,
+        [pbr::OriginalName("ROCK_TOMB")]
+        RockTomb = 63,
+        [pbr::OriginalName("ROCK_SLIDE")]
+        RockSlide = 64,
+        [pbr::OriginalName("POWER_GEM")]
+        PowerGem = 65,
+        [pbr::OriginalName("SHADOW_SNEAK")]
+        ShadowSneak = 66,
+        [pbr::OriginalName("SHADOW_PUNCH")]
+        ShadowPunch = 67,
+        [pbr::OriginalName("SHADOW_CLAW")]
+        ShadowClaw = 68,
+        [pbr::OriginalName("OMINOUS_WIND")]
+        OminousWind = 69,
+        [pbr::OriginalName("SHADOW_BALL")]
+        ShadowBall = 70,
+        [pbr::OriginalName("BULLET_PUNCH")]
+        BulletPunch = 71,
+        [pbr::OriginalName("MAGNET_BOMB")]
+        MagnetBomb = 72,
+        [pbr::OriginalName("STEEL_WING")]
+        SteelWing = 73,
+        [pbr::OriginalName("IRON_HEAD")]
+        IronHead = 74,
+        [pbr::OriginalName("PARABOLIC_CHARGE")]
+        ParabolicCharge = 75,
+        [pbr::OriginalName("SPARK")]
+        Spark = 76,
+        [pbr::OriginalName("THUNDER_PUNCH")]
+        ThunderPunch = 77,
+        [pbr::OriginalName("THUNDER")]
+        Thunder = 78,
+        [pbr::OriginalName("THUNDERBOLT")]
+        Thunderbolt = 79,
+        [pbr::OriginalName("TWISTER")]
+        Twister = 80,
+        [pbr::OriginalName("DRAGON_BREATH")]
+        DragonBreath = 81,
+        [pbr::OriginalName("DRAGON_PULSE")]
+        DragonPulse = 82,
+        [pbr::OriginalName("DRAGON_CLAW")]
+        DragonClaw = 83,
+        [pbr::OriginalName("DISARMING_VOICE")]
+        DisarmingVoice = 84,
+        [pbr::OriginalName("DRAINING_KISS")]
+        DrainingKiss = 85,
+        [pbr::OriginalName("DAZZLING_GLEAM")]
+        DazzlingGleam = 86,
+        [pbr::OriginalName("MOONBLAST")]
+        Moonblast = 87,
+        [pbr::OriginalName("PLAY_ROUGH")]
+        PlayRough = 88,
+        [pbr::OriginalName("CROSS_POISON")]
+        CrossPoison = 89,
+        [pbr::OriginalName("SLUDGE_BOMB")]
+        SludgeBomb = 90,
+        [pbr::OriginalName("SLUDGE_WAVE")]
+        SludgeWave = 91,
+        [pbr::OriginalName("GUNK_SHOT")]
+        GunkShot = 92,
+        [pbr::OriginalName("MUD_SHOT")]
+        MudShot = 93,
+        [pbr::OriginalName("BONE_CLUB")]
+        BoneClub = 94,
+        [pbr::OriginalName("BULLDOZE")]
+        Bulldoze = 95,
+        [pbr::OriginalName("MUD_BOMB")]
+        MudBomb = 96,
+        [pbr::OriginalName("FURY_CUTTER")]
+        FuryCutter = 97,
+        [pbr::OriginalName("BUG_BITE")]
+        BugBite = 98,
+        [pbr::OriginalName("SIGNAL_BEAM")]
+        SignalBeam = 99,
+        [pbr::OriginalName("X_SCISSOR")]
+        XScissor = 100,
+        [pbr::OriginalName("FLAME_CHARGE")]
+        FlameCharge = 101,
+        [pbr::OriginalName("FLAME_BURST")]
+        FlameBurst = 102,
+        [pbr::OriginalName("FIRE_BLAST")]
+        FireBlast = 103,
+        [pbr::OriginalName("BRINE")]
+        Brine = 104,
+        [pbr::OriginalName("WATER_PULSE")]
+        WaterPulse = 105,
+        [pbr::OriginalName("SCALD")]
+        Scald = 106,
+        [pbr::OriginalName("HYDRO_PUMP")]
+        HydroPump = 107,
+        [pbr::OriginalName("PSYCHIC")]
+        Psychic = 108,
+        [pbr::OriginalName("PSYSTRIKE")]
+        Psystrike = 109,
+        [pbr::OriginalName("ICE_SHARD")]
+        IceShard = 110,
+        [pbr::OriginalName("ICY_WIND")]
+        IcyWind = 111,
+        [pbr::OriginalName("FROST_BREATH")]
+        FrostBreath = 112,
+        [pbr::OriginalName("ABSORB")]
+        Absorb = 113,
+        [pbr::OriginalName("GIGA_DRAIN")]
+        GigaDrain = 114,
+        [pbr::OriginalName("FIRE_PUNCH")]
+        FirePunch = 115,
+        [pbr::OriginalName("SOLAR_BEAM")]
+        SolarBeam = 116,
+        [pbr::OriginalName("LEAF_BLADE")]
+        LeafBlade = 117,
+        [pbr::OriginalName("POWER_WHIP")]
+        PowerWhip = 118,
+        [pbr::OriginalName("SPLASH")]
+        Splash = 119,
+        [pbr::OriginalName("ACID")]
+        Acid = 120,
+        [pbr::OriginalName("AIR_CUTTER")]
+        AirCutter = 121,
+        [pbr::OriginalName("HURRICANE")]
+        Hurricane = 122,
+        [pbr::OriginalName("BRICK_BREAK")]
+        BrickBreak = 123,
+        [pbr::OriginalName("CUT")]
+        Cut = 124,
+        [pbr::OriginalName("SWIFT")]
+        Swift = 125,
+        [pbr::OriginalName("HORN_ATTACK")]
+        HornAttack = 126,
+        [pbr::OriginalName("STOMP")]
+        Stomp = 127,
+        [pbr::OriginalName("HEADBUTT")]
+        Headbutt = 128,
+        [pbr::OriginalName("HYPER_FANG")]
+        HyperFang = 129,
+        [pbr::OriginalName("SLAM")]
+        Slam = 130,
+        [pbr::OriginalName("BODY_SLAM")]
+        BodySlam = 131,
+        [pbr::OriginalName("REST")]
+        Rest = 132,
+        [pbr::OriginalName("STRUGGLE")]
+        Struggle = 133,
+        [pbr::OriginalName("SCALD_BLASTOISE")]
+        ScaldBlastoise = 134,
+        [pbr::OriginalName("HYDRO_PUMP_BLASTOISE")]
+        HydroPumpBlastoise = 135,
+        [pbr::OriginalName("WRAP_GREEN")]
+        WrapGreen = 136,
+        [pbr::OriginalName("WRAP_PINK")]
+        WrapPink = 137,
+        [pbr::OriginalName("FURY_CUTTER_FAST")]
+        FuryCutterFast = 200,
+        [pbr::OriginalName("BUG_BITE_FAST")]
+        BugBiteFast = 201,
+        [pbr::OriginalName("BITE_FAST")]
+        BiteFast = 202,
+        [pbr::OriginalName("SUCKER_PUNCH_FAST")]
+        SuckerPunchFast = 203,
+        [pbr::OriginalName("DRAGON_BREATH_FAST")]
+        DragonBreathFast = 204,
+        [pbr::OriginalName("THUNDER_SHOCK_FAST")]
+        ThunderShockFast = 205,
+        [pbr::OriginalName("SPARK_FAST")]
+        SparkFast = 206,
+        [pbr::OriginalName("LOW_KICK_FAST")]
+        LowKickFast = 207,
+        [pbr::OriginalName("KARATE_CHOP_FAST")]
+        KarateChopFast = 208,
+        [pbr::OriginalName("EMBER_FAST")]
+        EmberFast = 209,
+        [pbr::OriginalName("WING_ATTACK_FAST")]
+        WingAttackFast = 210,
+        [pbr::OriginalName("PECK_FAST")]
+        PeckFast = 211,
+        [pbr::OriginalName("LICK_FAST")]
+        LickFast = 212,
+        [pbr::OriginalName("SHADOW_CLAW_FAST")]
+        ShadowClawFast = 213,
+        [pbr::OriginalName("VINE_WHIP_FAST")]
+        VineWhipFast = 214,
+        [pbr::OriginalName("RAZOR_LEAF_FAST")]
+        RazorLeafFast = 215,
+        [pbr::OriginalName("MUD_SHOT_FAST")]
+        MudShotFast = 216,
+        [pbr::OriginalName("ICE_SHARD_FAST")]
+        IceShardFast = 217,
+        [pbr::OriginalName("FROST_BREATH_FAST")]
+        FrostBreathFast = 218,
+        [pbr::OriginalName("QUICK_ATTACK_FAST")]
+        QuickAttackFast = 219,
+        [pbr::OriginalName("SCRATCH_FAST")]
+        ScratchFast = 220,
+        [pbr::OriginalName("TACKLE_FAST")]
+        TackleFast = 221,
+        [pbr::OriginalName("POUND_FAST")]
+        PoundFast = 222,
+        [pbr::OriginalName("CUT_FAST")]
+        CutFast = 223,
+        [pbr::OriginalName("POISON_JAB_FAST")]
+        PoisonJabFast = 224,
+        [pbr::OriginalName("ACID_FAST")]
+        AcidFast = 225,
+        [pbr::OriginalName("PSYCHO_CUT_FAST")]
+        PsychoCutFast = 226,
+        [pbr::OriginalName("ROCK_THROW_FAST")]
+        RockThrowFast = 227,
+        [pbr::OriginalName("METAL_CLAW_FAST")]
+        MetalClawFast = 228,
+        [pbr::OriginalName("BULLET_PUNCH_FAST")]
+        BulletPunchFast = 229,
+        [pbr::OriginalName("WATER_GUN_FAST")]
+        WaterGunFast = 230,
+        [pbr::OriginalName("SPLASH_FAST")]
+        SplashFast = 231,
+        [pbr::OriginalName("WATER_GUN_FAST_BLASTOISE")]
+        WaterGunFastBlastoise = 232,
+        [pbr::OriginalName("MUD_SLAP_FAST")]
+        MudSlapFast = 233,
+        [pbr::OriginalName("ZEN_HEADBUTT_FAST")]
+        ZenHeadbuttFast = 234,
+        [pbr::OriginalName("CONFUSION_FAST")]
+        ConfusionFast = 235,
+        [pbr::OriginalName("POISON_STING_FAST")]
+        PoisonStingFast = 236,
+        [pbr::OriginalName("BUBBLE_FAST")]
+        BubbleFast = 237,
+        [pbr::OriginalName("FEINT_ATTACK_FAST")]
+        FeintAttackFast = 238,
+        [pbr::OriginalName("STEEL_WING_FAST")]
+        SteelWingFast = 239,
+        [pbr::OriginalName("FIRE_FANG_FAST")]
+        FireFangFast = 240,
+        [pbr::OriginalName("ROCK_SMASH_FAST")]
+        RockSmashFast = 241,
     }
 
     public enum ItemId
     {
-        [pbr::OriginalName("ITEM_UNKNOWN")] ItemUnknown = 0,
-        [pbr::OriginalName("ITEM_POKE_BALL")] ItemPokeBall = 1,
-        [pbr::OriginalName("ITEM_GREAT_BALL")] ItemGreatBall = 2,
-        [pbr::OriginalName("ITEM_ULTRA_BALL")] ItemUltraBall = 3,
-        [pbr::OriginalName("ITEM_MASTER_BALL")] ItemMasterBall = 4,
-        [pbr::OriginalName("ITEM_POTION")] ItemPotion = 101,
-        [pbr::OriginalName("ITEM_SUPER_POTION")] ItemSuperPotion = 102,
-        [pbr::OriginalName("ITEM_HYPER_POTION")] ItemHyperPotion = 103,
-        [pbr::OriginalName("ITEM_MAX_POTION")] ItemMaxPotion = 104,
-        [pbr::OriginalName("ITEM_REVIVE")] ItemRevive = 201,
-        [pbr::OriginalName("ITEM_MAX_REVIVE")] ItemMaxRevive = 202,
-        [pbr::OriginalName("ITEM_LUCKY_EGG")] ItemLuckyEgg = 301,
-        [pbr::OriginalName("ITEM_INCENSE_ORDINARY")] ItemIncenseOrdinary = 401,
-        [pbr::OriginalName("ITEM_INCENSE_SPICY")] ItemIncenseSpicy = 402,
-        [pbr::OriginalName("ITEM_INCENSE_COOL")] ItemIncenseCool = 403,
-        [pbr::OriginalName("ITEM_INCENSE_FLORAL")] ItemIncenseFloral = 404,
-        [pbr::OriginalName("ITEM_TROY_DISK")] ItemTroyDisk = 501,
-        [pbr::OriginalName("ITEM_X_ATTACK")] ItemXAttack = 602,
-        [pbr::OriginalName("ITEM_X_DEFENSE")] ItemXDefense = 603,
-        [pbr::OriginalName("ITEM_X_MIRACLE")] ItemXMiracle = 604,
-        [pbr::OriginalName("ITEM_RAZZ_BERRY")] ItemRazzBerry = 701,
-        [pbr::OriginalName("ITEM_BLUK_BERRY")] ItemBlukBerry = 702,
-        [pbr::OriginalName("ITEM_NANAB_BERRY")] ItemNanabBerry = 703,
-        [pbr::OriginalName("ITEM_WEPAR_BERRY")] ItemWeparBerry = 704,
-        [pbr::OriginalName("ITEM_PINAP_BERRY")] ItemPinapBerry = 705,
-        [pbr::OriginalName("ITEM_SPECIAL_CAMERA")] ItemSpecialCamera = 801,
-        [pbr::OriginalName("ITEM_INCUBATOR_BASIC_UNLIMITED")] ItemIncubatorBasicUnlimited = 901,
-        [pbr::OriginalName("ITEM_INCUBATOR_BASIC")] ItemIncubatorBasic = 902,
-        [pbr::OriginalName("ITEM_POKEMON_STORAGE_UPGRADE")] ItemPokemonStorageUpgrade = 1001,
-        [pbr::OriginalName("ITEM_ITEM_STORAGE_UPGRADE")] ItemItemStorageUpgrade = 1002,
+        [pbr::OriginalName("ITEM_UNKNOWN")]
+        ItemUnknown = 0,
+        [pbr::OriginalName("ITEM_POKE_BALL")]
+        ItemPokeBall = 1,
+        [pbr::OriginalName("ITEM_GREAT_BALL")]
+        ItemGreatBall = 2,
+        [pbr::OriginalName("ITEM_ULTRA_BALL")]
+        ItemUltraBall = 3,
+        [pbr::OriginalName("ITEM_MASTER_BALL")]
+        ItemMasterBall = 4,
+        [pbr::OriginalName("ITEM_POTION")]
+        ItemPotion = 101,
+        [pbr::OriginalName("ITEM_SUPER_POTION")]
+        ItemSuperPotion = 102,
+        [pbr::OriginalName("ITEM_HYPER_POTION")]
+        ItemHyperPotion = 103,
+        [pbr::OriginalName("ITEM_MAX_POTION")]
+        ItemMaxPotion = 104,
+        [pbr::OriginalName("ITEM_REVIVE")]
+        ItemRevive = 201,
+        [pbr::OriginalName("ITEM_MAX_REVIVE")]
+        ItemMaxRevive = 202,
+        [pbr::OriginalName("ITEM_LUCKY_EGG")]
+        ItemLuckyEgg = 301,
+        [pbr::OriginalName("ITEM_INCENSE_ORDINARY")]
+        ItemIncenseOrdinary = 401,
+        [pbr::OriginalName("ITEM_INCENSE_SPICY")]
+        ItemIncenseSpicy = 402,
+        [pbr::OriginalName("ITEM_INCENSE_COOL")]
+        ItemIncenseCool = 403,
+        [pbr::OriginalName("ITEM_INCENSE_FLORAL")]
+        ItemIncenseFloral = 404,
+        [pbr::OriginalName("ITEM_TROY_DISK")]
+        ItemTroyDisk = 501,
+        [pbr::OriginalName("ITEM_X_ATTACK")]
+        ItemXAttack = 602,
+        [pbr::OriginalName("ITEM_X_DEFENSE")]
+        ItemXDefense = 603,
+        [pbr::OriginalName("ITEM_X_MIRACLE")]
+        ItemXMiracle = 604,
+        [pbr::OriginalName("ITEM_RAZZ_BERRY")]
+        ItemRazzBerry = 701,
+        [pbr::OriginalName("ITEM_BLUK_BERRY")]
+        ItemBlukBerry = 702,
+        [pbr::OriginalName("ITEM_NANAB_BERRY")]
+        ItemNanabBerry = 703,
+        [pbr::OriginalName("ITEM_WEPAR_BERRY")]
+        ItemWeparBerry = 704,
+        [pbr::OriginalName("ITEM_PINAP_BERRY")]
+        ItemPinapBerry = 705,
+        [pbr::OriginalName("ITEM_SPECIAL_CAMERA")]
+        ItemSpecialCamera = 801,
+        [pbr::OriginalName("ITEM_INCUBATOR_BASIC_UNLIMITED")]
+        ItemIncubatorBasicUnlimited = 901,
+        [pbr::OriginalName("ITEM_INCUBATOR_BASIC")]
+        ItemIncubatorBasic = 902,
+        [pbr::OriginalName("ITEM_POKEMON_STORAGE_UPGRADE")]
+        ItemPokemonStorageUpgrade = 1001,
+        [pbr::OriginalName("ITEM_ITEM_STORAGE_UPGRADE")]
+        ItemItemStorageUpgrade = 1002,
     }
 
     public enum InventoryUpgradeType
     {
-        [pbr::OriginalName("UPGRADE_UNSET")] UpgradeUnset = 0,
-        [pbr::OriginalName("INCREASE_ITEM_STORAGE")] IncreaseItemStorage = 1,
-        [pbr::OriginalName("INCREASE_POKEMON_STORAGE")] IncreasePokemonStorage = 2,
+        [pbr::OriginalName("UPGRADE_UNSET")]
+        UpgradeUnset = 0,
+        [pbr::OriginalName("INCREASE_ITEM_STORAGE")]
+        IncreaseItemStorage = 1,
+        [pbr::OriginalName("INCREASE_POKEMON_STORAGE")]
+        IncreasePokemonStorage = 2,
     }
 
     public enum EggIncubatorType
     {
-        [pbr::OriginalName("INCUBATOR_UNSET")] IncubatorUnset = 0,
-        [pbr::OriginalName("INCUBATOR_DISTANCE")] IncubatorDistance = 1,
+        [pbr::OriginalName("INCUBATOR_UNSET")]
+        IncubatorUnset = 0,
+        [pbr::OriginalName("INCUBATOR_DISTANCE")]
+        IncubatorDistance = 1,
     }
 
     public enum PokemonFamilyId
     {
-        [pbr::OriginalName("FAMILY_UNSET")] FamilyUnset = 0,
-        [pbr::OriginalName("FAMILY_BULBASAUR")] FamilyBulbasaur = 1,
-        [pbr::OriginalName("FAMILY_CHARMANDER")] FamilyCharmander = 4,
-        [pbr::OriginalName("FAMILY_SQUIRTLE")] FamilySquirtle = 7,
-        [pbr::OriginalName("FAMILY_CATERPIE")] FamilyCaterpie = 10,
-        [pbr::OriginalName("FAMILY_WEEDLE")] FamilyWeedle = 13,
-        [pbr::OriginalName("FAMILY_PIDGEY")] FamilyPidgey = 16,
-        [pbr::OriginalName("FAMILY_RATTATA")] FamilyRattata = 19,
-        [pbr::OriginalName("FAMILY_SPEAROW")] FamilySpearow = 21,
-        [pbr::OriginalName("FAMILY_EKANS")] FamilyEkans = 23,
-        [pbr::OriginalName("FAMILY_PIKACHU")] FamilyPikachu = 25,
-        [pbr::OriginalName("FAMILY_SANDSHREW")] FamilySandshrew = 27,
-        [pbr::OriginalName("FAMILY_NIDORAN")] FamilyNidoran = 29,
-        [pbr::OriginalName("FAMILY_NIDORAN2")] FamilyNidoran2 = 32,
-        [pbr::OriginalName("FAMILY_CLEFAIRY")] FamilyClefairy = 35,
-        [pbr::OriginalName("FAMILY_VULPIX")] FamilyVulpix = 37,
-        [pbr::OriginalName("FAMILY_JIGGLYPUFF")] FamilyJigglypuff = 39,
-        [pbr::OriginalName("FAMILY_ZUBAT")] FamilyZubat = 41,
-        [pbr::OriginalName("FAMILY_ODDISH")] FamilyOddish = 43,
-        [pbr::OriginalName("FAMILY_PARAS")] FamilyParas = 46,
-        [pbr::OriginalName("FAMILY_VENONAT")] FamilyVenonat = 48,
-        [pbr::OriginalName("FAMILY_DIGLETT")] FamilyDiglett = 50,
-        [pbr::OriginalName("FAMILY_MEOWTH")] FamilyMeowth = 52,
-        [pbr::OriginalName("FAMILY_PSYDUCK")] FamilyPsyduck = 54,
-        [pbr::OriginalName("FAMILY_MANKEY")] FamilyMankey = 56,
-        [pbr::OriginalName("FAMILY_GROWLITHE")] FamilyGrowlithe = 58,
-        [pbr::OriginalName("FAMILY_POLIWAG")] FamilyPoliwag = 60,
-        [pbr::OriginalName("FAMILY_ABRA")] FamilyAbra = 63,
-        [pbr::OriginalName("FAMILY_MACHOP")] FamilyMachop = 66,
-        [pbr::OriginalName("FAMILY_BELLSPROUT")] FamilyBellsprout = 69,
-        [pbr::OriginalName("FAMILY_TENTACOOL")] FamilyTentacool = 72,
-        [pbr::OriginalName("FAMILY_GEODUDE")] FamilyGeodude = 74,
-        [pbr::OriginalName("FAMILY_PONYTA")] FamilyPonyta = 77,
-        [pbr::OriginalName("FAMILY_SLOWPOKE")] FamilySlowpoke = 79,
-        [pbr::OriginalName("FAMILY_MAGNEMITE")] FamilyMagnemite = 81,
-        [pbr::OriginalName("FAMILY_FARFETCHD")] FamilyFarfetchd = 83,
-        [pbr::OriginalName("FAMILY_DODUO")] FamilyDoduo = 84,
-        [pbr::OriginalName("FAMILY_SEEL")] FamilySeel = 86,
-        [pbr::OriginalName("FAMILY_GRIMER")] FamilyGrimer = 88,
-        [pbr::OriginalName("FAMILY_SHELLDER")] FamilyShellder = 90,
-        [pbr::OriginalName("FAMILY_GASTLY")] FamilyGastly = 92,
-        [pbr::OriginalName("FAMILY_ONIX")] FamilyOnix = 95,
-        [pbr::OriginalName("FAMILY_DROWZEE")] FamilyDrowzee = 96,
-        [pbr::OriginalName("FAMILY_KRABBY")] FamilyKrabby = 98,
-        [pbr::OriginalName("FAMILY_VOLTORB")] FamilyVoltorb = 100,
-        [pbr::OriginalName("FAMILY_EXEGGCUTE")] FamilyExeggcute = 102,
-        [pbr::OriginalName("FAMILY_CUBONE")] FamilyCubone = 104,
-        [pbr::OriginalName("FAMILY_HITMONLEE")] FamilyHitmonlee = 106,
-        [pbr::OriginalName("FAMILY_HITMONCHAN")] FamilyHitmonchan = 107,
-        [pbr::OriginalName("FAMILY_LICKITUNG")] FamilyLickitung = 108,
-        [pbr::OriginalName("FAMILY_KOFFING")] FamilyKoffing = 109,
-        [pbr::OriginalName("FAMILY_RHYHORN")] FamilyRhyhorn = 111,
-        [pbr::OriginalName("FAMILY_CHANSEY")] FamilyChansey = 113,
-        [pbr::OriginalName("FAMILY_TANGELA")] FamilyTangela = 114,
-        [pbr::OriginalName("FAMILY_KANGASKHAN")] FamilyKangaskhan = 115,
-        [pbr::OriginalName("FAMILY_HORSEA")] FamilyHorsea = 116,
-        [pbr::OriginalName("FAMILY_GOLDEEN")] FamilyGoldeen = 118,
-        [pbr::OriginalName("FAMILY_STARYU")] FamilyStaryu = 120,
-        [pbr::OriginalName("FAMILY_MR_MIME")] FamilyMrMime = 122,
-        [pbr::OriginalName("FAMILY_SCYTHER")] FamilyScyther = 123,
-        [pbr::OriginalName("FAMILY_JYNX")] FamilyJynx = 124,
-        [pbr::OriginalName("FAMILY_ELECTABUZZ")] FamilyElectabuzz = 125,
-        [pbr::OriginalName("FAMILY_MAGMAR")] FamilyMagmar = 126,
-        [pbr::OriginalName("FAMILY_PINSIR")] FamilyPinsir = 127,
-        [pbr::OriginalName("FAMILY_TAUROS")] FamilyTauros = 128,
-        [pbr::OriginalName("FAMILY_MAGIKARP")] FamilyMagikarp = 129,
-        [pbr::OriginalName("FAMILY_LAPRAS")] FamilyLapras = 131,
-        [pbr::OriginalName("FAMILY_DITTO")] FamilyDitto = 132,
-        [pbr::OriginalName("FAMILY_EEVEE")] FamilyEevee = 133,
-        [pbr::OriginalName("FAMILY_PORYGON")] FamilyPorygon = 137,
-        [pbr::OriginalName("FAMILY_OMANYTE")] FamilyOmanyte = 138,
-        [pbr::OriginalName("FAMILY_KABUTO")] FamilyKabuto = 140,
-        [pbr::OriginalName("FAMILY_AERODACTYL")] FamilyAerodactyl = 142,
-        [pbr::OriginalName("FAMILY_SNORLAX")] FamilySnorlax = 143,
-        [pbr::OriginalName("FAMILY_ARTICUNO")] FamilyArticuno = 144,
-        [pbr::OriginalName("FAMILY_ZAPDOS")] FamilyZapdos = 145,
-        [pbr::OriginalName("FAMILY_MOLTRES")] FamilyMoltres = 146,
-        [pbr::OriginalName("FAMILY_DRATINI")] FamilyDratini = 147,
-        [pbr::OriginalName("FAMILY_MEWTWO")] FamilyMewtwo = 150,
-        [pbr::OriginalName("FAMILY_MEW")] FamilyMew = 151,
+        [pbr::OriginalName("FAMILY_UNSET")]
+        FamilyUnset = 0,
+        [pbr::OriginalName("FAMILY_BULBASAUR")]
+        FamilyBulbasaur = 1,
+        [pbr::OriginalName("FAMILY_CHARMANDER")]
+        FamilyCharmander = 4,
+        [pbr::OriginalName("FAMILY_SQUIRTLE")]
+        FamilySquirtle = 7,
+        [pbr::OriginalName("FAMILY_CATERPIE")]
+        FamilyCaterpie = 10,
+        [pbr::OriginalName("FAMILY_WEEDLE")]
+        FamilyWeedle = 13,
+        [pbr::OriginalName("FAMILY_PIDGEY")]
+        FamilyPidgey = 16,
+        [pbr::OriginalName("FAMILY_RATTATA")]
+        FamilyRattata = 19,
+        [pbr::OriginalName("FAMILY_SPEAROW")]
+        FamilySpearow = 21,
+        [pbr::OriginalName("FAMILY_EKANS")]
+        FamilyEkans = 23,
+        [pbr::OriginalName("FAMILY_PIKACHU")]
+        FamilyPikachu = 25,
+        [pbr::OriginalName("FAMILY_SANDSHREW")]
+        FamilySandshrew = 27,
+        [pbr::OriginalName("FAMILY_NIDORAN")]
+        FamilyNidoran = 29,
+        [pbr::OriginalName("FAMILY_NIDORAN2")]
+        FamilyNidoran2 = 32,
+        [pbr::OriginalName("FAMILY_CLEFAIRY")]
+        FamilyClefairy = 35,
+        [pbr::OriginalName("FAMILY_VULPIX")]
+        FamilyVulpix = 37,
+        [pbr::OriginalName("FAMILY_JIGGLYPUFF")]
+        FamilyJigglypuff = 39,
+        [pbr::OriginalName("FAMILY_ZUBAT")]
+        FamilyZubat = 41,
+        [pbr::OriginalName("FAMILY_ODDISH")]
+        FamilyOddish = 43,
+        [pbr::OriginalName("FAMILY_PARAS")]
+        FamilyParas = 46,
+        [pbr::OriginalName("FAMILY_VENONAT")]
+        FamilyVenonat = 48,
+        [pbr::OriginalName("FAMILY_DIGLETT")]
+        FamilyDiglett = 50,
+        [pbr::OriginalName("FAMILY_MEOWTH")]
+        FamilyMeowth = 52,
+        [pbr::OriginalName("FAMILY_PSYDUCK")]
+        FamilyPsyduck = 54,
+        [pbr::OriginalName("FAMILY_MANKEY")]
+        FamilyMankey = 56,
+        [pbr::OriginalName("FAMILY_GROWLITHE")]
+        FamilyGrowlithe = 58,
+        [pbr::OriginalName("FAMILY_POLIWAG")]
+        FamilyPoliwag = 60,
+        [pbr::OriginalName("FAMILY_ABRA")]
+        FamilyAbra = 63,
+        [pbr::OriginalName("FAMILY_MACHOP")]
+        FamilyMachop = 66,
+        [pbr::OriginalName("FAMILY_BELLSPROUT")]
+        FamilyBellsprout = 69,
+        [pbr::OriginalName("FAMILY_TENTACOOL")]
+        FamilyTentacool = 72,
+        [pbr::OriginalName("FAMILY_GEODUDE")]
+        FamilyGeodude = 74,
+        [pbr::OriginalName("FAMILY_PONYTA")]
+        FamilyPonyta = 77,
+        [pbr::OriginalName("FAMILY_SLOWPOKE")]
+        FamilySlowpoke = 79,
+        [pbr::OriginalName("FAMILY_MAGNEMITE")]
+        FamilyMagnemite = 81,
+        [pbr::OriginalName("FAMILY_FARFETCHD")]
+        FamilyFarfetchd = 83,
+        [pbr::OriginalName("FAMILY_DODUO")]
+        FamilyDoduo = 84,
+        [pbr::OriginalName("FAMILY_SEEL")]
+        FamilySeel = 86,
+        [pbr::OriginalName("FAMILY_GRIMER")]
+        FamilyGrimer = 88,
+        [pbr::OriginalName("FAMILY_SHELLDER")]
+        FamilyShellder = 90,
+        [pbr::OriginalName("FAMILY_GASTLY")]
+        FamilyGastly = 92,
+        [pbr::OriginalName("FAMILY_ONIX")]
+        FamilyOnix = 95,
+        [pbr::OriginalName("FAMILY_DROWZEE")]
+        FamilyDrowzee = 96,
+        [pbr::OriginalName("FAMILY_KRABBY")]
+        FamilyKrabby = 98,
+        [pbr::OriginalName("FAMILY_VOLTORB")]
+        FamilyVoltorb = 100,
+        [pbr::OriginalName("FAMILY_EXEGGCUTE")]
+        FamilyExeggcute = 102,
+        [pbr::OriginalName("FAMILY_CUBONE")]
+        FamilyCubone = 104,
+        [pbr::OriginalName("FAMILY_HITMONLEE")]
+        FamilyHitmonlee = 106,
+        [pbr::OriginalName("FAMILY_HITMONCHAN")]
+        FamilyHitmonchan = 107,
+        [pbr::OriginalName("FAMILY_LICKITUNG")]
+        FamilyLickitung = 108,
+        [pbr::OriginalName("FAMILY_KOFFING")]
+        FamilyKoffing = 109,
+        [pbr::OriginalName("FAMILY_RHYHORN")]
+        FamilyRhyhorn = 111,
+        [pbr::OriginalName("FAMILY_CHANSEY")]
+        FamilyChansey = 113,
+        [pbr::OriginalName("FAMILY_TANGELA")]
+        FamilyTangela = 114,
+        [pbr::OriginalName("FAMILY_KANGASKHAN")]
+        FamilyKangaskhan = 115,
+        [pbr::OriginalName("FAMILY_HORSEA")]
+        FamilyHorsea = 116,
+        [pbr::OriginalName("FAMILY_GOLDEEN")]
+        FamilyGoldeen = 118,
+        [pbr::OriginalName("FAMILY_STARYU")]
+        FamilyStaryu = 120,
+        [pbr::OriginalName("FAMILY_MR_MIME")]
+        FamilyMrMime = 122,
+        [pbr::OriginalName("FAMILY_SCYTHER")]
+        FamilyScyther = 123,
+        [pbr::OriginalName("FAMILY_JYNX")]
+        FamilyJynx = 124,
+        [pbr::OriginalName("FAMILY_ELECTABUZZ")]
+        FamilyElectabuzz = 125,
+        [pbr::OriginalName("FAMILY_MAGMAR")]
+        FamilyMagmar = 126,
+        [pbr::OriginalName("FAMILY_PINSIR")]
+        FamilyPinsir = 127,
+        [pbr::OriginalName("FAMILY_TAUROS")]
+        FamilyTauros = 128,
+        [pbr::OriginalName("FAMILY_MAGIKARP")]
+        FamilyMagikarp = 129,
+        [pbr::OriginalName("FAMILY_LAPRAS")]
+        FamilyLapras = 131,
+        [pbr::OriginalName("FAMILY_DITTO")]
+        FamilyDitto = 132,
+        [pbr::OriginalName("FAMILY_EEVEE")]
+        FamilyEevee = 133,
+        [pbr::OriginalName("FAMILY_PORYGON")]
+        FamilyPorygon = 137,
+        [pbr::OriginalName("FAMILY_OMANYTE")]
+        FamilyOmanyte = 138,
+        [pbr::OriginalName("FAMILY_KABUTO")]
+        FamilyKabuto = 140,
+        [pbr::OriginalName("FAMILY_AERODACTYL")]
+        FamilyAerodactyl = 142,
+        [pbr::OriginalName("FAMILY_SNORLAX")]
+        FamilySnorlax = 143,
+        [pbr::OriginalName("FAMILY_ARTICUNO")]
+        FamilyArticuno = 144,
+        [pbr::OriginalName("FAMILY_ZAPDOS")]
+        FamilyZapdos = 145,
+        [pbr::OriginalName("FAMILY_MOLTRES")]
+        FamilyMoltres = 146,
+        [pbr::OriginalName("FAMILY_DRATINI")]
+        FamilyDratini = 147,
+        [pbr::OriginalName("FAMILY_MEWTWO")]
+        FamilyMewtwo = 150,
+        [pbr::OriginalName("FAMILY_MEW")]
+        FamilyMew = 151,
     }
 
     public enum MapObjectsStatus
     {
-        [pbr::OriginalName("UNSET_STATUS")] UnsetStatus = 0,
-        [pbr::OriginalName("SUCCESS")] Success = 1,
-        [pbr::OriginalName("LOCATION_UNSET")] LocationUnset = 2,
+        [pbr::OriginalName("UNSET_STATUS")]
+        UnsetStatus = 0,
+        [pbr::OriginalName("SUCCESS")]
+        Success = 1,
+        [pbr::OriginalName("LOCATION_UNSET")]
+        LocationUnset = 2,
     }
 
     public enum FortType
     {
-        [pbr::OriginalName("GYM")] Gym = 0,
-        [pbr::OriginalName("CHECKPOINT")] Checkpoint = 1,
+        [pbr::OriginalName("GYM")]
+        Gym = 0,
+        [pbr::OriginalName("CHECKPOINT")]
+        Checkpoint = 1,
     }
 
     public enum PokemonId
     {
-        [pbr::OriginalName("MISSINGNO")] Missingno = 0,
-        [pbr::OriginalName("BULBASAUR")] Bulbasaur = 1,
-        [pbr::OriginalName("IVYSAUR")] Ivysaur = 2,
-        [pbr::OriginalName("VENUSAUR")] Venusaur = 3,
-        [pbr::OriginalName("CHARMANDER")] Charmander = 4,
-        [pbr::OriginalName("CHARMELEON")] Charmeleon = 5,
-        [pbr::OriginalName("CHARIZARD")] Charizard = 6,
-        [pbr::OriginalName("SQUIRTLE")] Squirtle = 7,
-        [pbr::OriginalName("WARTORTLE")] Wartortle = 8,
-        [pbr::OriginalName("BLASTOISE")] Blastoise = 9,
-        [pbr::OriginalName("CATERPIE")] Caterpie = 10,
-        [pbr::OriginalName("METAPOD")] Metapod = 11,
-        [pbr::OriginalName("BUTTERFREE")] Butterfree = 12,
-        [pbr::OriginalName("WEEDLE")] Weedle = 13,
-        [pbr::OriginalName("KAKUNA")] Kakuna = 14,
-        [pbr::OriginalName("BEEDRILL")] Beedrill = 15,
-        [pbr::OriginalName("PIDGEY")] Pidgey = 16,
-        [pbr::OriginalName("PIDGEOTTO")] Pidgeotto = 17,
-        [pbr::OriginalName("PIDGEOT")] Pidgeot = 18,
-        [pbr::OriginalName("RATTATA")] Rattata = 19,
-        [pbr::OriginalName("RATICATE")] Raticate = 20,
-        [pbr::OriginalName("SPEAROW")] Spearow = 21,
-        [pbr::OriginalName("FEAROW")] Fearow = 22,
-        [pbr::OriginalName("EKANS")] Ekans = 23,
-        [pbr::OriginalName("ARBOK")] Arbok = 24,
-        [pbr::OriginalName("PIKACHU")] Pikachu = 25,
-        [pbr::OriginalName("RAICHU")] Raichu = 26,
-        [pbr::OriginalName("SANDSHREW")] Sandshrew = 27,
-        [pbr::OriginalName("SANDLASH")] Sandlash = 28,
-        [pbr::OriginalName("NIDORAN_FEMALE")] NidoranFemale = 29,
-        [pbr::OriginalName("NIDORINA")] Nidorina = 30,
-        [pbr::OriginalName("NIDOQUEEN")] Nidoqueen = 31,
-        [pbr::OriginalName("NIDORAN_MALE")] NidoranMale = 32,
-        [pbr::OriginalName("NIDORINO")] Nidorino = 33,
-        [pbr::OriginalName("NIDOKING")] Nidoking = 34,
-        [pbr::OriginalName("CLEFAIRY")] Clefairy = 35,
-        [pbr::OriginalName("CLEFABLE")] Clefable = 36,
-        [pbr::OriginalName("VULPIX")] Vulpix = 37,
-        [pbr::OriginalName("NINETALES")] Ninetales = 38,
-        [pbr::OriginalName("JIGGLYPUFF")] Jigglypuff = 39,
-        [pbr::OriginalName("WIGGLYTUFF")] Wigglytuff = 40,
-        [pbr::OriginalName("ZUBAT")] Zubat = 41,
-        [pbr::OriginalName("GOLBAT")] Golbat = 42,
-        [pbr::OriginalName("ODDISH")] Oddish = 43,
-        [pbr::OriginalName("GLOOM")] Gloom = 44,
-        [pbr::OriginalName("VILEPLUME")] Vileplume = 45,
-        [pbr::OriginalName("PARAS")] Paras = 46,
-        [pbr::OriginalName("PARASECT")] Parasect = 47,
-        [pbr::OriginalName("VENONAT")] Venonat = 48,
-        [pbr::OriginalName("VENOMOTH")] Venomoth = 49,
-        [pbr::OriginalName("DIGLETT")] Diglett = 50,
-        [pbr::OriginalName("DUGTRIO")] Dugtrio = 51,
-        [pbr::OriginalName("MEOWTH")] Meowth = 52,
-        [pbr::OriginalName("PERSIAN")] Persian = 53,
-        [pbr::OriginalName("PSYDUCK")] Psyduck = 54,
-        [pbr::OriginalName("GOLDUCK")] Golduck = 55,
-        [pbr::OriginalName("MANKEY")] Mankey = 56,
-        [pbr::OriginalName("PRIMEAPE")] Primeape = 57,
-        [pbr::OriginalName("GROWLITHE")] Growlithe = 58,
-        [pbr::OriginalName("ARCANINE")] Arcanine = 59,
-        [pbr::OriginalName("POLIWAG")] Poliwag = 60,
-        [pbr::OriginalName("POLIWHIRL")] Poliwhirl = 61,
-        [pbr::OriginalName("POLIWRATH")] Poliwrath = 62,
-        [pbr::OriginalName("ABRA")] Abra = 63,
-        [pbr::OriginalName("KADABRA")] Kadabra = 64,
-        [pbr::OriginalName("ALAKHAZAM")] Alakhazam = 65,
-        [pbr::OriginalName("MACHOP")] Machop = 66,
-        [pbr::OriginalName("MACHOKE")] Machoke = 67,
-        [pbr::OriginalName("MACHAMP")] Machamp = 68,
-        [pbr::OriginalName("BELLSPROUT")] Bellsprout = 69,
-        [pbr::OriginalName("WEEPINBELL")] Weepinbell = 70,
-        [pbr::OriginalName("VICTREEBELL")] Victreebell = 71,
-        [pbr::OriginalName("TENTACOOL")] Tentacool = 72,
-        [pbr::OriginalName("TENTACRUEL")] Tentacruel = 73,
-        [pbr::OriginalName("GEODUDE")] Geodude = 74,
-        [pbr::OriginalName("GRAVELER")] Graveler = 75,
-        [pbr::OriginalName("GOLEM")] Golem = 76,
-        [pbr::OriginalName("PONYTA")] Ponyta = 77,
-        [pbr::OriginalName("RAPIDASH")] Rapidash = 78,
-        [pbr::OriginalName("SLOWPOKE")] Slowpoke = 79,
-        [pbr::OriginalName("SLOWBRO")] Slowbro = 80,
-        [pbr::OriginalName("MAGNEMITE")] Magnemite = 81,
-        [pbr::OriginalName("MAGNETON")] Magneton = 82,
-        [pbr::OriginalName("FARFETCHD")] Farfetchd = 83,
-        [pbr::OriginalName("DODUO")] Doduo = 84,
-        [pbr::OriginalName("DODRIO")] Dodrio = 85,
-        [pbr::OriginalName("SEEL")] Seel = 86,
-        [pbr::OriginalName("DEWGONG")] Dewgong = 87,
-        [pbr::OriginalName("GRIMER")] Grimer = 88,
-        [pbr::OriginalName("MUK")] Muk = 89,
-        [pbr::OriginalName("SHELLDER")] Shellder = 90,
-        [pbr::OriginalName("CLOYSTER")] Cloyster = 91,
-        [pbr::OriginalName("GASTLY")] Gastly = 92,
-        [pbr::OriginalName("HAUNTER")] Haunter = 93,
-        [pbr::OriginalName("GENGAR")] Gengar = 94,
-        [pbr::OriginalName("ONIX")] Onix = 95,
-        [pbr::OriginalName("DROWZEE")] Drowzee = 96,
-        [pbr::OriginalName("HYPNO")] Hypno = 97,
-        [pbr::OriginalName("KRABBY")] Krabby = 98,
-        [pbr::OriginalName("KINGLER")] Kingler = 99,
-        [pbr::OriginalName("VOLTORB")] Voltorb = 100,
-        [pbr::OriginalName("ELECTRODE")] Electrode = 101,
-        [pbr::OriginalName("EXEGGCUTE")] Exeggcute = 102,
-        [pbr::OriginalName("EXEGGUTOR")] Exeggutor = 103,
-        [pbr::OriginalName("CUBONE")] Cubone = 104,
-        [pbr::OriginalName("MAROWAK")] Marowak = 105,
-        [pbr::OriginalName("HITMONLEE")] Hitmonlee = 106,
-        [pbr::OriginalName("HITMONCHAN")] Hitmonchan = 107,
-        [pbr::OriginalName("LICKITUNG")] Lickitung = 108,
-        [pbr::OriginalName("KOFFING")] Koffing = 109,
-        [pbr::OriginalName("WEEZING")] Weezing = 110,
-        [pbr::OriginalName("RHYHORN")] Rhyhorn = 111,
-        [pbr::OriginalName("RHYDON")] Rhydon = 112,
-        [pbr::OriginalName("CHANSEY")] Chansey = 113,
-        [pbr::OriginalName("TANGELA")] Tangela = 114,
-        [pbr::OriginalName("KANGASKHAN")] Kangaskhan = 115,
-        [pbr::OriginalName("HORSEA")] Horsea = 116,
-        [pbr::OriginalName("SEADRA")] Seadra = 117,
-        [pbr::OriginalName("GOLDEEN")] Goldeen = 118,
-        [pbr::OriginalName("SEAKING")] Seaking = 119,
-        [pbr::OriginalName("STARYU")] Staryu = 120,
-        [pbr::OriginalName("STARMIE")] Starmie = 121,
-        [pbr::OriginalName("MR_MIME")] MrMime = 122,
-        [pbr::OriginalName("SCYTHER")] Scyther = 123,
-        [pbr::OriginalName("JYNX")] Jynx = 124,
-        [pbr::OriginalName("ELECTABUZZ")] Electabuzz = 125,
-        [pbr::OriginalName("MAGMAR")] Magmar = 126,
-        [pbr::OriginalName("PINSIR")] Pinsir = 127,
-        [pbr::OriginalName("TAUROS")] Tauros = 128,
-        [pbr::OriginalName("MAGIKARP")] Magikarp = 129,
-        [pbr::OriginalName("GYARADOS")] Gyarados = 130,
-        [pbr::OriginalName("LAPRAS")] Lapras = 131,
-        [pbr::OriginalName("DITTO")] Ditto = 132,
-        [pbr::OriginalName("EEVEE")] Eevee = 133,
-        [pbr::OriginalName("VAPOREON")] Vaporeon = 134,
-        [pbr::OriginalName("JOLTEON")] Jolteon = 135,
-        [pbr::OriginalName("FLAREON")] Flareon = 136,
-        [pbr::OriginalName("PORYGON")] Porygon = 137,
-        [pbr::OriginalName("OMANYTE")] Omanyte = 138,
-        [pbr::OriginalName("OMASTAR")] Omastar = 139,
-        [pbr::OriginalName("KABUTO")] Kabuto = 140,
-        [pbr::OriginalName("KABUTOPS")] Kabutops = 141,
-        [pbr::OriginalName("AERODACTYL")] Aerodactyl = 142,
-        [pbr::OriginalName("SNORLAX")] Snorlax = 143,
-        [pbr::OriginalName("ARTICUNO")] Articuno = 144,
-        [pbr::OriginalName("ZAPDOS")] Zapdos = 145,
-        [pbr::OriginalName("MOLTRES")] Moltres = 146,
-        [pbr::OriginalName("DRATINI")] Dratini = 147,
-        [pbr::OriginalName("DRAGONAIR")] Dragonair = 148,
-        [pbr::OriginalName("DRAGONITE")] Dragonite = 149,
-        [pbr::OriginalName("MEWTWO")] Mewtwo = 150,
-        [pbr::OriginalName("MEW")] Mew = 151,
+        [pbr::OriginalName("MISSINGNO")]
+        Missingno = 0,
+        [pbr::OriginalName("BULBASAUR")]
+        Bulbasaur = 1,
+        [pbr::OriginalName("IVYSAUR")]
+        Ivysaur = 2,
+        [pbr::OriginalName("VENUSAUR")]
+        Venusaur = 3,
+        [pbr::OriginalName("CHARMANDER")]
+        Charmander = 4,
+        [pbr::OriginalName("CHARMELEON")]
+        Charmeleon = 5,
+        [pbr::OriginalName("CHARIZARD")]
+        Charizard = 6,
+        [pbr::OriginalName("SQUIRTLE")]
+        Squirtle = 7,
+        [pbr::OriginalName("WARTORTLE")]
+        Wartortle = 8,
+        [pbr::OriginalName("BLASTOISE")]
+        Blastoise = 9,
+        [pbr::OriginalName("CATERPIE")]
+        Caterpie = 10,
+        [pbr::OriginalName("METAPOD")]
+        Metapod = 11,
+        [pbr::OriginalName("BUTTERFREE")]
+        Butterfree = 12,
+        [pbr::OriginalName("WEEDLE")]
+        Weedle = 13,
+        [pbr::OriginalName("KAKUNA")]
+        Kakuna = 14,
+        [pbr::OriginalName("BEEDRILL")]
+        Beedrill = 15,
+        [pbr::OriginalName("PIDGEY")]
+        Pidgey = 16,
+        [pbr::OriginalName("PIDGEOTTO")]
+        Pidgeotto = 17,
+        [pbr::OriginalName("PIDGEOT")]
+        Pidgeot = 18,
+        [pbr::OriginalName("RATTATA")]
+        Rattata = 19,
+        [pbr::OriginalName("RATICATE")]
+        Raticate = 20,
+        [pbr::OriginalName("SPEAROW")]
+        Spearow = 21,
+        [pbr::OriginalName("FEAROW")]
+        Fearow = 22,
+        [pbr::OriginalName("EKANS")]
+        Ekans = 23,
+        [pbr::OriginalName("ARBOK")]
+        Arbok = 24,
+        [pbr::OriginalName("PIKACHU")]
+        Pikachu = 25,
+        [pbr::OriginalName("RAICHU")]
+        Raichu = 26,
+        [pbr::OriginalName("SANDSHREW")]
+        Sandshrew = 27,
+        [pbr::OriginalName("SANDSLASH")]
+        Sandslash = 28,
+        [pbr::OriginalName("NIDORAN_FEMALE")]
+        NidoranFemale = 29,
+        [pbr::OriginalName("NIDORINA")]
+        Nidorina = 30,
+        [pbr::OriginalName("NIDOQUEEN")]
+        Nidoqueen = 31,
+        [pbr::OriginalName("NIDORAN_MALE")]
+        NidoranMale = 32,
+        [pbr::OriginalName("NIDORINO")]
+        Nidorino = 33,
+        [pbr::OriginalName("NIDOKING")]
+        Nidoking = 34,
+        [pbr::OriginalName("CLEFAIRY")]
+        Clefairy = 35,
+        [pbr::OriginalName("CLEFABLE")]
+        Clefable = 36,
+        [pbr::OriginalName("VULPIX")]
+        Vulpix = 37,
+        [pbr::OriginalName("NINETALES")]
+        Ninetales = 38,
+        [pbr::OriginalName("JIGGLYPUFF")]
+        Jigglypuff = 39,
+        [pbr::OriginalName("WIGGLYTUFF")]
+        Wigglytuff = 40,
+        [pbr::OriginalName("ZUBAT")]
+        Zubat = 41,
+        [pbr::OriginalName("GOLBAT")]
+        Golbat = 42,
+        [pbr::OriginalName("ODDISH")]
+        Oddish = 43,
+        [pbr::OriginalName("GLOOM")]
+        Gloom = 44,
+        [pbr::OriginalName("VILEPLUME")]
+        Vileplume = 45,
+        [pbr::OriginalName("PARAS")]
+        Paras = 46,
+        [pbr::OriginalName("PARASECT")]
+        Parasect = 47,
+        [pbr::OriginalName("VENONAT")]
+        Venonat = 48,
+        [pbr::OriginalName("VENOMOTH")]
+        Venomoth = 49,
+        [pbr::OriginalName("DIGLETT")]
+        Diglett = 50,
+        [pbr::OriginalName("DUGTRIO")]
+        Dugtrio = 51,
+        [pbr::OriginalName("MEOWTH")]
+        Meowth = 52,
+        [pbr::OriginalName("PERSIAN")]
+        Persian = 53,
+        [pbr::OriginalName("PSYDUCK")]
+        Psyduck = 54,
+        [pbr::OriginalName("GOLDUCK")]
+        Golduck = 55,
+        [pbr::OriginalName("MANKEY")]
+        Mankey = 56,
+        [pbr::OriginalName("PRIMEAPE")]
+        Primeape = 57,
+        [pbr::OriginalName("GROWLITHE")]
+        Growlithe = 58,
+        [pbr::OriginalName("ARCANINE")]
+        Arcanine = 59,
+        [pbr::OriginalName("POLIWAG")]
+        Poliwag = 60,
+        [pbr::OriginalName("POLIWHIRL")]
+        Poliwhirl = 61,
+        [pbr::OriginalName("POLIWRATH")]
+        Poliwrath = 62,
+        [pbr::OriginalName("ABRA")]
+        Abra = 63,
+        [pbr::OriginalName("KADABRA")]
+        Kadabra = 64,
+        [pbr::OriginalName("ALAKAZAM")]
+        Alakazam = 65,
+        [pbr::OriginalName("MACHOP")]
+        Machop = 66,
+        [pbr::OriginalName("MACHOKE")]
+        Machoke = 67,
+        [pbr::OriginalName("MACHAMP")]
+        Machamp = 68,
+        [pbr::OriginalName("BELLSPROUT")]
+        Bellsprout = 69,
+        [pbr::OriginalName("WEEPINBELL")]
+        Weepinbell = 70,
+        [pbr::OriginalName("VICTREEBEL")]
+        Victreebel = 71,
+        [pbr::OriginalName("TENTACOOL")]
+        Tentacool = 72,
+        [pbr::OriginalName("TENTACRUEL")]
+        Tentacruel = 73,
+        [pbr::OriginalName("GEODUDE")]
+        Geodude = 74,
+        [pbr::OriginalName("GRAVELER")]
+        Graveler = 75,
+        [pbr::OriginalName("GOLEM")]
+        Golem = 76,
+        [pbr::OriginalName("PONYTA")]
+        Ponyta = 77,
+        [pbr::OriginalName("RAPIDASH")]
+        Rapidash = 78,
+        [pbr::OriginalName("SLOWPOKE")]
+        Slowpoke = 79,
+        [pbr::OriginalName("SLOWBRO")]
+        Slowbro = 80,
+        [pbr::OriginalName("MAGNEMITE")]
+        Magnemite = 81,
+        [pbr::OriginalName("MAGNETON")]
+        Magneton = 82,
+        [pbr::OriginalName("FARFETCH'D")]
+        Farfetchd = 83,
+        [pbr::OriginalName("DODUO")]
+        Doduo = 84,
+        [pbr::OriginalName("DODRIO")]
+        Dodrio = 85,
+        [pbr::OriginalName("SEEL")]
+        Seel = 86,
+        [pbr::OriginalName("DEWGONG")]
+        Dewgong = 87,
+        [pbr::OriginalName("GRIMER")]
+        Grimer = 88,
+        [pbr::OriginalName("MUK")]
+        Muk = 89,
+        [pbr::OriginalName("SHELLDER")]
+        Shellder = 90,
+        [pbr::OriginalName("CLOYSTER")]
+        Cloyster = 91,
+        [pbr::OriginalName("GASTLY")]
+        Gastly = 92,
+        [pbr::OriginalName("HAUNTER")]
+        Haunter = 93,
+        [pbr::OriginalName("GENGAR")]
+        Gengar = 94,
+        [pbr::OriginalName("ONIX")]
+        Onix = 95,
+        [pbr::OriginalName("DROWZEE")]
+        Drowzee = 96,
+        [pbr::OriginalName("HYPNO")]
+        Hypno = 97,
+        [pbr::OriginalName("KRABBY")]
+        Krabby = 98,
+        [pbr::OriginalName("KINGLER")]
+        Kingler = 99,
+        [pbr::OriginalName("VOLTORB")]
+        Voltorb = 100,
+        [pbr::OriginalName("ELECTRODE")]
+        Electrode = 101,
+        [pbr::OriginalName("EXEGGCUTE")]
+        Exeggcute = 102,
+        [pbr::OriginalName("EXEGGUTOR")]
+        Exeggutor = 103,
+        [pbr::OriginalName("CUBONE")]
+        Cubone = 104,
+        [pbr::OriginalName("MAROWAK")]
+        Marowak = 105,
+        [pbr::OriginalName("HITMONLEE")]
+        Hitmonlee = 106,
+        [pbr::OriginalName("HITMONCHAN")]
+        Hitmonchan = 107,
+        [pbr::OriginalName("LICKITUNG")]
+        Lickitung = 108,
+        [pbr::OriginalName("KOFFING")]
+        Koffing = 109,
+        [pbr::OriginalName("WEEZING")]
+        Weezing = 110,
+        [pbr::OriginalName("RHYHORN")]
+        Rhyhorn = 111,
+        [pbr::OriginalName("RHYDON")]
+        Rhydon = 112,
+        [pbr::OriginalName("CHANSEY")]
+        Chansey = 113,
+        [pbr::OriginalName("TANGELA")]
+        Tangela = 114,
+        [pbr::OriginalName("KANGASKHAN")]
+        Kangaskhan = 115,
+        [pbr::OriginalName("HORSEA")]
+        Horsea = 116,
+        [pbr::OriginalName("SEADRA")]
+        Seadra = 117,
+        [pbr::OriginalName("GOLDEEN")]
+        Goldeen = 118,
+        [pbr::OriginalName("SEAKING")]
+        Seaking = 119,
+        [pbr::OriginalName("STARYU")]
+        Staryu = 120,
+        [pbr::OriginalName("STARMIE")]
+        Starmie = 121,
+        [pbr::OriginalName("MR_MIME")]
+        MrMime = 122,
+        [pbr::OriginalName("SCYTHER")]
+        Scyther = 123,
+        [pbr::OriginalName("JYNX")]
+        Jynx = 124,
+        [pbr::OriginalName("ELECTABUZZ")]
+        Electabuzz = 125,
+        [pbr::OriginalName("MAGMAR")]
+        Magmar = 126,
+        [pbr::OriginalName("PINSIR")]
+        Pinsir = 127,
+        [pbr::OriginalName("TAUROS")]
+        Tauros = 128,
+        [pbr::OriginalName("MAGIKARP")]
+        Magikarp = 129,
+        [pbr::OriginalName("GYARADOS")]
+        Gyarados = 130,
+        [pbr::OriginalName("LAPRAS")]
+        Lapras = 131,
+        [pbr::OriginalName("DITTO")]
+        Ditto = 132,
+        [pbr::OriginalName("EEVEE")]
+        Eevee = 133,
+        [pbr::OriginalName("VAPOREON")]
+        Vaporeon = 134,
+        [pbr::OriginalName("JOLTEON")]
+        Jolteon = 135,
+        [pbr::OriginalName("FLAREON")]
+        Flareon = 136,
+        [pbr::OriginalName("PORYGON")]
+        Porygon = 137,
+        [pbr::OriginalName("OMANYTE")]
+        Omanyte = 138,
+        [pbr::OriginalName("OMASTAR")]
+        Omastar = 139,
+        [pbr::OriginalName("KABUTO")]
+        Kabuto = 140,
+        [pbr::OriginalName("KABUTOPS")]
+        Kabutops = 141,
+        [pbr::OriginalName("AERODACTYL")]
+        Aerodactyl = 142,
+        [pbr::OriginalName("SNORLAX")]
+        Snorlax = 143,
+        [pbr::OriginalName("ARTICUNO")]
+        Articuno = 144,
+        [pbr::OriginalName("ZAPDOS")]
+        Zapdos = 145,
+        [pbr::OriginalName("MOLTRES")]
+        Moltres = 146,
+        [pbr::OriginalName("DRATINI")]
+        Dratini = 147,
+        [pbr::OriginalName("DRAGONAIR")]
+        Dragonair = 148,
+        [pbr::OriginalName("DRAGONITE")]
+        Dragonite = 149,
+        [pbr::OriginalName("MEWTWO")]
+        Mewtwo = 150,
+        [pbr::OriginalName("MEW")]
+        Mew = 151,
+    }
+
+    public enum PokemonId_german
+    {
+        [pbr::OriginalName("MISSINGNO")]
+        Missingno = 0,
+        [pbr::OriginalName("BISASAM")]
+        Bisasam = 1,
+        [pbr::OriginalName("BISAKNOSP")]
+        Bisaknosp = 2,
+        [pbr::OriginalName("BISAFLOR")]
+        Bisaflor = 3,
+        [pbr::OriginalName("GLUMANDA")]
+        Glumanda = 4,
+        [pbr::OriginalName("GLUTEXO")]
+        Glutexo = 5,
+        [pbr::OriginalName("GLURAK")]
+        Glurak = 6,
+        [pbr::OriginalName("SCHIGGY")]
+        Schiggy = 7,
+        [pbr::OriginalName("SCHILLOK")]
+        Schillok = 8,
+        [pbr::OriginalName("TURTOK")]
+        Turtok = 9,
+        [pbr::OriginalName("RAUPY")]
+        Raupy = 10,
+        [pbr::OriginalName("SAFCON")]
+        Safcon = 11,
+        [pbr::OriginalName("SMETTBO")]
+        Smettbo = 12,
+        [pbr::OriginalName("HORNLIU")]
+        Hornliu = 13,
+        [pbr::OriginalName("KOKUNA")]
+        Kokuna = 14,
+        [pbr::OriginalName("BIBOR")]
+        Bibor = 15,
+        [pbr::OriginalName("TAUBSI")]
+        Taubsi = 16,
+        [pbr::OriginalName("TAUBOGA")]
+        Tauboga = 17,
+        [pbr::OriginalName("TAUBOSS")]
+        Tauboss = 18,
+        [pbr::OriginalName("RATTFRATZ")]
+        Rattfratz = 19,
+        [pbr::OriginalName("RATTIKARL")]
+        Rattikarl = 20,
+        [pbr::OriginalName("HABITAK")]
+        Habitak = 21,
+        [pbr::OriginalName("IBITAK")]
+        Ibitak = 22,
+        [pbr::OriginalName("RETTAN")]
+        Rettan = 23,
+        [pbr::OriginalName("ARBOK")]
+        Arbok = 24,
+        [pbr::OriginalName("PIKACHU")]
+        Pikachu = 25,
+        [pbr::OriginalName("RAICHU")]
+        Raichu = 26,
+        [pbr::OriginalName("SANDAN")]
+        Sandan = 27,
+        [pbr::OriginalName("SANDAMER")]
+        Sandamer = 28,
+        [pbr::OriginalName("MAENNLICHES NIDORAN")]
+        Maennliches_Nidoran = 29,
+        [pbr::OriginalName("NIDORINA")]
+        Nidorina = 30,
+        [pbr::OriginalName("NIDOQUEEN")]
+        Nidoqueen = 31,
+        [pbr::OriginalName("WEIBLICHES NIDORAN")]
+        Weibliches_Nidoran = 32,
+        [pbr::OriginalName("NIDORINO")]
+        Nidorino = 33,
+        [pbr::OriginalName("NIDOKING")]
+        Nidoking = 34,
+        [pbr::OriginalName("PIEPI")]
+        Piepi = 35,
+        [pbr::OriginalName("PIXI")]
+        Pixi = 36,
+        [pbr::OriginalName("VULPIX")]
+        Vulpix = 37,
+        [pbr::OriginalName("VULNONA")]
+        Vulnona = 38,
+        [pbr::OriginalName("PUMMELUFF")]
+        Pummeluff = 39,
+        [pbr::OriginalName("KNUDDELUFF")]
+        Knuddeluff = 40,
+        [pbr::OriginalName("ZUBAT")]
+        Zubat = 41,
+        [pbr::OriginalName("GOLBAT")]
+        Golbat = 42,
+        [pbr::OriginalName("MYRAPLA")]
+        Myrapla = 43,
+        [pbr::OriginalName("DUFLOR")]
+        Duflor = 44,
+        [pbr::OriginalName("GIFLOR")]
+        Giflor = 45,
+        [pbr::OriginalName("PARAS")]
+        Paras = 46,
+        [pbr::OriginalName("PARASEK")]
+        Parasek = 47,
+        [pbr::OriginalName("BLUZUK")]
+        Bluzuk = 48,
+        [pbr::OriginalName("OMOT")]
+        Omot = 49,
+        [pbr::OriginalName("DIGDA")]
+        Digda = 50,
+        [pbr::OriginalName("DIGDRI")]
+        Digdri = 51,
+        [pbr::OriginalName("MAUZI")]
+        Mauzi = 52,
+        [pbr::OriginalName("SNOBILIKAT")]
+        Snobilikat = 53,
+        [pbr::OriginalName("ENTON")]
+        Enton = 54,
+        [pbr::OriginalName("ENTORON")]
+        Entoron = 55,
+        [pbr::OriginalName("MENKI")]
+        Menki = 56,
+        [pbr::OriginalName("RASAFF")]
+        Rasaff = 57,
+        [pbr::OriginalName("FUKANO")]
+        Fukano = 58,
+        [pbr::OriginalName("ARKANI")]
+        Arkani = 59,
+        [pbr::OriginalName("QUAPSEL")]
+        Quapsel = 60,
+        [pbr::OriginalName("QUAPUTZI")]
+        Quaputzi = 61,
+        [pbr::OriginalName("QUAPPO")]
+        Quappo = 62,
+        [pbr::OriginalName("ABRA")]
+        Abra = 63,
+        [pbr::OriginalName("KADABRA")]
+        Kadabra = 64,
+        [pbr::OriginalName("SIMSALA")]
+        Simsala = 65,
+        [pbr::OriginalName("MACHOLLO")]
+        Machollo = 66,
+        [pbr::OriginalName("MASCHOCK")]
+        Maschock = 67,
+        [pbr::OriginalName("MACHOMEI")]
+        Machomei = 68,
+        [pbr::OriginalName("KNOFENSA")]
+        Knofensa = 69,
+        [pbr::OriginalName("ULTRIGARIA")]
+        Ultrigaria = 70,
+        [pbr::OriginalName("SARZENIA")]
+        Sarzenia = 71,
+        [pbr::OriginalName("TENTACHA")]
+        Tentacha = 72,
+        [pbr::OriginalName("TENTOXA")]
+        Tentoxa = 73,
+        [pbr::OriginalName("KLEINSTEIN")]
+        Kleinstein = 74,
+        [pbr::OriginalName("GEOROK")]
+        Georok = 75,
+        [pbr::OriginalName("GEOWAZ")]
+        Geowaz = 76,
+        [pbr::OriginalName("PONITA")]
+        Ponita = 77,
+        [pbr::OriginalName("GALLOPA")]
+        Gallopa = 78,
+        [pbr::OriginalName("FLEGMON")]
+        Flegmon = 79,
+        [pbr::OriginalName("LAHMUS")]
+        Lahmus = 80,
+        [pbr::OriginalName("MAGNETILO")]
+        Magnetilo = 81,
+        [pbr::OriginalName("MAGNETON")]
+        Magneton = 82,
+        [pbr::OriginalName("PORENTA")]
+        Porenta = 83,
+        [pbr::OriginalName("DODU")]
+        Dodu = 84,
+        [pbr::OriginalName("DODRI")]
+        Dodri = 85,
+        [pbr::OriginalName("JUROB")]
+        Jurob = 86,
+        [pbr::OriginalName("JUGONG")]
+        Jugong = 87,
+        [pbr::OriginalName("SLEIMA")]
+        Sleima = 88,
+        [pbr::OriginalName("SLEIMOK")]
+        Sleimok = 89,
+        [pbr::OriginalName("MUSCHAS")]
+        Muschas = 90,
+        [pbr::OriginalName("AUSTOS")]
+        Austos = 91,
+        [pbr::OriginalName("NEBULAK")]
+        Nebulak = 92,
+        [pbr::OriginalName("ALPOLLO")]
+        Alpollo = 93,
+        [pbr::OriginalName("GENGAR")]
+        Gengar = 94,
+        [pbr::OriginalName("ONIX")]
+        Onix = 95,
+        [pbr::OriginalName("TRAUMATO")]
+        Traumato = 96,
+        [pbr::OriginalName("HYPNO")]
+        Hypno = 97,
+        [pbr::OriginalName("KRABBY")]
+        Krabby = 98,
+        [pbr::OriginalName("KINGLER")]
+        Kingler = 99,
+        [pbr::OriginalName("VOLTOBAL")]
+        Voltobal = 100,
+        [pbr::OriginalName("LEKTROBAL")]
+        Lektrobal = 101,
+        [pbr::OriginalName("OWEI")]
+        Owei = 102,
+        [pbr::OriginalName("KOKOWEI")]
+        Kokowei = 103,
+        [pbr::OriginalName("TRAGOSSO")]
+        Tragosso = 104,
+        [pbr::OriginalName("KNOGGA")]
+        Knogga = 105,
+        [pbr::OriginalName("KICKLEE")]
+        Kicklee = 106,
+        [pbr::OriginalName("NOCKCHAN")]
+        Nockchan = 107,
+        [pbr::OriginalName("SCHLURP")]
+        Schlurp = 108,
+        [pbr::OriginalName("SMOGON")]
+        Smogon = 109,
+        [pbr::OriginalName("SMOGMOG")]
+        Smogmog = 110,
+        [pbr::OriginalName("RIHORN")]
+        Rihorn = 111,
+        [pbr::OriginalName("RIZEROS")]
+        Rizeros = 112,
+        [pbr::OriginalName("CHANEIRA")]
+        Chaneira = 113,
+        [pbr::OriginalName("TANGELA")]
+        Tangela = 114,
+        [pbr::OriginalName("KANGAMA")]
+        Kangama = 115,
+        [pbr::OriginalName("SEEPER")]
+        Seeper = 116,
+        [pbr::OriginalName("SEEMON")]
+        Seemon = 117,
+        [pbr::OriginalName("GOLDINI")]
+        Goldini = 118,
+        [pbr::OriginalName("GOLKING")]
+        Golking = 119,
+        [pbr::OriginalName("STERNDU")]
+        Sterndu = 120,
+        [pbr::OriginalName("STARMIE")]
+        Starmie = 121,
+        [pbr::OriginalName("PANTIMOS")]
+        Pantimos = 122,
+        [pbr::OriginalName("SICHLOR")]
+        Sichlor = 123,
+        [pbr::OriginalName("ROSSANA")]
+        Rossana = 124,
+        [pbr::OriginalName("ELEKTEK")]
+        Elektek = 125,
+        [pbr::OriginalName("MAGMAR")]
+        Magmar = 126,
+        [pbr::OriginalName("PINSIR")]
+        Pinsir = 127,
+        [pbr::OriginalName("TAUROS")]
+        Tauros = 128,
+        [pbr::OriginalName("KARPADOR")]
+        Karpador = 129,
+        [pbr::OriginalName("GARADOS")]
+        Garados = 130,
+        [pbr::OriginalName("LAPRAS")]
+        Lapras = 131,
+        [pbr::OriginalName("DITTO")]
+        Ditto = 132,
+        [pbr::OriginalName("EVOLI")]
+        Evoli = 133,
+        [pbr::OriginalName("AQUANA")]
+        Aquana = 134,
+        [pbr::OriginalName("BLITZA")]
+        Blitza = 135,
+        [pbr::OriginalName("FLAMARA")]
+        Flamara = 136,
+        [pbr::OriginalName("PORYGON")]
+        Porygon = 137,
+        [pbr::OriginalName("AMONITAS")]
+        Amonitas = 138,
+        [pbr::OriginalName("AMOROSO")]
+        Amoroso = 139,
+        [pbr::OriginalName("KABUTO")]
+        Kabuto = 140,
+        [pbr::OriginalName("KABUTOPS")]
+        Kabutops = 141,
+        [pbr::OriginalName("AERODACTYL")]
+        Aerodactyl = 142,
+        [pbr::OriginalName("RELAXO")]
+        Relaxo = 143,
+        [pbr::OriginalName("ARKTOS")]
+        Arktos = 144,
+        [pbr::OriginalName("ZAPDOS")]
+        Zapdos = 145,
+        [pbr::OriginalName("LAVADOS")]
+        Lavados = 146,
+        [pbr::OriginalName("DRATINI")]
+        Dratini = 147,
+        [pbr::OriginalName("DRAGONIR")]
+        Dragonir = 148,
+        [pbr::OriginalName("DRAGORAN")]
+        Dragoran = 149,
+        [pbr::OriginalName("MEWTU")]
+        Mewtu = 150,
+        [pbr::OriginalName("MEW")]
+        Mew = 151,
     }
 
     public enum FortSponsor
     {
-        [pbr::OriginalName("UNSET_SPONSOR")] UnsetSponsor = 0,
-        [pbr::OriginalName("MCDONALDS")] Mcdonalds = 1,
-        [pbr::OriginalName("POKEMON_STORE")] PokemonStore = 2,
+        [pbr::OriginalName("UNSET_SPONSOR")]
+        UnsetSponsor = 0,
+        [pbr::OriginalName("MCDONALDS")]
+        Mcdonalds = 1,
+        [pbr::OriginalName("POKEMON_STORE")]
+        PokemonStore = 2,
     }
 
     public enum FortRenderingType
     {
-        [pbr::OriginalName("DEFAULT")] Default = 0,
-        [pbr::OriginalName("INTERNAL_TEST")] InternalTest = 1,
+        [pbr::OriginalName("DEFAULT")]
+        Default = 0,
+        [pbr::OriginalName("INTERNAL_TEST")]
+        InternalTest = 1,
     }
 
     public enum ItemType
     {
-        [pbr::OriginalName("ITEM_TYPE_NONE")] None = 0,
-        [pbr::OriginalName("ITEM_TYPE_POKEBALL")] Pokeball = 1,
-        [pbr::OriginalName("ITEM_TYPE_POTION")] Potion = 2,
-        [pbr::OriginalName("ITEM_TYPE_REVIVE")] Revive = 3,
-        [pbr::OriginalName("ITEM_TYPE_MAP")] Map = 4,
-        [pbr::OriginalName("ITEM_TYPE_BATTLE")] Battle = 5,
-        [pbr::OriginalName("ITEM_TYPE_FOOD")] Food = 6,
-        [pbr::OriginalName("ITEM_TYPE_CAMERA")] Camera = 7,
-        [pbr::OriginalName("ITEM_TYPE_DISK")] Disk = 8,
-        [pbr::OriginalName("ITEM_TYPE_INCUBATOR")] Incubator = 9,
-        [pbr::OriginalName("ITEM_TYPE_INCENSE")] Incense = 10,
-        [pbr::OriginalName("ITEM_TYPE_XP_BOOST")] XpBoost = 11,
-        [pbr::OriginalName("ITEM_TYPE_INVENTORY_UPGRADE")] InventoryUpgrade = 12,
+        [pbr::OriginalName("ITEM_TYPE_NONE")]
+        None = 0,
+        [pbr::OriginalName("ITEM_TYPE_POKEBALL")]
+        Pokeball = 1,
+        [pbr::OriginalName("ITEM_TYPE_POTION")]
+        Potion = 2,
+        [pbr::OriginalName("ITEM_TYPE_REVIVE")]
+        Revive = 3,
+        [pbr::OriginalName("ITEM_TYPE_MAP")]
+        Map = 4,
+        [pbr::OriginalName("ITEM_TYPE_BATTLE")]
+        Battle = 5,
+        [pbr::OriginalName("ITEM_TYPE_FOOD")]
+        Food = 6,
+        [pbr::OriginalName("ITEM_TYPE_CAMERA")]
+        Camera = 7,
+        [pbr::OriginalName("ITEM_TYPE_DISK")]
+        Disk = 8,
+        [pbr::OriginalName("ITEM_TYPE_INCUBATOR")]
+        Incubator = 9,
+        [pbr::OriginalName("ITEM_TYPE_INCENSE")]
+        Incense = 10,
+        [pbr::OriginalName("ITEM_TYPE_XP_BOOST")]
+        XpBoost = 11,
+        [pbr::OriginalName("ITEM_TYPE_INVENTORY_UPGRADE")]
+        InventoryUpgrade = 12,
     }
 
     public enum ItemCategory
     {
-        [pbr::OriginalName("ITEM_CATEGORY_NONE")] None = 0,
-        [pbr::OriginalName("ITEM_CATEGORY_POKEBALL")] Pokeball = 1,
-        [pbr::OriginalName("ITEM_CATEGORY_FOOD")] Food = 2,
-        [pbr::OriginalName("ITEM_CATEGORY_MEDICINE")] Medicine = 3,
-        [pbr::OriginalName("ITEM_CATEGORY_BOOST")] Boost = 4,
-        [pbr::OriginalName("ITEM_CATEGORY_UTILITES")] Utilites = 5,
-        [pbr::OriginalName("ITEM_CATEGORY_CAMERA")] Camera = 6,
-        [pbr::OriginalName("ITEM_CATEGORY_DISK")] Disk = 7,
-        [pbr::OriginalName("ITEM_CATEGORY_INCUBATOR")] Incubator = 8,
-        [pbr::OriginalName("ITEM_CATEGORY_INCENSE")] Incense = 9,
-        [pbr::OriginalName("ITEM_CATEGORY_XP_BOOST")] XpBoost = 10,
-        [pbr::OriginalName("ITEM_CATEGORY_INVENTORY_UPGRADE")] InventoryUpgrade = 11,
+        [pbr::OriginalName("ITEM_CATEGORY_NONE")]
+        None = 0,
+        [pbr::OriginalName("ITEM_CATEGORY_POKEBALL")]
+        Pokeball = 1,
+        [pbr::OriginalName("ITEM_CATEGORY_FOOD")]
+        Food = 2,
+        [pbr::OriginalName("ITEM_CATEGORY_MEDICINE")]
+        Medicine = 3,
+        [pbr::OriginalName("ITEM_CATEGORY_BOOST")]
+        Boost = 4,
+        [pbr::OriginalName("ITEM_CATEGORY_UTILITES")]
+        Utilites = 5,
+        [pbr::OriginalName("ITEM_CATEGORY_CAMERA")]
+        Camera = 6,
+        [pbr::OriginalName("ITEM_CATEGORY_DISK")]
+        Disk = 7,
+        [pbr::OriginalName("ITEM_CATEGORY_INCUBATOR")]
+        Incubator = 8,
+        [pbr::OriginalName("ITEM_CATEGORY_INCENSE")]
+        Incense = 9,
+        [pbr::OriginalName("ITEM_CATEGORY_XP_BOOST")]
+        XpBoost = 10,
+        [pbr::OriginalName("ITEM_CATEGORY_INVENTORY_UPGRADE")]
+        InventoryUpgrade = 11,
     }
 
     public enum ItemEffect
     {
-        [pbr::OriginalName("ITEM_EFFECT_NONE")] None = 0,
-        [pbr::OriginalName("ITEM_EFFECT_CAP_NO_FLEE")] CapNoFlee = 1000,
-        [pbr::OriginalName("ITEM_EFFECT_CAP_NO_MOVEMENT")] CapNoMovement = 1002,
-        [pbr::OriginalName("ITEM_EFFECT_CAP_NO_THREAT")] CapNoThreat = 1003,
-        [pbr::OriginalName("ITEM_EFFECT_CAP_TARGET_MAX")] CapTargetMax = 1004,
-        [pbr::OriginalName("ITEM_EFFECT_CAP_TARGET_SLOW")] CapTargetSlow = 1005,
-        [pbr::OriginalName("ITEM_EFFECT_CAP_CHANCE_NIGHT")] CapChanceNight = 1006,
-        [pbr::OriginalName("ITEM_EFFECT_CAP_CHANCE_TRAINER")] CapChanceTrainer = 1007,
-        [pbr::OriginalName("ITEM_EFFECT_CAP_CHANCE_FIRST_THROW")] CapChanceFirstThrow = 1008,
-        [pbr::OriginalName("ITEM_EFFECT_CAP_CHANCE_LEGEND")] CapChanceLegend = 1009,
-        [pbr::OriginalName("ITEM_EFFECT_CAP_CHANCE_HEAVY")] CapChanceHeavy = 1010,
-        [pbr::OriginalName("ITEM_EFFECT_CAP_CHANCE_REPEAT")] CapChanceRepeat = 1011,
-        [pbr::OriginalName("ITEM_EFFECT_CAP_CHANCE_MULTI_THROW")] CapChanceMultiThrow = 1012,
-        [pbr::OriginalName("ITEM_EFFECT_CAP_CHANCE_ALWAYS")] CapChanceAlways = 1013,
-        [pbr::OriginalName("ITEM_EFFECT_CAP_CHANCE_SINGLE_THROW")] CapChanceSingleThrow = 1014,
+        [pbr::OriginalName("ITEM_EFFECT_NONE")]
+        None = 0,
+        [pbr::OriginalName("ITEM_EFFECT_CAP_NO_FLEE")]
+        CapNoFlee = 1000,
+        [pbr::OriginalName("ITEM_EFFECT_CAP_NO_MOVEMENT")]
+        CapNoMovement = 1002,
+        [pbr::OriginalName("ITEM_EFFECT_CAP_NO_THREAT")]
+        CapNoThreat = 1003,
+        [pbr::OriginalName("ITEM_EFFECT_CAP_TARGET_MAX")]
+        CapTargetMax = 1004,
+        [pbr::OriginalName("ITEM_EFFECT_CAP_TARGET_SLOW")]
+        CapTargetSlow = 1005,
+        [pbr::OriginalName("ITEM_EFFECT_CAP_CHANCE_NIGHT")]
+        CapChanceNight = 1006,
+        [pbr::OriginalName("ITEM_EFFECT_CAP_CHANCE_TRAINER")]
+        CapChanceTrainer = 1007,
+        [pbr::OriginalName("ITEM_EFFECT_CAP_CHANCE_FIRST_THROW")]
+        CapChanceFirstThrow = 1008,
+        [pbr::OriginalName("ITEM_EFFECT_CAP_CHANCE_LEGEND")]
+        CapChanceLegend = 1009,
+        [pbr::OriginalName("ITEM_EFFECT_CAP_CHANCE_HEAVY")]
+        CapChanceHeavy = 1010,
+        [pbr::OriginalName("ITEM_EFFECT_CAP_CHANCE_REPEAT")]
+        CapChanceRepeat = 1011,
+        [pbr::OriginalName("ITEM_EFFECT_CAP_CHANCE_MULTI_THROW")]
+        CapChanceMultiThrow = 1012,
+        [pbr::OriginalName("ITEM_EFFECT_CAP_CHANCE_ALWAYS")]
+        CapChanceAlways = 1013,
+        [pbr::OriginalName("ITEM_EFFECT_CAP_CHANCE_SINGLE_THROW")]
+        CapChanceSingleThrow = 1014,
     }
 
     public enum ActivityType
     {
-        [pbr::OriginalName("ACTIVITY_UNKNOWN")] ActivityUnknown = 0,
-        [pbr::OriginalName("ACTIVITY_CATCH_POKEMON")] ActivityCatchPokemon = 1,
-        [pbr::OriginalName("ACTIVITY_CATCH_LEGEND_POKEMON")] ActivityCatchLegendPokemon = 2,
-        [pbr::OriginalName("ACTIVITY_FLEE_POKEMON")] ActivityFleePokemon = 3,
-        [pbr::OriginalName("ACTIVITY_DEFEAT_FORT")] ActivityDefeatFort = 4,
-        [pbr::OriginalName("ACTIVITY_EVOLVE_POKEMON")] ActivityEvolvePokemon = 5,
-        [pbr::OriginalName("ACTIVITY_HATCH_EGG")] ActivityHatchEgg = 6,
-        [pbr::OriginalName("ACTIVITY_WALK_KM")] ActivityWalkKm = 7,
-        [pbr::OriginalName("ACTIVITY_POKEDEX_ENTRY_NEW")] ActivityPokedexEntryNew = 8,
-        [pbr::OriginalName("ACTIVITY_CATCH_FIRST_THROW")] ActivityCatchFirstThrow = 9,
-        [pbr::OriginalName("ACTIVITY_CATCH_NICE_THROW")] ActivityCatchNiceThrow = 10,
-        [pbr::OriginalName("ACTIVITY_CATCH_GREAT_THROW")] ActivityCatchGreatThrow = 11,
-        [pbr::OriginalName("ACTIVITY_CATCH_EXCELLENT_THROW")] ActivityCatchExcellentThrow = 12,
-        [pbr::OriginalName("ACTIVITY_CATCH_CURVEBALL")] ActivityCatchCurveball = 13,
-        [pbr::OriginalName("ACTIVITY_CATCH_FIRST_CATCH_OF_DAY")] ActivityCatchFirstCatchOfDay = 14,
-        [pbr::OriginalName("ACTIVITY_CATCH_MILESTONE")] ActivityCatchMilestone = 15,
-        [pbr::OriginalName("ACTIVITY_TRAIN_POKEMON")] ActivityTrainPokemon = 16,
-        [pbr::OriginalName("ACTIVITY_SEARCH_FORT")] ActivitySearchFort = 17,
-        [pbr::OriginalName("ACTIVITY_RELEASE_POKEMON")] ActivityReleasePokemon = 18,
-        [pbr::OriginalName("ACTIVITY_HATCH_EGG_SMALL_BONUS")] ActivityHatchEggSmallBonus = 19,
-        [pbr::OriginalName("ACTIVITY_HATCH_EGG_MEDIUM_BONUS")] ActivityHatchEggMediumBonus = 20,
-        [pbr::OriginalName("ACTIVITY_HATCH_EGG_LARGE_BONUS")] ActivityHatchEggLargeBonus = 21,
-        [pbr::OriginalName("ACTIVITY_DEFEAT_GYM_DEFENDER")] ActivityDefeatGymDefender = 22,
-        [pbr::OriginalName("ACTIVITY_DEFEAT_GYM_LEADER")] ActivityDefeatGymLeader = 23,
+        [pbr::OriginalName("ACTIVITY_UNKNOWN")]
+        ActivityUnknown = 0,
+        [pbr::OriginalName("ACTIVITY_CATCH_POKEMON")]
+        ActivityCatchPokemon = 1,
+        [pbr::OriginalName("ACTIVITY_CATCH_LEGEND_POKEMON")]
+        ActivityCatchLegendPokemon = 2,
+        [pbr::OriginalName("ACTIVITY_FLEE_POKEMON")]
+        ActivityFleePokemon = 3,
+        [pbr::OriginalName("ACTIVITY_DEFEAT_FORT")]
+        ActivityDefeatFort = 4,
+        [pbr::OriginalName("ACTIVITY_EVOLVE_POKEMON")]
+        ActivityEvolvePokemon = 5,
+        [pbr::OriginalName("ACTIVITY_HATCH_EGG")]
+        ActivityHatchEgg = 6,
+        [pbr::OriginalName("ACTIVITY_WALK_KM")]
+        ActivityWalkKm = 7,
+        [pbr::OriginalName("ACTIVITY_POKEDEX_ENTRY_NEW")]
+        ActivityPokedexEntryNew = 8,
+        [pbr::OriginalName("ACTIVITY_CATCH_FIRST_THROW")]
+        ActivityCatchFirstThrow = 9,
+        [pbr::OriginalName("ACTIVITY_CATCH_NICE_THROW")]
+        ActivityCatchNiceThrow = 10,
+        [pbr::OriginalName("ACTIVITY_CATCH_GREAT_THROW")]
+        ActivityCatchGreatThrow = 11,
+        [pbr::OriginalName("ACTIVITY_CATCH_EXCELLENT_THROW")]
+        ActivityCatchExcellentThrow = 12,
+        [pbr::OriginalName("ACTIVITY_CATCH_CURVEBALL")]
+        ActivityCatchCurveball = 13,
+        [pbr::OriginalName("ACTIVITY_CATCH_FIRST_CATCH_OF_DAY")]
+        ActivityCatchFirstCatchOfDay = 14,
+        [pbr::OriginalName("ACTIVITY_CATCH_MILESTONE")]
+        ActivityCatchMilestone = 15,
+        [pbr::OriginalName("ACTIVITY_TRAIN_POKEMON")]
+        ActivityTrainPokemon = 16,
+        [pbr::OriginalName("ACTIVITY_SEARCH_FORT")]
+        ActivitySearchFort = 17,
+        [pbr::OriginalName("ACTIVITY_RELEASE_POKEMON")]
+        ActivityReleasePokemon = 18,
+        [pbr::OriginalName("ACTIVITY_HATCH_EGG_SMALL_BONUS")]
+        ActivityHatchEggSmallBonus = 19,
+        [pbr::OriginalName("ACTIVITY_HATCH_EGG_MEDIUM_BONUS")]
+        ActivityHatchEggMediumBonus = 20,
+        [pbr::OriginalName("ACTIVITY_HATCH_EGG_LARGE_BONUS")]
+        ActivityHatchEggLargeBonus = 21,
+        [pbr::OriginalName("ACTIVITY_DEFEAT_GYM_DEFENDER")]
+        ActivityDefeatGymDefender = 22,
+        [pbr::OriginalName("ACTIVITY_DEFEAT_GYM_LEADER")]
+        ActivityDefeatGymLeader = 23,
     }
 
     public enum BadgeType
     {
-        [pbr::OriginalName("BADGE_UNSET")] BadgeUnset = 0,
-        [pbr::OriginalName("BADGE_TRAVEL_KM")] BadgeTravelKm = 1,
-        [pbr::OriginalName("BADGE_POKEDEX_ENTRIES")] BadgePokedexEntries = 2,
-        [pbr::OriginalName("BADGE_CAPTURE_TOTAL")] BadgeCaptureTotal = 3,
-        [pbr::OriginalName("BADGE_DEFEATED_FORT")] BadgeDefeatedFort = 4,
-        [pbr::OriginalName("BADGE_EVOLVED_TOTAL")] BadgeEvolvedTotal = 5,
-        [pbr::OriginalName("BADGE_HATCHED_TOTAL")] BadgeHatchedTotal = 6,
-        [pbr::OriginalName("BADGE_ENCOUNTERED_TOTAL")] BadgeEncounteredTotal = 7,
-        [pbr::OriginalName("BADGE_POKESTOPS_VISITED")] BadgePokestopsVisited = 8,
-        [pbr::OriginalName("BADGE_UNIQUE_POKESTOPS")] BadgeUniquePokestops = 9,
-        [pbr::OriginalName("BADGE_POKEBALL_THROWN")] BadgePokeballThrown = 10,
-        [pbr::OriginalName("BADGE_BIG_MAGIKARP")] BadgeBigMagikarp = 11,
-        [pbr::OriginalName("BADGE_DEPLOYED_TOTAL")] BadgeDeployedTotal = 12,
-        [pbr::OriginalName("BADGE_BATTLE_ATTACK_WON")] BadgeBattleAttackWon = 13,
-        [pbr::OriginalName("BADGE_BATTLE_TRAINING_WON")] BadgeBattleTrainingWon = 14,
-        [pbr::OriginalName("BADGE_BATTLE_DEFEND_WON")] BadgeBattleDefendWon = 15,
-        [pbr::OriginalName("BADGE_PRESTIGE_RAISED")] BadgePrestigeRaised = 16,
-        [pbr::OriginalName("BADGE_PRESTIGE_DROPPED")] BadgePrestigeDropped = 17,
-        [pbr::OriginalName("BADGE_TYPE_NORMAL")] Normal = 18,
-        [pbr::OriginalName("BADGE_TYPE_FIGHTING")] Fighting = 19,
-        [pbr::OriginalName("BADGE_TYPE_FLYING")] Flying = 20,
-        [pbr::OriginalName("BADGE_TYPE_POISON")] Poison = 21,
-        [pbr::OriginalName("BADGE_TYPE_GROUND")] Ground = 22,
-        [pbr::OriginalName("BADGE_TYPE_ROCK")] Rock = 23,
-        [pbr::OriginalName("BADGE_TYPE_BUG")] Bug = 24,
-        [pbr::OriginalName("BADGE_TYPE_GHOST")] Ghost = 25,
-        [pbr::OriginalName("BADGE_TYPE_STEEL")] Steel = 26,
-        [pbr::OriginalName("BADGE_TYPE_FIRE")] Fire = 27,
-        [pbr::OriginalName("BADGE_TYPE_WATER")] Water = 28,
-        [pbr::OriginalName("BADGE_TYPE_GRASS")] Grass = 29,
-        [pbr::OriginalName("BADGE_TYPE_ELECTRIC")] Electric = 30,
-        [pbr::OriginalName("BADGE_TYPE_PSYCHIC")] Psychic = 31,
-        [pbr::OriginalName("BADGE_TYPE_ICE")] Ice = 32,
-        [pbr::OriginalName("BADGE_TYPE_DRAGON")] Dragon = 33,
-        [pbr::OriginalName("BADGE_TYPE_DARK")] Dark = 34,
-        [pbr::OriginalName("BADGE_TYPE_FAIRY")] Fairy = 35,
-        [pbr::OriginalName("BADGE_SMALL_RATTATA")] BadgeSmallRattata = 36,
-        [pbr::OriginalName("BADGE_PIKACHU")] BadgePikachu = 37,
+        [pbr::OriginalName("BADGE_UNSET")]
+        BadgeUnset = 0,
+        [pbr::OriginalName("BADGE_TRAVEL_KM")]
+        BadgeTravelKm = 1,
+        [pbr::OriginalName("BADGE_POKEDEX_ENTRIES")]
+        BadgePokedexEntries = 2,
+        [pbr::OriginalName("BADGE_CAPTURE_TOTAL")]
+        BadgeCaptureTotal = 3,
+        [pbr::OriginalName("BADGE_DEFEATED_FORT")]
+        BadgeDefeatedFort = 4,
+        [pbr::OriginalName("BADGE_EVOLVED_TOTAL")]
+        BadgeEvolvedTotal = 5,
+        [pbr::OriginalName("BADGE_HATCHED_TOTAL")]
+        BadgeHatchedTotal = 6,
+        [pbr::OriginalName("BADGE_ENCOUNTERED_TOTAL")]
+        BadgeEncounteredTotal = 7,
+        [pbr::OriginalName("BADGE_POKESTOPS_VISITED")]
+        BadgePokestopsVisited = 8,
+        [pbr::OriginalName("BADGE_UNIQUE_POKESTOPS")]
+        BadgeUniquePokestops = 9,
+        [pbr::OriginalName("BADGE_POKEBALL_THROWN")]
+        BadgePokeballThrown = 10,
+        [pbr::OriginalName("BADGE_BIG_MAGIKARP")]
+        BadgeBigMagikarp = 11,
+        [pbr::OriginalName("BADGE_DEPLOYED_TOTAL")]
+        BadgeDeployedTotal = 12,
+        [pbr::OriginalName("BADGE_BATTLE_ATTACK_WON")]
+        BadgeBattleAttackWon = 13,
+        [pbr::OriginalName("BADGE_BATTLE_TRAINING_WON")]
+        BadgeBattleTrainingWon = 14,
+        [pbr::OriginalName("BADGE_BATTLE_DEFEND_WON")]
+        BadgeBattleDefendWon = 15,
+        [pbr::OriginalName("BADGE_PRESTIGE_RAISED")]
+        BadgePrestigeRaised = 16,
+        [pbr::OriginalName("BADGE_PRESTIGE_DROPPED")]
+        BadgePrestigeDropped = 17,
+        [pbr::OriginalName("BADGE_TYPE_NORMAL")]
+        Normal = 18,
+        [pbr::OriginalName("BADGE_TYPE_FIGHTING")]
+        Fighting = 19,
+        [pbr::OriginalName("BADGE_TYPE_FLYING")]
+        Flying = 20,
+        [pbr::OriginalName("BADGE_TYPE_POISON")]
+        Poison = 21,
+        [pbr::OriginalName("BADGE_TYPE_GROUND")]
+        Ground = 22,
+        [pbr::OriginalName("BADGE_TYPE_ROCK")]
+        Rock = 23,
+        [pbr::OriginalName("BADGE_TYPE_BUG")]
+        Bug = 24,
+        [pbr::OriginalName("BADGE_TYPE_GHOST")]
+        Ghost = 25,
+        [pbr::OriginalName("BADGE_TYPE_STEEL")]
+        Steel = 26,
+        [pbr::OriginalName("BADGE_TYPE_FIRE")]
+        Fire = 27,
+        [pbr::OriginalName("BADGE_TYPE_WATER")]
+        Water = 28,
+        [pbr::OriginalName("BADGE_TYPE_GRASS")]
+        Grass = 29,
+        [pbr::OriginalName("BADGE_TYPE_ELECTRIC")]
+        Electric = 30,
+        [pbr::OriginalName("BADGE_TYPE_PSYCHIC")]
+        Psychic = 31,
+        [pbr::OriginalName("BADGE_TYPE_ICE")]
+        Ice = 32,
+        [pbr::OriginalName("BADGE_TYPE_DRAGON")]
+        Dragon = 33,
+        [pbr::OriginalName("BADGE_TYPE_DARK")]
+        Dark = 34,
+        [pbr::OriginalName("BADGE_TYPE_FAIRY")]
+        Fairy = 35,
+        [pbr::OriginalName("BADGE_SMALL_RATTATA")]
+        BadgeSmallRattata = 36,
+        [pbr::OriginalName("BADGE_PIKACHU")]
+        BadgePikachu = 37,
     }
 
     public enum HoloIapItemCategory
     {
-        [pbr::OriginalName("IAP_CATEGORY_NONE")] IapCategoryNone = 0,
-        [pbr::OriginalName("IAP_CATEGORY_BUNDLE")] IapCategoryBundle = 1,
-        [pbr::OriginalName("IAP_CATEGORY_ITEMS")] IapCategoryItems = 2,
-        [pbr::OriginalName("IAP_CATEGORY_UPGRADES")] IapCategoryUpgrades = 3,
-        [pbr::OriginalName("IAP_CATEGORY_POKECOINS")] IapCategoryPokecoins = 4,
+        [pbr::OriginalName("IAP_CATEGORY_NONE")]
+        IapCategoryNone = 0,
+        [pbr::OriginalName("IAP_CATEGORY_BUNDLE")]
+        IapCategoryBundle = 1,
+        [pbr::OriginalName("IAP_CATEGORY_ITEMS")]
+        IapCategoryItems = 2,
+        [pbr::OriginalName("IAP_CATEGORY_UPGRADES")]
+        IapCategoryUpgrades = 3,
+        [pbr::OriginalName("IAP_CATEGORY_POKECOINS")]
+        IapCategoryPokecoins = 4,
     }
 
     public enum CameraInterpolation
     {
-        [pbr::OriginalName("CAM_INTERP_CUT")] CamInterpCut = 0,
-        [pbr::OriginalName("CAM_INTERP_LINEAR")] CamInterpLinear = 1,
-        [pbr::OriginalName("CAM_INTERP_SMOOTH")] CamInterpSmooth = 2,
-        [pbr::OriginalName("CAM_INTERP_SMOOTH_ROT_LINEAR_MOVE")] CamInterpSmoothRotLinearMove = 3,
-        [pbr::OriginalName("CAM_INTERP_DEPENDS")] CamInterpDepends = 4,
+        [pbr::OriginalName("CAM_INTERP_CUT")]
+        CamInterpCut = 0,
+        [pbr::OriginalName("CAM_INTERP_LINEAR")]
+        CamInterpLinear = 1,
+        [pbr::OriginalName("CAM_INTERP_SMOOTH")]
+        CamInterpSmooth = 2,
+        [pbr::OriginalName("CAM_INTERP_SMOOTH_ROT_LINEAR_MOVE")]
+        CamInterpSmoothRotLinearMove = 3,
+        [pbr::OriginalName("CAM_INTERP_DEPENDS")]
+        CamInterpDepends = 4,
     }
 
     public enum CameraTarget
     {
-        [pbr::OriginalName("CAM_TARGET_ATTACKER")] CamTargetAttacker = 0,
-        [pbr::OriginalName("CAM_TARGET_ATTACKER_EDGE")] CamTargetAttackerEdge = 1,
-        [pbr::OriginalName("CAM_TARGET_ATTACKER_GROUND")] CamTargetAttackerGround = 2,
-        [pbr::OriginalName("CAM_TARGET_DEFENDER")] CamTargetDefender = 3,
-        [pbr::OriginalName("CAM_TARGET_DEFENDER_EDGE")] CamTargetDefenderEdge = 4,
-        [pbr::OriginalName("CAM_TARGET_DEFENDER_GROUND")] CamTargetDefenderGround = 5,
-        [pbr::OriginalName("CAM_TARGET_ATTACKER_DEFENDER")] CamTargetAttackerDefender = 6,
-        [pbr::OriginalName("CAM_TARGET_ATTACKER_DEFENDER_EDGE")] CamTargetAttackerDefenderEdge = 7,
-        [pbr::OriginalName("CAM_TARGET_DEFENDER_ATTACKER")] CamTargetDefenderAttacker = 8,
-        [pbr::OriginalName("CAM_TARGET_DEFENDER_ATTACKER_EDGE")] CamTargetDefenderAttackerEdge = 9,
-        [pbr::OriginalName("CAM_TARGET_ATTACKER_DEFENDER_MIRROR")] CamTargetAttackerDefenderMirror = 11,
-        [pbr::OriginalName("CAM_TARGET_SHOULDER_ATTACKER_DEFENDER")] CamTargetShoulderAttackerDefender = 12,
-        [pbr::OriginalName("CAM_TARGET_SHOULDER_ATTACKER_DEFENDER_MIRROR")] CamTargetShoulderAttackerDefenderMirror = 13,
-        [pbr::OriginalName("CAM_TARGET_ATTACKER_DEFENDER_WORLD")] CamTargetAttackerDefenderWorld = 14,
+        [pbr::OriginalName("CAM_TARGET_ATTACKER")]
+        CamTargetAttacker = 0,
+        [pbr::OriginalName("CAM_TARGET_ATTACKER_EDGE")]
+        CamTargetAttackerEdge = 1,
+        [pbr::OriginalName("CAM_TARGET_ATTACKER_GROUND")]
+        CamTargetAttackerGround = 2,
+        [pbr::OriginalName("CAM_TARGET_DEFENDER")]
+        CamTargetDefender = 3,
+        [pbr::OriginalName("CAM_TARGET_DEFENDER_EDGE")]
+        CamTargetDefenderEdge = 4,
+        [pbr::OriginalName("CAM_TARGET_DEFENDER_GROUND")]
+        CamTargetDefenderGround = 5,
+        [pbr::OriginalName("CAM_TARGET_ATTACKER_DEFENDER")]
+        CamTargetAttackerDefender = 6,
+        [pbr::OriginalName("CAM_TARGET_ATTACKER_DEFENDER_EDGE")]
+        CamTargetAttackerDefenderEdge = 7,
+        [pbr::OriginalName("CAM_TARGET_DEFENDER_ATTACKER")]
+        CamTargetDefenderAttacker = 8,
+        [pbr::OriginalName("CAM_TARGET_DEFENDER_ATTACKER_EDGE")]
+        CamTargetDefenderAttackerEdge = 9,
+        [pbr::OriginalName("CAM_TARGET_ATTACKER_DEFENDER_MIRROR")]
+        CamTargetAttackerDefenderMirror = 11,
+        [pbr::OriginalName("CAM_TARGET_SHOULDER_ATTACKER_DEFENDER")]
+        CamTargetShoulderAttackerDefender = 12,
+        [pbr::OriginalName("CAM_TARGET_SHOULDER_ATTACKER_DEFENDER_MIRROR")]
+        CamTargetShoulderAttackerDefenderMirror = 13,
+        [pbr::OriginalName("CAM_TARGET_ATTACKER_DEFENDER_WORLD")]
+        CamTargetAttackerDefenderWorld = 14,
     }
 
     public enum PokemonType
     {
-        [pbr::OriginalName("POKEMON_TYPE_NONE")] None = 0,
-        [pbr::OriginalName("POKEMON_TYPE_NORMAL")] Normal = 1,
-        [pbr::OriginalName("POKEMON_TYPE_FIGHTING")] Fighting = 2,
-        [pbr::OriginalName("POKEMON_TYPE_FLYING")] Flying = 3,
-        [pbr::OriginalName("POKEMON_TYPE_POISON")] Poison = 4,
-        [pbr::OriginalName("POKEMON_TYPE_GROUND")] Ground = 5,
-        [pbr::OriginalName("POKEMON_TYPE_ROCK")] Rock = 6,
-        [pbr::OriginalName("POKEMON_TYPE_BUG")] Bug = 7,
-        [pbr::OriginalName("POKEMON_TYPE_GHOST")] Ghost = 8,
-        [pbr::OriginalName("POKEMON_TYPE_STEEL")] Steel = 9,
-        [pbr::OriginalName("POKEMON_TYPE_FIRE")] Fire = 10,
-        [pbr::OriginalName("POKEMON_TYPE_WATER")] Water = 11,
-        [pbr::OriginalName("POKEMON_TYPE_GRASS")] Grass = 12,
-        [pbr::OriginalName("POKEMON_TYPE_ELECTRIC")] Electric = 13,
-        [pbr::OriginalName("POKEMON_TYPE_PSYCHIC")] Psychic = 14,
-        [pbr::OriginalName("POKEMON_TYPE_ICE")] Ice = 15,
-        [pbr::OriginalName("POKEMON_TYPE_DRAGON")] Dragon = 16,
-        [pbr::OriginalName("POKEMON_TYPE_DARK")] Dark = 17,
-        [pbr::OriginalName("POKEMON_TYPE_FAIRY")] Fairy = 18,
+        [pbr::OriginalName("POKEMON_TYPE_NONE")]
+        None = 0,
+        [pbr::OriginalName("POKEMON_TYPE_NORMAL")]
+        Normal = 1,
+        [pbr::OriginalName("POKEMON_TYPE_FIGHTING")]
+        Fighting = 2,
+        [pbr::OriginalName("POKEMON_TYPE_FLYING")]
+        Flying = 3,
+        [pbr::OriginalName("POKEMON_TYPE_POISON")]
+        Poison = 4,
+        [pbr::OriginalName("POKEMON_TYPE_GROUND")]
+        Ground = 5,
+        [pbr::OriginalName("POKEMON_TYPE_ROCK")]
+        Rock = 6,
+        [pbr::OriginalName("POKEMON_TYPE_BUG")]
+        Bug = 7,
+        [pbr::OriginalName("POKEMON_TYPE_GHOST")]
+        Ghost = 8,
+        [pbr::OriginalName("POKEMON_TYPE_STEEL")]
+        Steel = 9,
+        [pbr::OriginalName("POKEMON_TYPE_FIRE")]
+        Fire = 10,
+        [pbr::OriginalName("POKEMON_TYPE_WATER")]
+        Water = 11,
+        [pbr::OriginalName("POKEMON_TYPE_GRASS")]
+        Grass = 12,
+        [pbr::OriginalName("POKEMON_TYPE_ELECTRIC")]
+        Electric = 13,
+        [pbr::OriginalName("POKEMON_TYPE_PSYCHIC")]
+        Psychic = 14,
+        [pbr::OriginalName("POKEMON_TYPE_ICE")]
+        Ice = 15,
+        [pbr::OriginalName("POKEMON_TYPE_DRAGON")]
+        Dragon = 16,
+        [pbr::OriginalName("POKEMON_TYPE_DARK")]
+        Dark = 17,
+        [pbr::OriginalName("POKEMON_TYPE_FAIRY")]
+        Fairy = 18,
     }
 
     public enum PokemonMovementType
     {
-        [pbr::OriginalName("MOVEMENT_STATIC")] MovementStatic = 0,
-        [pbr::OriginalName("MOVEMENT_JUMP")] MovementJump = 1,
-        [pbr::OriginalName("MOVEMENT_VERTICAL")] MovementVertical = 2,
-        [pbr::OriginalName("MOVEMENT_PSYCHIC")] MovementPsychic = 3,
-        [pbr::OriginalName("MOVEMENT_ELECTRIC")] MovementElectric = 4,
-        [pbr::OriginalName("MOVEMENT_FLYING")] MovementFlying = 5,
-        [pbr::OriginalName("MOVEMENT_HOVERING")] MovementHovering = 6,
+        [pbr::OriginalName("MOVEMENT_STATIC")]
+        MovementStatic = 0,
+        [pbr::OriginalName("MOVEMENT_JUMP")]
+        MovementJump = 1,
+        [pbr::OriginalName("MOVEMENT_VERTICAL")]
+        MovementVertical = 2,
+        [pbr::OriginalName("MOVEMENT_PSYCHIC")]
+        MovementPsychic = 3,
+        [pbr::OriginalName("MOVEMENT_ELECTRIC")]
+        MovementElectric = 4,
+        [pbr::OriginalName("MOVEMENT_FLYING")]
+        MovementFlying = 5,
+        [pbr::OriginalName("MOVEMENT_HOVERING")]
+        MovementHovering = 6,
     }
 
     public enum PokemonClass
     {
-        [pbr::OriginalName("NORMAL")] Normal = 0,
-        [pbr::OriginalName("LEGENDARY")] Legendary = 1,
-        [pbr::OriginalName("MYTHIC")] Mythic = 2,
+        [pbr::OriginalName("NORMAL")]
+        Normal = 0,
+        [pbr::OriginalName("LEGENDARY")]
+        Legendary = 1,
+        [pbr::OriginalName("MYTHIC")]
+        Mythic = 2,
     }
 
     #endregion

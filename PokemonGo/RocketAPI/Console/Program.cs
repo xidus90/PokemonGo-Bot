@@ -231,12 +231,7 @@ namespace PokemonGo.RocketAPI.Console
 
                 string pokemonName;
                 if (ClientSettings.Language == "german")
-                {
-                    string name_english = Convert.ToString(pokemon.PokemonId);
-                    var request = (HttpWebRequest)WebRequest.Create("http://boosting-service.de/pokemon/index.php?pokeName=" + name_english);
-                    var response = (HttpWebResponse)request.GetResponse();
-                    pokemonName = new StreamReader(response.GetResponseStream()).ReadToEnd();
-                }
+                    pokemonName = Convert.ToString((PokemonId_german)(int)pokemon.PokemonId);
                 else
                     pokemonName = Convert.ToString(pokemon.PokemonId);
                 if (caughtPokemonResponse.Status == CatchPokemonResponse.Types.CatchStatus.CatchSuccess)
@@ -413,16 +408,7 @@ namespace PokemonGo.RocketAPI.Console
                     }*/
                     string pokemonName;
                     if (ClientSettings.Language == "german")
-                    {
-                        string name_english = Convert.ToString(pokemon.PokemonId);
-                        try
-                        {
-                            var request = (HttpWebRequest)WebRequest.Create("http://boosting-service.de/pokemon/index.php?pokeName=" + name_english);
-                            var response = (HttpWebResponse)request.GetResponse();
-                            pokemonName = new StreamReader(response.GetResponseStream()).ReadToEnd();
-                        }
-                        catch (Exception) { pokemonName = Convert.ToString(pokemon.PokemonId) + "(Language server offline)"; }
-                    }
+                        pokemonName = Convert.ToString((PokemonId_german)(int)pokemon.PokemonId);
                     else
                         pokemonName = Convert.ToString(pokemon.PokemonId);
                     if (transferPokemonResponse.Status == 1)
@@ -465,17 +451,7 @@ namespace PokemonGo.RocketAPI.Console
                         var transfer = await client.TransferPokemon(dubpokemon.Id);
                         string pokemonName;
                         if (ClientSettings.Language == "german")
-                        {
-                            ColoredConsoleWrite(ConsoleColor.DarkCyan, "german");
-                            string name_english = Convert.ToString(dubpokemon.PokemonId);
-                            try
-                            {
-                                var request = (HttpWebRequest)WebRequest.Create("http://boosting-service.de/pokemon/index.php?pokeName=" + name_english);
-                                var response = (HttpWebResponse)request.GetResponse();
-                                pokemonName = new StreamReader(response.GetResponseStream()).ReadToEnd();
-                            }
-                            catch (Exception e) { pokemonName = Convert.ToString(dubpokemon.PokemonId) + "(Language server offline)"; }
-                        }
+                            pokemonName = Convert.ToString((PokemonId_german)(int)dubpokemon.PokemonId);
                         else
                             pokemonName = Convert.ToString(dubpokemon.PokemonId);
                         ColoredConsoleWrite(ConsoleColor.DarkGreen,
