@@ -226,7 +226,7 @@ namespace PokemonGo.RocketAPI.Console
                 else
                     pokemonName = Convert.ToString(pokemon.PokemonId);
 
-                if (!CatchOnlyThesePokemon.Contains(pokemon.PokemonId))
+                if (!CatchOnlyThesePokemon.Contains(pokemon.PokemonId) && ClientSettings.CatchOnlySpecific)
                 {
                     ColoredConsoleWrite(ConsoleColor.DarkYellow, $"[{DateTime.Now.ToString("HH:mm:ss")}] We didnt try to catch {pokemonName} because it is filtered");
                     return;
