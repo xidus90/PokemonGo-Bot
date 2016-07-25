@@ -69,7 +69,7 @@ namespace bhelper
 
         public int RecycleItemsInterval => GetSetting() != string.Empty ? Convert.ToInt16(GetSetting()) : 60;
 
-        public string Language => GetSetting() != string.Empty ? GetSetting() : "english";
+        public string Language => GetSetting() != string.Empty ? GetSetting() : "English.ini";
 
         public string RazzBerryMode => GetSetting() != string.Empty ? GetSetting() : "cp";
 

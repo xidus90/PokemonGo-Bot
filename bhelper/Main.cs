@@ -34,15 +34,15 @@ namespace bhelper
 
                 if (cleanedServerAssemblyVersion <= localAssembly.Version)
                 {
-                    //ColoredConsoleWrite(ConsoleColor.Yellow, "Awesome! You have already got the newest version! " + Assembly.GetExecutingAssembly().GetName().Version);
+                    ColoredConsoleWrite(ConsoleColor.White, $"[{DateTime.Now.ToString("HH:mm:ss")}] "+ Language.GetPhrases()["updates_latest"] + Assembly.GetExecutingAssembly().GetName().Version + "!");
                     return true;
                 }
 
-                ColoredConsoleWrite(ConsoleColor.Red, "There is a new Version available: " + cleanedServerAssemblyVersion);
+                ColoredConsoleWrite(ConsoleColor.Yellow, $"[{DateTime.Now.ToString("HH:mm:ss")}] " + Language.GetPhrases()["updates_outdated"] + cleanedServerAssemblyVersion);
             }
             catch (Exception)
             {
-                ColoredConsoleWrite(ConsoleColor.Red, "Unable to check for updates now...");
+                ColoredConsoleWrite(ConsoleColor.White, Language.GetPhrases()["updates_exception"]);
                 return false;
             }
 
@@ -54,7 +54,7 @@ namespace bhelper
             using (var wC = new WebClient())
                 return
                     wC.DownloadString(
-                        "https://raw.githubusercontent.com/Sen66/PokemonGo-Bot/master/PokemonGo/RocketAPI/Console/Properties/AssemblyInfo.cs");
+                        "https://raw.githubusercontent.com/Sen66/PokemonGo-Bot/master/UpdateFile.cs");
         }
 
         public static void ColoredConsoleWrite(ConsoleColor color, string text)

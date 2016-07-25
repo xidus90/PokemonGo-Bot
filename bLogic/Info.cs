@@ -9,14 +9,6 @@ namespace bLogic
 {
     public static class Info
     {
-        public static void AddTOtalExperience(Hero hero, Int32 xp)
-        {
-            hero.TotalExperience += xp;
-        }
-        public static Int32 GetTotalExperience(Hero hero)
-        {
-            return hero.TotalExperience;
-        }
         public static bool PrintStartUp(Hero hero, GetPlayerResponse profileResponse)
         {
             try

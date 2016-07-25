@@ -16,23 +16,21 @@ namespace PokemonGo.RocketAPI.Console
         {
             if (!_hero.AllowedToRun)
             {
-                bhelper.Main.ColoredConsoleWrite(ConsoleColor.Yellow, "Stopping bot cyclus now!");
+                bhelper.Main.ColoredConsoleWrite(ConsoleColor.Yellow, $"[{DateTime.Now.ToString("HH:mm:ss")}] " + Language.GetPhrases()["bot_stopping"]);
                 return;
             }
 
             try
             {
-                bhelper.Main.CheckVersion(Assembly.GetExecutingAssembly().GetName());
-
+                bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, $"[{DateTime.Now.ToString("HH:mm:ss")}] " + Language.GetPhrases()["bot_authenticating"]);
                 if (_hero.ClientSettings.AuthType == AuthType.Ptc)
                     await _hero.Client.DoPtcLogin(_hero.ClientSettings.PtcUsername, _hero.ClientSettings.PtcPassword);
                 else if (_hero.ClientSettings.AuthType == AuthType.Google)
                     await _hero.Client.DoGoogleLogin();
+                bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, $"[{DateTime.Now.ToString("HH:mm:ss")}] " + Language.GetPhrases()["bot_loggedin"]);
 
                 await _hero.Client.SetServer();
                 var profile = await _hero.Client.GetProfile();
-                var settings = await _hero.Client.GetSettings();
-                var mapObjects = await _hero.Client.GetMapObjects();
                 var inventory = await _hero.Client.GetInventory();
                 var pokemons =
                     inventory.InventoryDelta.InventoryItems.Select(i => i.InventoryItemData?.Pokemon)
@@ -52,13 +50,13 @@ namespace PokemonGo.RocketAPI.Console
                 else if (_hero.ClientSettings.TransferType == "cp")
                     await bLogic.Pokemon.TransferAllWeakPokemon(_hero);
                 else
-                    bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, $"[{DateTime.Now.ToString("HH:mm:ss")}] Transfering pokemon disabled");
+                    bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, $"[{DateTime.Now.ToString("HH:mm:ss")}] " + Language.GetPhrases()["pokemon_transfer_disabled"]);
                 if (_hero.ClientSettings.EvolveAllGivenPokemons)
                     await bLogic.Pokemon.EvolveAllGivenPokemons(_hero, pokemons);
                 if (_hero.ClientSettings.Recycler)
                     _hero.Client.RecycleItems(_hero.Client);
 
-                await Task.Delay(5000);
+                await Task.Delay(1000);
                 //time for some gui updates
                 bLogic.Info.PrintLevel(_hero);
                 RefreshConsoleTitle(profile.Profile.Username, _hero);
@@ -79,6 +77,7 @@ namespace PokemonGo.RocketAPI.Console
             catch (ArgumentNullException crap) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, "Argument Null Refference - Restarting: " + crap.Message); Execute(); }
             catch (NullReferenceException crap) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, "Null Refference - Restarting: " + crap.Message); Execute(); }
             catch (AccountNotVerifiedException crap) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.Red, "ACCOUNT NOT VERIFIED - WONT WORK - " + crap.Message); Execute(); }
+            catch (System.IO.FileNotFoundException) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.Red, $" Use an existing language!"); }
             catch (Exception crap) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.Red, "Not Handled Exception: " + crap.Message); Execute(); }
         }
         
@@ -93,26 +92,44 @@ namespace PokemonGo.RocketAPI.Console
             {
                 try
                 {
+
+                    var client = new Client(new bhelper.Settings());
+                    Program._hero = new Hero(client);
+
+                    if (_hero.ClientSettings.Language == "System")
+                    {
+                        switch (System.Globalization.CultureInfo.InstalledUICulture.Name)
+                        {
+                            case "de_DE":
+                            case "de_AT":
+                            case "de_CH":
+                                {
+                                    Language.LoadLanguageFile("de_DE");
+                                    break;
+                                }
+                            default:
+                                {
+                                    Language.LoadLanguageFile("en_EN");
+                                    break;
+                                }
+                        }
+                        bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, $"[{DateTime.Now.ToString("HH:mm:ss")}] " + Language.GetPhrases()["detected_sys_language"] + System.Globalization.CultureInfo.InstalledUICulture.DisplayName);
+                    }
+                    else
+                        Language.LoadLanguageFile(_hero.ClientSettings.Language);
+                    bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, $"[{DateTime.Now.ToString("HH:mm:ss")}] " + Language.GetPhrases()["loaded_language"] + Language.LanguageFile);
+
                     //if we are on the newest version we should be fine running the bot
                     if (bhelper.Main.CheckVersion(Assembly.GetExecutingAssembly().GetName()))
                     {
                         Program._hero.AllowedToRun = true;
                     }
 
-                    var client = new Client(new bhelper.Settings());
-                    Program._hero = new Hero(client);
-
                     //lets get rolling
                     Program.Execute();
                 }
-                catch (PtcOfflineException)
-                {
-                    bhelper.Main.ColoredConsoleWrite(ConsoleColor.Red, "PTC Servers are probably down OR your credentials are wrong. Try google");
-                }
-                catch (Exception ex)
-                {
-                    bhelper.Main.ColoredConsoleWrite(ConsoleColor.Red, $"[{DateTime.Now.ToString("HH:mm:ss")}] Unhandled exception: {ex}");
-                }
+                catch (PtcOfflineException) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.Red, Language.GetPhrases()["PtcOfflineException"]); }
+                catch (Exception ex) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.Red, $"[{DateTime.Now.ToString("HH:mm:ss")}] {ex}"); }
             });
             System.Console.ReadLine();
         }
@@ -134,12 +151,11 @@ namespace PokemonGo.RocketAPI.Console
                 if (playerStatistic != null)
                 {
                     int XpDiff = bhelper.Game.GetXpDiff(playerStatistic.Level);
-                    System.Console.Title = string.Format(username + " | LEVEL: {0:0} - ({1:0}) | SD: {2:0} | XP/H: {3:0} | POKE/H: {4:0}", playerStatistic.Level, string.Format("{0:#,##0}", (playerStatistic.Experience - playerStatistic.PrevLevelXp - XpDiff)) + "/" + string.Format("{0:#,##0}", (playerStatistic.NextLevelXp - playerStatistic.PrevLevelXp - XpDiff)), string.Format("{0:#,##0}", profile.Profile.Currency.ToArray()[1].Amount), string.Format("{0:#,##0}", Math.Round(bLogic.Pokemon.TotalExperience / bhelper.Main.GetRuntime(_hero.TimeStarted))), Math.Round(bLogic.Pokemon.TotalPokemon / bhelper.Main.GetRuntime(_hero.TimeStarted)));
+                    System.Console.Title = string.Format(username + " | LEVEL: {0:0} - ({1:0}) | SD: {2:0} | XP/H: {3:0} | POKE/H: {4:0}", playerStatistic.Level, string.Format("{0:#,##0}", (playerStatistic.Experience - playerStatistic.PrevLevelXp - XpDiff)) + "/" + string.Format("{0:#,##0}", (playerStatistic.NextLevelXp - playerStatistic.PrevLevelXp - XpDiff)), string.Format("{0:#,##0}", profile.Profile.Currency.ToArray()[1].Amount), string.Format("{0:#,##0}", Math.Round(bLogic.Pokemon.TotalExperience / bhelper.Main.GetRuntime(_hero.TimeStarted))), Math.Round(bLogic.Pokemon.TotalPokemon / bhelper.Main.GetRuntime(_hero.TimeStarted)) + " | " +(DateTime.Now - _hero.TimeStarted).ToString(@"dd\.hh\:mm\:ss"));
                 }
             await Task.Delay(1000);
 
             RefreshConsoleTitle(username, hero);
         }
-        
     }
 }

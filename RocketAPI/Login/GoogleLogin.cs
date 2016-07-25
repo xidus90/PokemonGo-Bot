@@ -18,8 +18,8 @@ namespace PokemonGo.RocketAPI.Login
 
         internal static async Task<TokenResponseModel> GetAccessToken(DeviceCodeModel deviceCodeResponse)
         {
-            Console.WriteLine("Please visit " + deviceCodeResponse.verification_url + " and enter " +
-                              deviceCodeResponse.user_code);
+            System.Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("Please visit " + deviceCodeResponse.verification_url + " and enter " + deviceCodeResponse.user_code);
 
             //Poll until user submitted code..
             TokenResponseModel tokenResponse;
@@ -28,7 +28,6 @@ namespace PokemonGo.RocketAPI.Login
                 await Task.Delay(2000);
                 tokenResponse = await PollSubmittedToken(deviceCodeResponse.device_code);
             } while (tokenResponse.access_token == null || tokenResponse.refresh_token == null);
-            Console.WriteLine("Logged in Google Account..");
             return tokenResponse;
         }
 

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<English>
+  <phrase key="detected_sys_language" value="Detected System Locale: "></phrase>
+  <phrase key="loaded_language" value="Language file loaded: "></phrase>
+  <phrase key ="updates_latest" value="You got the latest version: "></phrase>
+  <phrase key ="updates_exception" value="Unable to check for updates!"></phrase>
+  <phrase key ="updates_outdated" value="There is a new version available: "></phrase>
+  <phrase key ="PtcOfflineException" value="The PTC Servers seem unavailable. Please try again later!"></phrase>
+  <phrase key ="bot_stopping" value="The bot is shutting down."></phrase>
+  <phrase key ="bot_authenticating" value="The Bot trys to login with your submitted method."></phrase>
+  <phrase key ="bot_loggedin" value="The Bot successfully logged in!"></phrase>
+  <phrase key ="pokemon_transfer_disabled" value="Transfering Pokemon is disabled!"></phrase>
+  <phrase key ="pokemon_caught" value="We caught a [POKEMON] with [CP] CP."></phrase>
+  <phrase key ="pokemon_away" value="A [POKEMON] with [CP] CP ran away. "></phrase>
+  
+  <phrase key ="aa1aaaaaaaaaaaaaaa" value="aaaaaaaaaaaaaaaaa "></phrase>
+  <phrase key ="aaaaaa2aaaaaaaaaaa" value="aaaaaaaaaaaaaaaaa "></phrase>
+  <phrase key ="aaaaaaa3aaaaaaaaaa" value="aaaaaaaaaaaaaaaaa "></phrase>
+  <phrase key ="aaaaaaaa4aaaaaaaaa" value="aaaaaaaaaaaaaaaaa "></phrase>
+  <phrase key ="aaaaaaaaa5aaaaaaaa" value="aaaaaaaaaaaaaaaaa "></phrase>
+  <phrase key ="aaaaaaaaaa6aaaaaaa" value="aaaaaaaaaaaaaaaaa "></phrase>
+  <phrase key ="aaaaaaaaaaa7aaaaaa" value="aaaaaaaaaaaaaaaaa "></phrase>
+  <phrase key ="aaaaaaaaaaaa8aaaaa" value="aaaaaaaaaaaaaaaaa "></phrase>
+  <phrase key ="aaaaaaaaaaaaa9aaaa" value="aaaaaaaaaaaaaaaaa "></phrase>
+  <phrase key ="aaaaaaaaaaaaaa0aaa" value="aaaaaaaaaaaaaaaaa "></phrase>
+  <phrase key ="aaaa12aaaaaaaaaaaaa" value="aaaaaaaaaaaaaaaaa "></phrase>
+  <phrase key ="aaaaaa12aaaaaaaaaaa" value="aaaaaaaaaaaaaaaaa "></phrase>
+  <phrase key ="aaaaaaaa12aaaaaaaaa" value="aaaaaaaaaaaaaaaaa "></phrase>
+  <phrase key ="aaaaaaaaaa12aaaaaaa" value="aaaaaaaaaaaaaaaaa "></phrase>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</English>

@@ -75,14 +75,38 @@ namespace PokemonGo.RocketAPI.GUI
             {
                 try
                 {
+
+                    var client = new Client(new bhelper.Settings());
+                    Program._hero = new Hero(client);
+
+                    if (Program._hero.ClientSettings.Language == "System")
+                    {
+                        switch (System.Globalization.CultureInfo.InstalledUICulture.Name)
+                        {
+                            case "de_DE":
+                            case "de_AT":
+                            case "de_CH":
+                                {
+                                    bhelper.Language.LoadLanguageFile("de_DE");
+                                    break;
+                                }
+                            default:
+                                {
+                                    bhelper.Language.LoadLanguageFile("en_EN");
+                                    break;
+                                }
+                        }
+                        bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, $"[{DateTime.Now.ToString("HH:mm:ss")}] " + bhelper.Language.GetPhrases()["detected_sys_language"] + System.Globalization.CultureInfo.InstalledUICulture.DisplayName);
+                    }
+                    else
+                        bhelper.Language.LoadLanguageFile(Program._hero.ClientSettings.Language);
+                    bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, $"[{DateTime.Now.ToString("HH:mm:ss")}] " + bhelper.Language.GetPhrases()["loaded_language"] + bhelper.Language.LanguageFile);
+
                     //if we are on the newest version we should be fine running the bot
                     if (bhelper.Main.CheckVersion(Assembly.GetExecutingAssembly().GetName()))
                     {
                         Program._hero.AllowedToRun = true;
                     }
-
-                    var client = new Client(new bhelper.Settings());
-                    Program._hero = new Hero(client);
 
                     //lets get rolling
                     Program.Execute();
@@ -90,15 +114,11 @@ namespace PokemonGo.RocketAPI.GUI
                     SeStartButtonStatus = false;
                     SeStopButtonStatus = true;
                 }
-                catch (Exceptions.PtcOfflineException)
-                {
-                    bhelper.Main.ColoredConsoleWrite(ConsoleColor.Red,
-                        "PTC Servers are probably down OR your credentials are wrong. Try google");
-                }
+                catch (Exceptions.PtcOfflineException) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.Red, "PTC Servers are probably down OR your credentials are wrong. Try google"); }
+                catch (System.IO.FileNotFoundException) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.Red, $"Use an existing language!"); }
                 catch (Exception ex)
                 {
-                    bhelper.Main.ColoredConsoleWrite(ConsoleColor.Red,
-                        $"[{DateTime.Now.ToString("HH:mm:ss")}] Unhandled exception: {ex}");
+                    bhelper.Main.ColoredConsoleWrite(ConsoleColor.Red, $"[{DateTime.Now.ToString("HH:mm:ss")}] Unhandled exception: {ex}");
                 }
             });
         }

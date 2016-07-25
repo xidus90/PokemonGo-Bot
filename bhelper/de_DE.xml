@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Deutsch>
+  <phrase key="detected_sys_language" value="System Sprache identifiziert: "></phrase>
+  <phrase key="loaded_language" value="Sprachdatei geladen: "></phrase>
+  <phrase key ="updates_latest" value="Du hast die neueste Version: "></phrase>
+  <phrase key ="updates_exception" value="Konnte nicht nach Updates suchen!"></phrase>
+  <phrase key ="updates_outdated" value="Es ist eine neue Version verfügbar: "></phrase>
+  <phrase key ="PtcOfflineException" value="Die PTC Server scheinen offline zu sein. Versuch es später erneut!"></phrase>
+  <phrase key ="bot_stopping" value="Der Bot stoppt gerade."></phrase>
+  <phrase key ="bot_authenticating" value="Der Bot loggt sich nun mit der von Ihnen ausgewählten Methode ein."></phrase>
+  <phrase key ="bot_loggedin" value="Der Bot hat sich erfolgreich eingeloggt!"></phrase>
+  <phrase key ="pokemon_transfer_disabled" value="Pokemon verschicken ist ausgeschaltet!"></phrase>
+  <phrase key ="pokemon_caught" value="Wir haben ein [POKEMON] mit [CP] WP gefangen."></phrase>
+  <phrase key ="pokemon_away" value="Ein [POKEMON] mit [CP] WP ist entkommen."></phrase>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</Deutsch>
