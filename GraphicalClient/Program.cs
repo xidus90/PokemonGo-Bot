@@ -61,7 +61,7 @@ namespace PokemonGo.RocketAPI.GUI
                 await Task.Delay(5000);
                 //time for some gui updates
                 bLogic.Info.PrintLevel(_hero);
-                UpdateFormTitle(_hero.Client);
+                UpdateFormTitle();
 
 
                 if (_hero.ClientSettings.EggHatchedOutput)
@@ -88,18 +88,18 @@ namespace PokemonGo.RocketAPI.GUI
         /// </summary>
         /// <param name="client"></param>
         /// <returns></returns>
-        public static async Task UpdateFormTitle(Client client)
+        public static async Task UpdateFormTitle()
         {
-            var inventory = await client.GetInventory();
+            var inventory = await _hero.Client.GetInventory();
             var stats = inventory.InventoryDelta.InventoryItems.Select(i => i.InventoryItemData?.PlayerStats).ToArray();
-            var profile = await client.GetProfile();
+            var profile = await _hero.Client.GetProfile();
             foreach (var playerStatistic in stats)
                 if (playerStatistic != null)
                 {
-                    MainWindow.main.SetMainFormTitle = string.Format(_hero.ClientSettings.PtcUsername + " :: L{0:0} | {1:0} exp/h | {2:0} pok/h", playerStatistic.Level, Math.Round(_hero.TotalExperience / bhelper.Main.GetRuntime(_hero.TimeStarted)), Math.Round(_hero.TotalPokemon / bhelper.Main.GetRuntime(_hero.TimeStarted)));
-                    
+                    MainWindow.main.SetMainFormTitle = string.Format(profile.Profile.Username + " | Level: {0:0} | XP/H: {1:0} | POKE/H: {2:0}", playerStatistic.Level, Math.Round(bLogic.Pokemon.TotalExperience / bhelper.Main.GetRuntime(_hero.TimeStarted)), Math.Round(bLogic.Pokemon.TotalPokemon / bhelper.Main.GetRuntime(_hero.TimeStarted)));
                 }
             await Task.Delay(1000);
+            UpdateFormTitle();
         }
         
     }

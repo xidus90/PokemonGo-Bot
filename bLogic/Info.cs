@@ -9,6 +9,14 @@ namespace bLogic
 {
     public static class Info
     {
+        public static void AddTOtalExperience(Hero hero, Int32 xp)
+        {
+            hero.TotalExperience += xp;
+        }
+        public static Int32 GetTotalExperience(Hero hero)
+        {
+            return hero.TotalExperience;
+        }
         public static bool PrintStartUp(Hero hero, GetPlayerResponse profileResponse)
         {
             try
@@ -16,10 +24,9 @@ namespace bLogic
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.Yellow, "+-------------- account info ---------------+");
                 if (hero.ClientSettings.AuthType == AuthType.Ptc)
                 {
-                    bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray,
-                        " Account Name: " + hero.ClientSettings.PtcUsername);
+                bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, " PTC Name: " + hero.ClientSettings.PtcUsername);
                 }
-                bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, " Hero Name: " + profileResponse.Profile.Username);
+                bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, " User Name: " + profileResponse.Profile.Username);
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, " Team: " + profileResponse.Profile.Team);
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, " Stardust: " + profileResponse.Profile.Currency.ToArray()[1].Amount);
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, " Distance traveled: " + String.Format("{0:0.00} km", hero.TotalKmWalked));

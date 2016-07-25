@@ -41,7 +41,6 @@ namespace PokemonGo.RocketAPI.Console
                 foreach (var v in stats)
                     if (v != null)
                         _hero.TotalKmWalked = v.KmWalked;
-
                 bLogic.Info.PrintStartUp(_hero, profile);
                
                 if (_hero.ClientSettings.TransferType == "leaveStrongest")
@@ -62,15 +61,16 @@ namespace PokemonGo.RocketAPI.Console
                 await Task.Delay(5000);
                 //time for some gui updates
                 bLogic.Info.PrintLevel(_hero);
-                RefreshConsoleTitle(profile.Profile.Username, _hero.Client);
+                RefreshConsoleTitle(profile.Profile.Username, _hero);
 
                 if (_hero.ClientSettings.EggHatchedOutput)
                     bLogic.Item.CheckEggsHatched(_hero);
                 if (_hero.ClientSettings.UseLuckyEggMode == "always")
                     _hero.Client.UseLuckyEgg(_hero.Client);
                 await bLogic.Pokemon.ExecuteFarmingPokestopsAndPokemons(_hero);
-                bhelper.Main.ColoredConsoleWrite(ConsoleColor.Red, $"[{DateTime.Now.ToString("HH:mm:ss")}] No nearby usefull locations found. Waiting 10 seconds.");
-                await Task.Delay(10000);
+                _hero.ClientSettings.DefaultLatitude = Client.GetLatitude(true);
+                _hero.ClientSettings.DefaultLongitude = Client.GetLongitude(true);
+                await Task.Delay(1000);
                 Execute();
             }
             catch (TaskCanceledException crap) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, "Task Canceled Exception - Restarting: " + crap.Message); Execute(); }
@@ -125,20 +125,20 @@ namespace PokemonGo.RocketAPI.Console
         /// <param name="username"></param>
         /// <param name="client"></param>
         /// <returns></returns>
-        public static async Task RefreshConsoleTitle(string username, Client client)
+        public static async Task RefreshConsoleTitle(string username, Hero hero)
         {
-            var inventory = await client.GetInventory();
+            var inventory = await hero.Client.GetInventory();
             var stats = inventory.InventoryDelta.InventoryItems.Select(i => i.InventoryItemData?.PlayerStats).ToArray();
-            var profile = await client.GetProfile();
+            var profile = await hero.Client.GetProfile();
             foreach (var playerStatistic in stats)
                 if (playerStatistic != null)
                 {
                     int XpDiff = bhelper.Game.GetXpDiff(playerStatistic.Level);
-                    System.Console.Title = string.Format(_hero.ClientSettings.PtcUsername + " :: L{0:0} | {1:0} exp/h | {2:0} pok/h", playerStatistic.Level, Math.Round(_hero.TotalExperience / bhelper.Main.GetRuntime(_hero.TimeStarted)), Math.Round(_hero.TotalPokemon / bhelper.Main.GetRuntime(_hero.TimeStarted)));
+                    System.Console.Title = string.Format(username + " | Level: {0:0} | XP/H {1:0} | POKE/H {2:0}", playerStatistic.Level, Math.Round(bLogic.Pokemon.TotalExperience / bhelper.Main.GetRuntime(_hero.TimeStarted)), Math.Round(bLogic.Pokemon.TotalPokemon / bhelper.Main.GetRuntime(_hero.TimeStarted)));
                 }
             await Task.Delay(1000);
 
-            RefreshConsoleTitle(username, client);
+            RefreshConsoleTitle(username, hero);
         }
         
     }

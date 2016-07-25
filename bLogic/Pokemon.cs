@@ -20,6 +20,9 @@ namespace bLogic
         /// <param name="hero"></param>
         /// <param name="pokemonToEvolve"></param>
         /// <returns></returns>
+
+        public static int TotalExperience = 0;
+        public static int TotalPokemon = 0;
         public static async Task EvolveAllGivenPokemons(Hero hero, IEnumerable<PokemonData> pokemonToEvolve)
         {
             foreach (var pokemon in pokemonToEvolve)
@@ -125,8 +128,8 @@ namespace bLogic
                 {
                     bhelper.Main.ColoredConsoleWrite(ConsoleColor.Green, $"[{DateTime.Now.ToString("HH:mm:ss")}] We caught a {pokemonName} with {encounterPokemonResponse?.WildPokemon?.PokemonData?.Cp} CP");
                     foreach (int xp in caughtPokemonResponse.Scores.Xp)
-                        hero.TotalExperience += xp;
-                    hero.TotalPokemon += 1;
+                        TotalExperience += xp;
+                    TotalPokemon += 1;
                 }
                 else
                     bhelper.Main.ColoredConsoleWrite(ConsoleColor.Red, $"[{DateTime.Now.ToString("HH:mm:ss")}] {pokemonName} with {encounterPokemonResponse?.WildPokemon?.PokemonData?.Cp} CP got away..");
@@ -232,7 +235,7 @@ namespace bLogic
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.Cyan, PokeStopOutput.ToString());
 
                 if (fortSearch.ExperienceAwarded != 0)
-                    _hero.TotalExperience += (fortSearch.ExperienceAwarded);
+                    TotalExperience += (fortSearch.ExperienceAwarded);
                 await Task.Delay(15000);
                 await ExecuteCatchAllNearbyPokemons(_hero);
             }
