@@ -14,7 +14,56 @@ namespace bLogic
 {
     public class Pokemon
     {
+        public static async Task EvolveAllGivenPokemons(Hero hero, IEnumerable<PokemonData> pokemonToEvolve)
+        {
+            foreach (var pokemon in pokemonToEvolve)
+            {
+                /*
+                enum Holoholo.Rpc.Types.EvolvePokemonOutProto.Result {
+	                UNSET = 0;
+	                SUCCESS = 1;
+	                FAILED_POKEMON_MISSING = 2;
+	                FAILED_INSUFFICIENT_RESOURCES = 3;
+	                FAILED_POKEMON_CANNOT_EVOLVE = 4;
+	                FAILED_POKEMON_IS_DEPLOYED = 5;
+                }
+                }*/
 
+                var countOfEvolvedUnits = 0;
+                var xpCount = 0;
+
+                EvolvePokemonOut evolvePokemonOutProto;
+                do
+                {
+                    evolvePokemonOutProto = await hero.Client.EvolvePokemon(pokemon.Id);
+                    //todo: someone check whether this still works
+
+                    if (evolvePokemonOutProto.Result == 1)
+                    {
+                        bhelper.Main.ColoredConsoleWrite(ConsoleColor.Cyan,
+                            $"[{DateTime.Now.ToString("HH:mm:ss")}] Evolved {pokemon.PokemonId} successfully for {evolvePokemonOutProto.ExpAwarded}xp");
+
+                        countOfEvolvedUnits++;
+                        xpCount += evolvePokemonOutProto.ExpAwarded;
+                    }
+                    else
+                    {
+                        var result = evolvePokemonOutProto.Result;
+                        /*
+                        ColoredConsoleWrite(ConsoleColor.White, $"Failed to evolve {pokemon.PokemonId}. " +
+                                                 $"EvolvePokemonOutProto.Result was {result}");
+
+                        ColoredConsoleWrite(ConsoleColor.White, $"Due to above error, stopping evolving {pokemon.PokemonId}");
+                        */
+                    }
+                } while (evolvePokemonOutProto.Result == 1);
+                if (countOfEvolvedUnits > 0)
+                    bhelper.Main.ColoredConsoleWrite(ConsoleColor.Cyan,
+                        $"[{DateTime.Now.ToString("HH:mm:ss")}] Evolved {countOfEvolvedUnits} pieces of {pokemon.PokemonId} for {xpCount}xp");
+
+                await Task.Delay(3000);
+            }
+        }
         public static async Task CheckEggsHatched(Hero hero)
         {
             try

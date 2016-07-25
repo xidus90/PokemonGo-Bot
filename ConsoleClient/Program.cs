@@ -25,56 +25,7 @@ namespace PokemonGo.RocketAPI.Console
     {
         public static bhelper.Hero _hero;
 
-        private static async Task EvolveAllGivenPokemons(Client client, IEnumerable<PokemonData> pokemonToEvolve)
-        {
-            foreach (var pokemon in pokemonToEvolve)
-            {
-                /*
-                enum Holoholo.Rpc.Types.EvolvePokemonOutProto.Result {
-	                UNSET = 0;
-	                SUCCESS = 1;
-	                FAILED_POKEMON_MISSING = 2;
-	                FAILED_INSUFFICIENT_RESOURCES = 3;
-	                FAILED_POKEMON_CANNOT_EVOLVE = 4;
-	                FAILED_POKEMON_IS_DEPLOYED = 5;
-                }
-                }*/
-
-                var countOfEvolvedUnits = 0;
-                var xpCount = 0;
-
-                EvolvePokemonOut evolvePokemonOutProto;
-                do
-                {
-                    evolvePokemonOutProto = await client.EvolvePokemon(pokemon.Id);
-                    //todo: someone check whether this still works
-
-                    if (evolvePokemonOutProto.Result == 1)
-                    {
-                        bhelper.Main.ColoredConsoleWrite(ConsoleColor.Cyan,
-                            $"[{DateTime.Now.ToString("HH:mm:ss")}] Evolved {pokemon.PokemonId} successfully for {evolvePokemonOutProto.ExpAwarded}xp");
-
-                        countOfEvolvedUnits++;
-                        xpCount += evolvePokemonOutProto.ExpAwarded;
-                    }
-                    else
-                    {
-                        var result = evolvePokemonOutProto.Result;
-                        /*
-                        ColoredConsoleWrite(ConsoleColor.White, $"Failed to evolve {pokemon.PokemonId}. " +
-                                                 $"EvolvePokemonOutProto.Result was {result}");
-
-                        ColoredConsoleWrite(ConsoleColor.White, $"Due to above error, stopping evolving {pokemon.PokemonId}");
-                        */
-                    }
-                } while (evolvePokemonOutProto.Result == 1);
-                if (countOfEvolvedUnits > 0)
-                    bhelper.Main.ColoredConsoleWrite(ConsoleColor.Cyan,
-                        $"[{DateTime.Now.ToString("HH:mm:ss")}] Evolved {countOfEvolvedUnits} pieces of {pokemon.PokemonId} for {xpCount}xp");
-
-                await Task.Delay(3000);
-            }
-        }
+        
 
         private static async void Execute()
         {
@@ -129,7 +80,7 @@ namespace PokemonGo.RocketAPI.Console
                 else
                     bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, $"[{DateTime.Now.ToString("HH:mm:ss")}] Transfering pokemon disabled");
                 if (_hero.ClientSettings.EvolveAllGivenPokemons)
-                    await EvolveAllGivenPokemons(client, pokemons);
+                    await bLogic.Pokemon.EvolveAllGivenPokemons(_hero, pokemons);
                 if (_hero.ClientSettings.Recycler)
                     client.RecycleItems(client);
 
@@ -152,76 +103,12 @@ namespace PokemonGo.RocketAPI.Console
             catch (NullReferenceException) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, "Null Refference - Restarting"); Execute(); }
             catch (Exception ex) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, ex.ToString()); Execute(); }
         }
-
-        private static async Task ExecuteCatchAllNearbyPokemons(Client client)
-        {
-            var mapObjects = await client.GetMapObjects();
-
-            var pokemons = mapObjects.MapCells.SelectMany(i => i.CatchablePokemons);
-
-            var inventory2 = await client.GetInventory();
-            var pokemons2 = inventory2.InventoryDelta.InventoryItems
-                .Select(i => i.InventoryItemData?.Pokemon)
-                .Where(p => p != null && p?.PokemonId > 0)
-                .ToArray();
-
-            PokemonId[] CatchOnlyThesePokemon = new[]
-            {
-                PokemonId.Rattata
-            };
-
-            foreach (var pokemon in pokemons)
-            {
-                string pokemonName;
-                if (_hero.ClientSettings.Language == "german")
-                    pokemonName = Convert.ToString((PokemonId_german)(int)pokemon.PokemonId);
-                else
-                    pokemonName = Convert.ToString(pokemon.PokemonId);
-
-                if (!CatchOnlyThesePokemon.Contains(pokemon.PokemonId) && _hero.ClientSettings.CatchOnlySpecific)
-                {
-                    bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkYellow, $"[{DateTime.Now.ToString("HH:mm:ss")}] We didnt try to catch {pokemonName} because it is filtered");
-                    return;
-                }
-                var update = await client.UpdatePlayerLocation(pokemon.Latitude, pokemon.Longitude);
-                var encounterPokemonResponse = await client.EncounterPokemon(pokemon.EncounterId, pokemon.SpawnpointId);
-                var pokemonCP = encounterPokemonResponse?.WildPokemon?.PokemonData?.Cp;
-                CatchPokemonResponse caughtPokemonResponse;
-                do
-                {
-                    if (_hero.ClientSettings.RazzBerryMode == "cp")
-                        if (pokemonCP > _hero.ClientSettings.RazzBerrySetting)
-                            await client.UseRazzBerry(client, pokemon.EncounterId, pokemon.SpawnpointId);
-                    if (_hero.ClientSettings.RazzBerryMode == "probability")
-                        if (encounterPokemonResponse.CaptureProbability.CaptureProbability_.First() < _hero.ClientSettings.RazzBerrySetting)
-                            await client.UseRazzBerry(client, pokemon.EncounterId, pokemon.SpawnpointId);
-                    caughtPokemonResponse = await client.CatchPokemon(pokemon.EncounterId, pokemon.SpawnpointId, pokemon.Latitude, pokemon.Longitude, MiscEnums.Item.ITEM_POKE_BALL, pokemonCP); ; //note: reverted from settings because this should not be part of settings but part of logic
-                } while (caughtPokemonResponse.Status == CatchPokemonResponse.Types.CatchStatus.CatchMissed || caughtPokemonResponse.Status == CatchPokemonResponse.Types.CatchStatus.CatchEscape);
-                if (caughtPokemonResponse.Status == CatchPokemonResponse.Types.CatchStatus.CatchSuccess)
-                {
-                    bhelper.Main.ColoredConsoleWrite(ConsoleColor.Green, $"[{DateTime.Now.ToString("HH:mm:ss")}] We caught a {pokemonName} with {encounterPokemonResponse?.WildPokemon?.PokemonData?.Cp} CP");
-                    foreach (int xp in caughtPokemonResponse.Scores.Xp)
-                        _hero.TotalExperience += xp;
-                    _hero.TotalPokemon += 1;
-                }
-                else
-                    bhelper.Main.ColoredConsoleWrite(ConsoleColor.Red, $"[{DateTime.Now.ToString("HH:mm:ss")}] {pokemonName} with {encounterPokemonResponse?.WildPokemon?.PokemonData?.Cp} CP got away..");
-
-                if (_hero.ClientSettings.TransferType == "leaveStrongest")
-                    await bLogic.Pokemon.TransferAllButStrongestUnwantedPokemon(_hero);
-                else if (_hero.ClientSettings.TransferType == "all")
-                    await bLogic.Pokemon.TransferAllGivenPokemons(_hero, pokemons2);
-                else if (_hero.ClientSettings.TransferType == "duplicate")
-                    await bLogic.Pokemon.TransferDuplicatePokemon(_hero);
-                else if (_hero.ClientSettings.TransferType == "cp")
-                    await bLogic.Pokemon.TransferAllWeakPokemon(_hero);
-
-                await Task.Delay(3000);
-            }
-        }
         
-
-
+        /// <summary>
+        /// console client main entry point
+        /// No start parameter possible currently
+        /// </summary>
+        /// <param name="args"></param>
         private static void Main(string[] args)
         {
             Task.Run(() =>
@@ -241,10 +128,7 @@ namespace PokemonGo.RocketAPI.Console
             });
             System.Console.ReadLine();
         }
-
-
-
-
+        
         
 
         public static async Task PrintLevel(Client client)
