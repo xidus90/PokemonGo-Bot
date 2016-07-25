@@ -75,8 +75,6 @@ namespace bhelper
         public bool EggHatchedOutput => GetSetting() != string.Empty ? System.Convert.ToBoolean(GetSetting(), CultureInfo.InvariantCulture) : false;
 
         public string UseLuckyEggMode => GetSetting() != string.Empty ? GetSetting() : "always";
-        
-        public string LocationReference => GetSetting() != string.Empty ? GetSetting() : "unlabeled";
 
         public string GoogleRefreshToken
         {
