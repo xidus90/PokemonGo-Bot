@@ -24,28 +24,29 @@ namespace PokemonGo.RocketAPI.Console
     internal class Program
     {
         public static bhelper.Hero _hero;
-
         
-
         private static async void Execute()
         {
-            var client = new Client(new bhelper.Settings());
-            _hero = new Hero(client);
+            if (!_hero.AllowedToRun)
+            {
+                bhelper.Main.ColoredConsoleWrite(ConsoleColor.Yellow, "Stopping bot cyclus now!");
+                return;
+            }
 
             try
             {
                 bhelper.Main.CheckVersion(Assembly.GetExecutingAssembly().GetName());
 
                 if (_hero.ClientSettings.AuthType == AuthType.Ptc)
-                    await client.DoPtcLogin(_hero.ClientSettings.PtcUsername, _hero.ClientSettings.PtcPassword);
+                    await _hero.Client.DoPtcLogin(_hero.ClientSettings.PtcUsername, _hero.ClientSettings.PtcPassword);
                 else if (_hero.ClientSettings.AuthType == AuthType.Google)
                     await _hero.Client.DoGoogleLogin();
 
-                await client.SetServer();
-                var profile = await client.GetProfile();
-                var settings = await client.GetSettings();
-                var mapObjects = await client.GetMapObjects();
-                var inventory = await client.GetInventory();
+                await _hero.Client.SetServer();
+                var profile = await _hero.Client.GetProfile();
+                var settings = await _hero.Client.GetSettings();
+                var mapObjects = await _hero.Client.GetMapObjects();
+                var inventory = await _hero.Client.GetInventory();
                 var pokemons =
                     inventory.InventoryDelta.InventoryItems.Select(i => i.InventoryItemData?.Pokemon)
                         .Where(p => p != null && p?.PokemonId > 0);
@@ -57,17 +58,14 @@ namespace PokemonGo.RocketAPI.Console
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.Yellow, "----------------------------");
                 if (_hero.ClientSettings.AuthType == AuthType.Ptc)
                 {
-                    bhelper.Main.ColoredConsoleWrite(ConsoleColor.Cyan, "Account Name: " + _hero.ClientSettings.PtcUsername);
-                    // we shouldnt show the password because data safety is always a good idea
-                    //bhelper.Main.ColoredConsoleWrite(ConsoleColor.Cyan, "Password: " + _clientSettings.PtcPassword);
+                    bhelper.Main.ColoredConsoleWrite(ConsoleColor.Cyan, "Login Name: " + _hero.ClientSettings.PtcUsername);
                 }
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, "Latitude: " + _hero.ClientSettings.DefaultLatitude);
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, "Longitude: " + _hero.ClientSettings.DefaultLongitude);
-                bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, "Your Account:");
-                bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, "Name: " + profile.Profile.Username);
+                bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, "Hero Name: " + profile.Profile.Username);
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, "Team: " + profile.Profile.Team);
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, "Stardust: " + profile.Profile.Currency.ToArray()[1].Amount);
-                bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, "Total km walked: " + _hero.TotalKmWalked);
+                bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, "Distance traveled: " + String.Format("{0:0.00} km", _hero.TotalKmWalked));
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.Yellow, "----------------------------");
                 if (_hero.ClientSettings.TransferType == "leaveStrongest")
                     await bLogic.Pokemon.TransferAllButStrongestUnwantedPokemon(_hero);
@@ -82,27 +80,29 @@ namespace PokemonGo.RocketAPI.Console
                 if (_hero.ClientSettings.EvolveAllGivenPokemons)
                     await bLogic.Pokemon.EvolveAllGivenPokemons(_hero, pokemons);
                 if (_hero.ClientSettings.Recycler)
-                    client.RecycleItems(client);
+                    _hero.Client.RecycleItems(_hero.Client);
 
                 await Task.Delay(5000);
-                PrintLevel(client);
+                //time for some gui updates
+                PrintLevel(_hero.Client);
+                ConsoleLevelTitle(profile.Profile.Username, _hero.Client);
+
                 if (_hero.ClientSettings.EggHatchedOutput)
                     await bLogic.Pokemon.CheckEggsHatched(_hero);
                 if (_hero.ClientSettings.UseLuckyEggMode == "always")
-                    await client.UseLuckyEgg(client);
-                ConsoleLevelTitle(profile.Profile.Username, client);
+                    await _hero.Client.UseLuckyEgg(_hero.Client);
                 await bLogic.Pokemon.ExecuteFarmingPokestopsAndPokemons(_hero);
-                bhelper.Main.ColoredConsoleWrite(ConsoleColor.Red, $"[{DateTime.Now.ToString("HH:mm:ss")}] No nearby usefull locations found. Please wait 10 seconds.");
+                bhelper.Main.ColoredConsoleWrite(ConsoleColor.Red, $"[{DateTime.Now.ToString("HH:mm:ss")}] No nearby usefull locations found. Waiting 10 seconds.");
                 await Task.Delay(10000);
                 Execute();
             }
-            catch (TaskCanceledException) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, "Task Canceled Exception - Restarting"); Execute(); }
-            catch (UriFormatException) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, "System URI Format Exception - Restarting"); Execute(); }
-            catch (ArgumentOutOfRangeException) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, "ArgumentOutOfRangeException - Restarting"); Execute(); }
-            catch (ArgumentNullException) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, "Argument Null Refference - Restarting"); Execute(); }
-            catch (NullReferenceException) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, "Null Refference - Restarting"); Execute(); }
-            catch (AccountNotVerifiedException) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.Red, "ACCOUNT NOT VERIFIED - WONT WORK"); Execute(); }
-            catch (Exception ex) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, ex.ToString()); Execute(); }
+            catch (TaskCanceledException crap) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, "Task Canceled Exception - Restarting: " + crap.Message); Execute(); }
+            catch (UriFormatException crap) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, "System URI Format Exception - Restarting " + crap.Message); Execute(); }
+            catch (ArgumentOutOfRangeException crap) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, "ArgumentOutOfRangeException - Restarting " + crap.Message); Execute(); }
+            catch (ArgumentNullException crap) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, "Argument Null Refference - Restarting " + crap.Message); Execute(); }
+            catch (NullReferenceException crap) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, "Null Refference - Restarting " + crap.Message); Execute(); }
+            catch (AccountNotVerifiedException crap) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.Red, "ACCOUNT NOT VERIFIED - WONT WORK " + crap.Message); Execute(); }
+            catch (Exception crap) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.Red, "Not Handled Exception: " + crap.Message); Execute(); }
         }
         
         /// <summary>
@@ -115,8 +115,18 @@ namespace PokemonGo.RocketAPI.Console
             Task.Run(() =>
             {
                 try
-                {	
-                    Execute();
+                {
+                    //if we are on the newest version we should be fine running the bot
+                    if (bhelper.Main.CheckVersion(Assembly.GetExecutingAssembly().GetName()))
+                    {
+                        Program._hero.AllowedToRun = true;
+                    }
+
+                    var client = new Client(new bhelper.Settings());
+                    Program._hero = new Hero(client);
+
+                    //lets get rolling
+                    Program.Execute();
                 }
                 catch (PtcOfflineException)
                 {
