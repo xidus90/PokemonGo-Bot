@@ -10,7 +10,6 @@ namespace PokemonGo.RocketAPI
     public interface ISettings
     {
         AuthType AuthType { get; }
-        string LocationReference { get; }
         double DefaultLatitude { get; set; }
         double DefaultLongitude { get; set; }
         string LevelOutput { get; }
