@@ -11,7 +11,7 @@
             <ColumnDefinition Width="0*"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <TabControl x:Name="tabControl" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="502" Margin="10,110,0,0" VerticalAlignment="Top" Width="543">
+        <TabControl x:Name="tabControl" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="502" Margin="10,106,0,0" VerticalAlignment="Top" Width="543">
             <TabItem Header="Output">
                 <Grid Background="#FFE5E5E5">
                     <Grid.ColumnDefinitions>
@@ -62,10 +62,10 @@
                 <Grid HorizontalAlignment="Left" Height="22" Margin="8,6,0,0" VerticalAlignment="Top" Width="18"/>
             </TabItem>
         </TabControl>
-        <Button x:Name="buttonStart" Grid.ColumnSpan="2" Content="Start" HorizontalAlignment="Left" Margin="10,616,0,0" VerticalAlignment="Top" Width="100" Height="30" Click="buttonStart_Click"/>
+        <Button x:Name="buttonStart" Grid.ColumnSpan="2" Content="Start" HorizontalAlignment="Left" Margin="10,611,0,0" VerticalAlignment="Top" Width="100" Height="30" Click="buttonStart_Click"/>
         <Image x:Name="image" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="85" Margin="0,10,0,0" VerticalAlignment="Top" Width="553" Source="/Resources/pogo-bot-logo.png"/>
         <Label x:Name="lbl_Version" Grid.ColumnSpan="2" Content="v.0.0.0.0" HorizontalAlignment="Left" Margin="462,84,0,0" VerticalAlignment="Top" Width="91" FontSize="9.333"/>
-        <Button x:Name="buttonStop" Grid.ColumnSpan="2" Content="Stop" HorizontalAlignment="Left" Margin="121,616,0,0" VerticalAlignment="Top" Width="100" Height="30" Click="buttonStop_Click" IsEnabled="False"/>
+        <Button x:Name="buttonStop" Grid.ColumnSpan="2" Content="Stop" HorizontalAlignment="Left" Margin="121,611,0,0" VerticalAlignment="Top" Width="100" Height="30" Click="buttonStop_Click" IsEnabled="False"/>
 
     </Grid>
 </Window>
