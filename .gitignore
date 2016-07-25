@@ -1,11 +1,13 @@
 ConsoleClient/bin/
+ConsoleClient/obj/
 GraphicalClient/obj/
 GraphicalClient/bin/
-GraphicalClient/obj/
 RocketAPI/bin/
 RocketAPI/obj/
 bhelper/bin/
 bhelper/obj/
+bLogic/bin/
+bLogic/obj/
 packages/
 _binaries/
-ConsoleClient/obj/
+

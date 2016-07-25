@@ -17,17 +17,14 @@ using System.Text;
 using Google.Protobuf;
 using PokemonGo.RocketAPI.Helpers;
 using System.IO;
+using bhelper;
 
 namespace PokemonGo.RocketAPI.Console
 {
     internal class Program
     {
-        private static ISettings ClientSettings = new bhelper.Settings();
-        private static int Currentlevel = -1;
-        private static int TotalExperience = 0;
-        private static int TotalPokemon = 0;
-        private static double TotalKmWalked = 0;
-        private static DateTime TimeStarted = DateTime.Now;
+        private static ISettings _clientSettings = new bhelper.Settings();
+        public static bhelper.Hero _hero;
 
 
         private static async Task EvolveAllGivenPokemons(Client client, IEnumerable<PokemonData> pokemonToEvolve)
@@ -83,15 +80,17 @@ namespace PokemonGo.RocketAPI.Console
 
         private static async void Execute()
         {
-            var client = new Client(ClientSettings);
+            var client = new Client(_clientSettings);
+            _hero = new Hero(client);
+            
             try
             {
                 bhelper.Main.CheckVersion(Assembly.GetExecutingAssembly().GetName());
 
-                if (ClientSettings.AuthType == AuthType.Ptc)
-                    await client.DoPtcLogin(ClientSettings.PtcUsername, ClientSettings.PtcPassword);
-                else if (ClientSettings.AuthType == AuthType.Google)
-                    await client.DoGoogleLogin();
+                if (_clientSettings.AuthType == AuthType.Ptc)
+                    await client.DoPtcLogin(_clientSettings.PtcUsername, _clientSettings.PtcPassword);
+                else if (_clientSettings.AuthType == AuthType.Google)
+                    await _hero.Client.DoGoogleLogin();
 
                 await client.SetServer();
                 var profile = await client.GetProfile();
@@ -104,43 +103,43 @@ namespace PokemonGo.RocketAPI.Console
                 var stats = inventory.InventoryDelta.InventoryItems.Select(i => i.InventoryItemData.PlayerStats).ToArray();
                 foreach (var v in stats)
                     if (v != null)
-                        TotalKmWalked = v.KmWalked;
+                        _hero.TotalKmWalked = v.KmWalked;
 
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.Yellow, "----------------------------");
-                if (ClientSettings.AuthType == AuthType.Ptc)
+                if (_clientSettings.AuthType == AuthType.Ptc)
                 {
-                    bhelper.Main.ColoredConsoleWrite(ConsoleColor.Cyan, "Account: " + ClientSettings.PtcUsername);
+                    bhelper.Main.ColoredConsoleWrite(ConsoleColor.Cyan, "Account: " + _clientSettings.PtcUsername);
                     // we shouldnt show the password because data safety is always a good idea
-                    //bhelper.Main.ColoredConsoleWrite(ConsoleColor.Cyan, "Password: " + ClientSettings.PtcPassword);
+                    //bhelper.Main.ColoredConsoleWrite(ConsoleColor.Cyan, "Password: " + _clientSettings.PtcPassword);
                 }
-                bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, "Latitude: " + ClientSettings.DefaultLatitude);
-                bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, "Longitude: " + ClientSettings.DefaultLongitude);
+                bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, "Latitude: " + _clientSettings.DefaultLatitude);
+                bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, "Longitude: " + _clientSettings.DefaultLongitude);
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, "Your Account:");
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, "Name: " + profile.Profile.Username);
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, "Team: " + profile.Profile.Team);
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, "Stardust: " + profile.Profile.Currency.ToArray()[1].Amount);
-                bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, "Total km walked: " + TotalKmWalked);
+                bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, "Total km walked: " + _hero.TotalKmWalked);
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.Yellow, "----------------------------");
-                if (ClientSettings.TransferType == "leaveStrongest")
+                if (_clientSettings.TransferType == "leaveStrongest")
                     await TransferAllButStrongestUnwantedPokemon(client);
-                else if (ClientSettings.TransferType == "all")
+                else if (_clientSettings.TransferType == "all")
                     await TransferAllGivenPokemons(client, pokemons);
-                else if (ClientSettings.TransferType == "duplicate")
+                else if (_clientSettings.TransferType == "duplicate")
                     await TransferDuplicatePokemon(client);
-                else if (ClientSettings.TransferType == "cp")
-                    await TransferAllWeakPokemon(client, ClientSettings.TransferCPThreshold);
+                else if (_clientSettings.TransferType == "cp")
+                    await TransferAllWeakPokemon(client, _clientSettings.TransferCPThreshold);
                 else
                     bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, $"[{DateTime.Now.ToString("HH:mm:ss")}] Transfering pokemon disabled");
-                if (ClientSettings.EvolveAllGivenPokemons)
+                if (_clientSettings.EvolveAllGivenPokemons)
                     await EvolveAllGivenPokemons(client, pokemons);
-                if (ClientSettings.Recycler)
+                if (_clientSettings.Recycler)
                     client.RecycleItems(client);
 
                 await Task.Delay(5000);
                 PrintLevel(client);
-                if (ClientSettings.EggHatchedOutput)
-                    await CheckEggsHatched(client);
-                if (ClientSettings.UseLuckyEggMode == "always")
+                if (_clientSettings.EggHatchedOutput)
+                    await bLogic.Pokemon.CheckEggsHatched(client, _hero.TotalKmWalked);
+                if (_clientSettings.UseLuckyEggMode == "always")
                     await client.UseLuckyEgg(client);
                 ConsoleLevelTitle(profile.Profile.Username, client);
                 await ExecuteFarmingPokestopsAndPokemons(client);
@@ -176,12 +175,12 @@ namespace PokemonGo.RocketAPI.Console
             foreach (var pokemon in pokemons)
             {
                 string pokemonName;
-                if (ClientSettings.Language == "german")
+                if (_clientSettings.Language == "german")
                     pokemonName = Convert.ToString((PokemonId_german)(int)pokemon.PokemonId);
                 else
                     pokemonName = Convert.ToString(pokemon.PokemonId);
 
-                if (!CatchOnlyThesePokemon.Contains(pokemon.PokemonId) && ClientSettings.CatchOnlySpecific)
+                if (!CatchOnlyThesePokemon.Contains(pokemon.PokemonId) && _clientSettings.CatchOnlySpecific)
                 {
                     bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkYellow, $"[{DateTime.Now.ToString("HH:mm:ss")}] We didnt try to catch {pokemonName} because it is filtered");
                     return;
@@ -192,11 +191,11 @@ namespace PokemonGo.RocketAPI.Console
                 CatchPokemonResponse caughtPokemonResponse;
                 do
                 {
-                    if (ClientSettings.RazzBerryMode == "cp")
-                        if (pokemonCP > ClientSettings.RazzBerrySetting)
+                    if (_clientSettings.RazzBerryMode == "cp")
+                        if (pokemonCP > _clientSettings.RazzBerrySetting)
                             await client.UseRazzBerry(client, pokemon.EncounterId, pokemon.SpawnpointId);
-                    if (ClientSettings.RazzBerryMode == "probability")
-                        if (encounterPokemonResponse.CaptureProbability.CaptureProbability_.First() < ClientSettings.RazzBerrySetting)
+                    if (_clientSettings.RazzBerryMode == "probability")
+                        if (encounterPokemonResponse.CaptureProbability.CaptureProbability_.First() < _clientSettings.RazzBerrySetting)
                             await client.UseRazzBerry(client, pokemon.EncounterId, pokemon.SpawnpointId);
                     caughtPokemonResponse = await client.CatchPokemon(pokemon.EncounterId, pokemon.SpawnpointId, pokemon.Latitude, pokemon.Longitude, MiscEnums.Item.ITEM_POKE_BALL, pokemonCP); ; //note: reverted from settings because this should not be part of settings but part of logic
                 } while (caughtPokemonResponse.Status == CatchPokemonResponse.Types.CatchStatus.CatchMissed || caughtPokemonResponse.Status == CatchPokemonResponse.Types.CatchStatus.CatchEscape);
@@ -204,20 +203,20 @@ namespace PokemonGo.RocketAPI.Console
                 {
                     bhelper.Main.ColoredConsoleWrite(ConsoleColor.Green, $"[{DateTime.Now.ToString("HH:mm:ss")}] We caught a {pokemonName} with {encounterPokemonResponse?.WildPokemon?.PokemonData?.Cp} CP");
                     foreach (int xp in caughtPokemonResponse.Scores.Xp)
-                        TotalExperience += xp;
-                    TotalPokemon += 1;
+                        _hero.TotalExperience += xp;
+                    _hero.TotalPokemon += 1;
                 }
                 else
                     bhelper.Main.ColoredConsoleWrite(ConsoleColor.Red, $"[{DateTime.Now.ToString("HH:mm:ss")}] {pokemonName} with {encounterPokemonResponse?.WildPokemon?.PokemonData?.Cp} CP got away..");
 
-                if (ClientSettings.TransferType == "leaveStrongest")
+                if (_clientSettings.TransferType == "leaveStrongest")
                     await TransferAllButStrongestUnwantedPokemon(client);
-                else if (ClientSettings.TransferType == "all")
+                else if (_clientSettings.TransferType == "all")
                     await TransferAllGivenPokemons(client, pokemons2);
-                else if (ClientSettings.TransferType == "duplicate")
+                else if (_clientSettings.TransferType == "duplicate")
                     await TransferDuplicatePokemon(client);
-                else if (ClientSettings.TransferType == "cp")
-                    await TransferAllWeakPokemon(client, ClientSettings.TransferCPThreshold);
+                else if (_clientSettings.TransferType == "cp")
+                    await TransferAllWeakPokemon(client, _clientSettings.TransferCPThreshold);
 
                 await Task.Delay(3000);
             }
@@ -250,7 +249,7 @@ namespace PokemonGo.RocketAPI.Console
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.Cyan, PokeStopOutput.ToString());
 
                 if (fortSearch.ExperienceAwarded != 0)
-                    TotalExperience += (fortSearch.ExperienceAwarded);
+                    _hero.TotalExperience += (fortSearch.ExperienceAwarded);
                 await Task.Delay(15000);
                 await ExecuteCatchAllNearbyPokemons(client);
             }
@@ -372,7 +371,7 @@ namespace PokemonGo.RocketAPI.Console
                         ERROR_POKEMON_IS_EGG = 4;
                     }*/
                     string pokemonName;
-                    if (ClientSettings.Language == "german")
+                    if (_clientSettings.Language == "german")
                         pokemonName = Convert.ToString((PokemonId_german)(int)pokemon.PokemonId);
                     else
                         pokemonName = Convert.ToString(pokemon.PokemonId);
@@ -415,7 +414,7 @@ namespace PokemonGo.RocketAPI.Console
                     {
                         var transfer = await client.TransferPokemon(dubpokemon.Id);
                         string pokemonName;
-                        if (ClientSettings.Language == "german")
+                        if (_clientSettings.Language == "german")
                             pokemonName = Convert.ToString((PokemonId_german)(int)dubpokemon.PokemonId);
                         else
                             pokemonName = Convert.ToString(dubpokemon.PokemonId);
@@ -487,35 +486,22 @@ namespace PokemonGo.RocketAPI.Console
                 if (v != null)
                 {
                     int XpDiff = bhelper.Game.GetXpDiff(v.Level);
-                    if (ClientSettings.LevelOutput == "time")
+                    if (_clientSettings.LevelOutput == "time")
                         bhelper.Main.ColoredConsoleWrite(ConsoleColor.Yellow, $"[{DateTime.Now.ToString("HH:mm:ss")}] Current Level: " + v.Level + " (" + (v.Experience - XpDiff) + "/" + (v.NextLevelXp - XpDiff) + ")");
-                    else if (ClientSettings.LevelOutput == "levelup")
-                        if (Currentlevel != v.Level)
+                    else if (_clientSettings.LevelOutput == "levelup")
+                        if (_hero.Currentlevel != v.Level)
                         {
-                            Currentlevel = v.Level;
+                            _hero.Currentlevel = v.Level;
                             bhelper.Main.ColoredConsoleWrite(ConsoleColor.Magenta, $"[{DateTime.Now.ToString("HH:mm:ss")}] Current Level: " + v.Level + ". XP needed for next Level: " + (v.NextLevelXp - v.Experience));
                         }
                 }
-            if (ClientSettings.LevelOutput == "levelup")
+            if (_clientSettings.LevelOutput == "levelup")
                 await Task.Delay(1000);
             else
-                await Task.Delay(ClientSettings.LevelTimeInterval * 1000);
+                await Task.Delay(_clientSettings.LevelTimeInterval * 1000);
             PrintLevel(client);
         }
-
-        public static async Task CheckEggsHatched(Client client)
-        {
-            try
-            {
-                var inventory = await client.GetInventory();
-                var eggkmwalked = inventory.InventoryDelta.InventoryItems.Select(i => i.InventoryItemData?.EggIncubators.EggIncubator).ToArray();
-                foreach (var v in eggkmwalked)
-                    if (v != null)
-                        if (v.TargetKmWalked > TotalKmWalked)
-                            bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkYellow, "One of your eggs is hatched");
-            }
-            catch (Exception) { }
-        }
+        
 
         public static async Task ConsoleLevelTitle(string Username, Client client)
         {
@@ -526,7 +512,7 @@ namespace PokemonGo.RocketAPI.Console
                 if (v != null)
                 {
                     int XpDiff = bhelper.Game.GetXpDiff(v.Level);
-                    System.Console.Title = string.Format(Username + " | Level: {0:0} - ({1:0} / {2:0}) | Stardust: {3:0}", v.Level, (v.Experience - v.PrevLevelXp - XpDiff), (v.NextLevelXp - v.PrevLevelXp - XpDiff), profile.Profile.Currency.ToArray()[1].Amount) + " | XP/Hour: " + Math.Round(TotalExperience / bhelper.Main.GetRuntime(TimeStarted)) + " | Pokemon/Hour: " + Math.Round(TotalPokemon / bhelper.Main.GetRuntime(TimeStarted));
+                    System.Console.Title = string.Format(Username + " | Level: {0:0} - ({1:0} / {2:0}) | Stardust: {3:0}", v.Level, (v.Experience - v.PrevLevelXp - XpDiff), (v.NextLevelXp - v.PrevLevelXp - XpDiff), profile.Profile.Currency.ToArray()[1].Amount) + " | XP/Hour: " + Math.Round(_hero.TotalExperience / bhelper.Main.GetRuntime(_hero.TimeStarted)) + " | Pokemon/Hour: " + Math.Round(_hero.TotalPokemon / bhelper.Main.GetRuntime(_hero.TimeStarted));
                 }
             await Task.Delay(1000);
             ConsoleLevelTitle(Username, client);
