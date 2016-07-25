@@ -17,7 +17,7 @@ using System.Text;
 using Google.Protobuf;
 using PokemonGo.RocketAPI.Helpers;
 using System.IO;
-
+using bhelper;
 
 
 namespace PokemonGo.RocketAPI.GUI
@@ -79,7 +79,9 @@ namespace PokemonGo.RocketAPI.GUI
 
         public static async void Execute()
         {
-            var client = new Client(_hero.ClientSettings);
+            var client = new Client(new bhelper.Settings());
+            _hero = new Hero(client);
+
             try
             {
                 bhelper.Main.CheckVersion(Assembly.GetExecutingAssembly().GetName());

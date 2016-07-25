@@ -78,8 +78,8 @@ namespace PokemonGo.RocketAPI.Console
 
         private static async void Execute()
         {
-            var client = new Client(_hero.ClientSettings);
-            _hero = new Hero();
+            var client = new Client(new bhelper.Settings());
+            _hero = new Hero(client);
 
             try
             {
