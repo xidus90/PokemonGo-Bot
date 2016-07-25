@@ -27,14 +27,20 @@ namespace PokemonGo.RocketAPI.GUI
 
         private static Logger logger;
 
-
+        public static MainWindow main;
+        public string Status
+        {
+            get { return Title.ToString(); }
+            set { Dispatcher.Invoke(new Action(() => { Title = value; })); }
+        }
         public MainWindow()
         {
             InitializeComponent();
-            logger = new Logger(Output);
-            System.Console.SetOut(logger);
-            System.Console.SetError(logger);
+            main = this;
 
+            logger = new Logger(Output);
+            Console.SetOut(logger);
+            Console.SetError(logger);
         }
 
         private async void buttonStart_Click(object sender, RoutedEventArgs e)
@@ -63,5 +69,6 @@ namespace PokemonGo.RocketAPI.GUI
             var value = GetWindowLong(hwnd, GWL_STYLE);
             SetWindowLong(hwnd, GWL_STYLE, (int)(value & ~WS_MAXIMIZEBOX));
         }
+
     }
 }

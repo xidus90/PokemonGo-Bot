@@ -1,5 +1,3 @@
-#region
-
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -20,13 +18,13 @@ using Google.Protobuf;
 using PokemonGo.RocketAPI.Helpers;
 using System.IO;
 
-#endregion
+
 
 namespace PokemonGo.RocketAPI.GUI
 {
     internal class Program
     {
-        private static ISettings ClientSettings = new Settings();
+        private static ISettings ClientSettings = new bhelper.Settings();
         private static int Currentlevel = -1;
         private static int TotalExperience = 0;
         private static int TotalPokemon = 0;
@@ -162,20 +160,14 @@ namespace PokemonGo.RocketAPI.GUI
                     if (v != null)
                         TotalKmWalked = v.KmWalked;
 
-                ColoredConsoleWrite(ConsoleColor.Yellow, "----------------------------");
-                if (ClientSettings.AuthType == AuthType.Ptc)
-                {
-                    ColoredConsoleWrite(ConsoleColor.Cyan, "Account: " + ClientSettings.PtcUsername);
-                    ColoredConsoleWrite(ConsoleColor.Cyan, "Password: " + ClientSettings.PtcPassword);
-                }
-                ColoredConsoleWrite(ConsoleColor.DarkGray, "Latitude: " + ClientSettings.DefaultLatitude);
-                ColoredConsoleWrite(ConsoleColor.DarkGray, "Longitude: " + ClientSettings.DefaultLongitude);
-                ColoredConsoleWrite(ConsoleColor.DarkGray, "Your Account:");
-                ColoredConsoleWrite(ConsoleColor.DarkGray, "Name: " + profile.Profile.Username);
-                ColoredConsoleWrite(ConsoleColor.DarkGray, "Team: " + profile.Profile.Team);
-                ColoredConsoleWrite(ConsoleColor.DarkGray, "Stardust: " + profile.Profile.Currency.ToArray()[1].Amount);
+                ColoredConsoleWrite(ConsoleColor.Yellow, "+-------------- account info ---------------+");
+                ColoredConsoleWrite(ConsoleColor.DarkGray, " Name: " + profile.Profile.Username);
+                ColoredConsoleWrite(ConsoleColor.DarkGray, " Team: " + profile.Profile.Team);
+                ColoredConsoleWrite(ConsoleColor.DarkGray, " Stardust: " + profile.Profile.Currency.ToArray()[1].Amount);
                 ColoredConsoleWrite(ConsoleColor.DarkGray, "Total km walked: " + TotalKmWalked);
-                ColoredConsoleWrite(ConsoleColor.Yellow, "----------------------------");
+                ColoredConsoleWrite(ConsoleColor.DarkGray, " Latitude: " + ClientSettings.DefaultLatitude);
+                ColoredConsoleWrite(ConsoleColor.DarkGray, " Longitude: " + ClientSettings.DefaultLongitude);
+                ColoredConsoleWrite(ConsoleColor.Yellow, "+--------------------------------------------+");
                 if (ClientSettings.TransferType == "leaveStrongest")
                     await TransferAllButStrongestUnwantedPokemon(client);
                 else if (ClientSettings.TransferType == "all")
@@ -190,14 +182,18 @@ namespace PokemonGo.RocketAPI.GUI
                     await EvolveAllGivenPokemons(client, pokemons);
                 if (ClientSettings.Recycler)
                     client.RecycleItems(client);
-
+                
                 await Task.Delay(5000);
+
                 PrintLevel(client);
+                UpdateFormTitle(client);
+
+
                 if (ClientSettings.EggHatchedOutput)
                     await CheckEggsHatched(client);
                 if (ClientSettings.UseLuckyEggMode == "always")
                     await client.UseLuckyEgg(client);
-                ConsoleLevelTitle(profile.Profile.Username, client);
+
                 await ExecuteFarmingPokestopsAndPokemons(client);
                 ColoredConsoleWrite(ConsoleColor.Red, $"[{DateTime.Now.ToString("HH:mm:ss")}] No nearby usefull locations found. Please wait 10 seconds.");
                 await Task.Delay(10000);
@@ -211,6 +207,22 @@ namespace PokemonGo.RocketAPI.GUI
             catch (Exception ex) { ColoredConsoleWrite(ConsoleColor.White, ex.ToString()); Execute(); }
         }
 
+        public static async Task UpdateFormTitle(Client client)
+        {
+            var inventory = await client.GetInventory();
+            var stats = inventory.InventoryDelta.InventoryItems.Select(i => i.InventoryItemData?.PlayerStats).ToArray();
+            var profile = await client.GetProfile();
+            foreach (var v in stats)
+                if (v != null)
+                {
+                    int XpDiff = bhelper.Game.GetXpDiff(v.Level);
+
+                    MainWindow.main.Status = string.Format("Level: {0:0} - [{1:0}/ {2:0}] | Stardust: {3:0}", v.Level, (v.Experience - v.PrevLevelXp - XpDiff), (v.NextLevelXp - v.PrevLevelXp - XpDiff), profile.Profile.Currency.ToArray()[1].Amount);
+                    
+                }
+            await Task.Delay(1000);
+            UpdateFormTitle(client);
+        }
         private static async Task ExecuteCatchAllNearbyPokemons(Client client)
         {
             var mapObjects = await client.GetMapObjects();
@@ -520,20 +532,25 @@ namespace PokemonGo.RocketAPI.GUI
             foreach (var v in stats)
                 if (v != null)
                 {
-                    int XpDiff = GetXpDiff(client, v.Level);
+                    int XpDiff = bhelper.Game.GetXpDiff(v.Level);
                     if (ClientSettings.LevelOutput == "time")
-                        ColoredConsoleWrite(ConsoleColor.Yellow, $"[{DateTime.Now.ToString("HH:mm:ss")}] Current Level: " + v.Level + " (" + (v.Experience - XpDiff) + "/" + (v.NextLevelXp - XpDiff) + ")");
+                        ColoredConsoleWrite(ConsoleColor.Yellow,
+                            $"[{DateTime.Now.ToString("HH:mm:ss")}] Current Level: " + v.Level + " (" +
+                            (v.Experience - XpDiff) + "/" + (v.NextLevelXp - XpDiff) + ")");
                     else if (ClientSettings.LevelOutput == "levelup")
                         if (Currentlevel != v.Level)
                         {
                             Currentlevel = v.Level;
-                            ColoredConsoleWrite(ConsoleColor.Magenta, $"[{DateTime.Now.ToString("HH:mm:ss")}] Current Level: " + v.Level + ". XP needed for next Level: " + (v.NextLevelXp - v.Experience));
+                            ColoredConsoleWrite(ConsoleColor.Magenta,
+                                $"[{DateTime.Now.ToString("HH:mm:ss")}] Current Level: " + v.Level +
+                                ". XP needed for next Level: " + (v.NextLevelXp - v.Experience));
                         }
                 }
             if (ClientSettings.LevelOutput == "levelup")
                 await Task.Delay(1000);
             else
-                await Task.Delay(ClientSettings.LevelTimeInterval * 1000);
+                await Task.Delay(ClientSettings.LevelTimeInterval*1000);
+
             PrintLevel(client);
         }
 
@@ -559,99 +576,12 @@ namespace PokemonGo.RocketAPI.GUI
             foreach (var v in stats)
                 if (v != null)
                 {
-                    int XpDiff = GetXpDiff(client, v.Level);
+                    int XpDiff = bhelper.Game.GetXpDiff(v.Level);
                     System.Console.Title = string.Format(Username + " | Level: {0:0} - ({1:0} / {2:0}) | Stardust: {3:0}", v.Level, (v.Experience - v.PrevLevelXp - XpDiff), (v.NextLevelXp - v.PrevLevelXp - XpDiff), profile.Profile.Currency.ToArray()[1].Amount) + " | XP/Hour: " + Math.Round(TotalExperience / GetRuntime()) + " | Pokemon/Hour: " + Math.Round(TotalPokemon / GetRuntime());
                 }
             await Task.Delay(1000);
             ConsoleLevelTitle(Username, client);
         }
-
-        public static int GetXpDiff(Client client, int Level)
-        {
-            switch (Level)
-            {
-                case 1:
-                    return 0;
-                case 2:
-                    return 1000;
-                case 3:
-                    return 2000;
-                case 4:
-                    return 3000;
-                case 5:
-                    return 4000;
-                case 6:
-                    return 5000;
-                case 7:
-                    return 6000;
-                case 8:
-                    return 7000;
-                case 9:
-                    return 8000;
-                case 10:
-                    return 9000;
-                case 11:
-                    return 10000;
-                case 12:
-                    return 10000;
-                case 13:
-                    return 10000;
-                case 14:
-                    return 10000;
-                case 15:
-                    return 15000;
-                case 16:
-                    return 20000;
-                case 17:
-                    return 20000;
-                case 18:
-                    return 20000;
-                case 19:
-                    return 25000;
-                case 20:
-                    return 25000;
-                case 21:
-                    return 50000;
-                case 22:
-                    return 75000;
-                case 23:
-                    return 100000;
-                case 24:
-                    return 125000;
-                case 25:
-                    return 150000;
-                case 26:
-                    return 190000;
-                case 27:
-                    return 200000;
-                case 28:
-                    return 250000;
-                case 29:
-                    return 300000;
-                case 30:
-                    return 350000;
-                case 31:
-                    return 500000;
-                case 32:
-                    return 500000;
-                case 33:
-                    return 750000;
-                case 34:
-                    return 1000000;
-                case 35:
-                    return 1250000;
-                case 36:
-                    return 1500000;
-                case 37:
-                    return 2000000;
-                case 38:
-                    return 2500000;
-                case 39:
-                    return 1000000;
-                case 40:
-                    return 1000000;
-            }
-            return 0;
-        }
+        
     }
 }

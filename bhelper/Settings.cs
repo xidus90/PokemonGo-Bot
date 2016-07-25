@@ -1,5 +1,3 @@
-#region
-
 using System.Configuration;
 using System.Globalization;
 using System.Runtime.CompilerServices;
@@ -7,11 +5,10 @@ using PokemonGo.RocketAPI.Enums;
 using System.Collections.Generic;
 using AllEnum;
 using System;
-using System.Linq;
+using PokemonGo.RocketAPI;
 
-#endregion
 
-namespace PokemonGo.RocketAPI.GUI
+namespace bhelper
 {
     public class Settings : ISettings
     {

@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokemonGo.RocketAPI.Console
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokemonGo.RocketAPI.GUI", "PokemonGo\RocketAPI\GUI\PokemonGo.RocketAPI.GUI.csproj", "{AFCEF13E-887C-40D8-92BD-64DD02A8DD82}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bhelper", "bhelper\bhelper.csproj", "{A4807269-D99F-48F5-9678-E9C4EE6A02D0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{AFCEF13E-887C-40D8-92BD-64DD02A8DD82}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AFCEF13E-887C-40D8-92BD-64DD02A8DD82}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AFCEF13E-887C-40D8-92BD-64DD02A8DD82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4807269-D99F-48F5-9678-E9C4EE6A02D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4807269-D99F-48F5-9678-E9C4EE6A02D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4807269-D99F-48F5-9678-E9C4EE6A02D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4807269-D99F-48F5-9678-E9C4EE6A02D0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
