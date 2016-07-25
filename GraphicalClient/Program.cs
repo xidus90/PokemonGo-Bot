@@ -65,9 +65,9 @@ namespace PokemonGo.RocketAPI.GUI
 
 
                 if (_hero.ClientSettings.EggHatchedOutput)
-                    await bLogic.Item.CheckEggsHatched(_hero);
+                    bLogic.Item.CheckEggsHatched(_hero);
                 if (_hero.ClientSettings.UseLuckyEggMode == "always")
-                    await _hero.Client.UseLuckyEgg(_hero.Client);
+                    _hero.Client.UseLuckyEgg(_hero.Client);
 
                 await bLogic.Pokemon.ExecuteFarmingPokestopsAndPokemons(_hero);
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.Red, $"[{DateTime.Now.ToString("HH:mm:ss")}] No nearby usefull locations found. Please wait 10 seconds.");

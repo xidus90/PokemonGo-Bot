@@ -19,10 +19,10 @@ namespace bhelper
             Client = client;
             ClientSettings = new Settings();
 
-            Currentlevel = 1;
-            TotalExperience = 1;
-            TotalPokemon = 1;
-            TotalKmWalked = 1;
+            Currentlevel = -1;
+            TotalExperience = 0;
+            TotalPokemon = 0;
+            TotalKmWalked = 0;
             TimeStarted = DateTime.Now;
             AllowedToRun = true;
 

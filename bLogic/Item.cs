@@ -10,7 +10,7 @@ namespace bLogic
     public class Item
     {
         /// <summary>
-        /// Check for hatchet eggs
+        /// Check for hatched eggs
         /// </summary>
         /// <param name="hero"></param>
         /// <returns></returns>
@@ -26,6 +26,8 @@ namespace bLogic
                             bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkYellow, "One of your eggs is hatched");
             }
             catch (Exception) { }
+            Task.Delay(60000);
+            CheckEggsHatched(hero);
         }
 
         public static string GetFriendlyItemsString(IEnumerable<FortSearchResponse.Types.ItemAward> items)
