@@ -86,7 +86,8 @@ namespace PokemonGo.RocketAPI.Console
             var client = new Client(ClientSettings);
             try
             {
-                bhelper.Main.CheckVersion();
+                bhelper.Main.CheckVersion(Assembly.GetExecutingAssembly().GetName());
+
                 if (ClientSettings.AuthType == AuthType.Ptc)
                     await client.DoPtcLogin(ClientSettings.PtcUsername, ClientSettings.PtcPassword);
                 else if (ClientSettings.AuthType == AuthType.Google)

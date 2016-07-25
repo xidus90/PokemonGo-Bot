@@ -12,39 +12,44 @@ namespace bhelper
 {
     public static class Main
     {
-        public static void CheckVersion()
+        public static bool CheckVersion(AssemblyName localAssembly)
         {
             try
             {
-                var match =
-                    new Regex(
-                        @"\[assembly\: AssemblyVersion\(""(\d{1,})\.(\d{1,})\.(\d{1,})\.(\d{1,})""\)\]")
-                        .Match(DownloadServerVersion());
+                var downloadedVersionRegex =
+                    new Regex( @"\[assembly\: AssemblyVersion\(""(\d{1,})\.(\d{1,})\.(\d{1,})\.(\d{1,})""\)\]")
+                        .Match(GetMainVersion());
 
-                if (!match.Success) return;
-                var gitVersion =
+                if (!downloadedVersionRegex.Success)
+                    return false;
+
+                var cleanedServerAssemblyVersion =
                     new Version(
                         string.Format(
                             "{0}.{1}.{2}.{3}",
-                            match.Groups[1],
-                            match.Groups[2],
-                            match.Groups[3],
-                            match.Groups[4]));
-                if (gitVersion <= Assembly.GetExecutingAssembly().GetName().Version)
+                            downloadedVersionRegex.Groups[1],
+                            downloadedVersionRegex.Groups[2],
+                            downloadedVersionRegex.Groups[3],
+                            downloadedVersionRegex.Groups[4]));
+
+                if (cleanedServerAssemblyVersion <= localAssembly.Version)
                 {
                     //ColoredConsoleWrite(ConsoleColor.Yellow, "Awesome! You have already got the newest version! " + Assembly.GetExecutingAssembly().GetName().Version);
-                    return;
+                    return true;
                 }
 
-                ColoredConsoleWrite(ConsoleColor.White, "There is a new Version available: " + gitVersion);
+                ColoredConsoleWrite(ConsoleColor.White, "There is a new Version available: " + cleanedServerAssemblyVersion);
             }
             catch (Exception)
             {
                 ColoredConsoleWrite(ConsoleColor.White, "Unable to check for updates now...");
+                return false;
             }
+
+            return false;
         }
 
-        private static string DownloadServerVersion()
+        private static string GetMainVersion()
         {
             using (var wC = new WebClient())
                 return
