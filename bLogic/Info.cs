@@ -8,7 +8,7 @@ namespace bLogic
 {
     public static class Info
     {
-        public static bool StartUp(Hero hero, GetPlayerResponse profileResponse)
+        public static bool StartUpPrint(Hero hero, GetPlayerResponse profileResponse)
         {
             try
             {
@@ -22,13 +22,13 @@ namespace bLogic
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, " Team: " + profileResponse.Profile.Team);
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, " Stardust: " + profileResponse.Profile.Currency.ToArray()[1].Amount);
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, " Distance traveled: " + String.Format("{0:0.00} km", hero.TotalKmWalked));
-                bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, " Latitude: " + hero.ClientSettings.DefaultLatitude);
-                bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, " Longitude: " + hero.ClientSettings.DefaultLongitude);
+                bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, " Latitude: " + String.Format("{0:0.00} degree", hero.ClientSettings.DefaultLatitude));
+                bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, " Longitude: " + String.Format("{0:0.00} degree", hero.ClientSettings.DefaultLongitude));
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.Yellow, "+--------------------------------------------+");
             }
             catch (Exception crap)
             {
-                bhelper.Main.ColoredConsoleWrite(ConsoleColor.Yellow, "Info.StartUp Exception: " + crap.Message);
+                bhelper.Main.ColoredConsoleWrite(ConsoleColor.Yellow, "Info.StartUpPrint Exception: " + crap.Message);
                 return false;
             }
 

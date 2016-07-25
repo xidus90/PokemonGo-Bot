@@ -41,7 +41,7 @@ namespace PokemonGo.RocketAPI.GUI
                     if (v != null)
                         _hero.TotalKmWalked = v.KmWalked;
 
-                bLogic.Info.StartUp(_hero, profile);
+                bLogic.Info.StartUpPrint(_hero, profile);
                 
                 if (_hero.ClientSettings.TransferType == "leaveStrongest")
                     await bLogic.Pokemon.TransferAllButStrongestUnwantedPokemon(_hero);
