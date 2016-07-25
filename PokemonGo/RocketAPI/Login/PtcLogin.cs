@@ -41,10 +41,12 @@ namespace PokemonGo.RocketAPI.Login
                             new KeyValuePair<string, string>("username", username),
                             new KeyValuePair<string, string>("password", password)
                         }));
-
-                var ticketId = HttpUtility.ParseQueryString(loginResp.Headers.Location.Query)["ticket"];
-                if (ticketId == null)
+                if (HttpUtility.ParseQueryString(loginResp.Headers.Location.Query)["ticket"] == null || loginResp.Headers.Location == null)
+                {
+                    if (loginResp.StatusCode == HttpStatusCode.OK && !loginResp.Headers.Contains("Set-Cookies"))
+                        throw new AccountNotVerifiedException();
                     throw new PtcOfflineException();
+                }
 
                 //Get tokenvar 
                 var tokenResp = await tempHttpClient.PostAsync(Resources.PtcLoginOauth,
@@ -57,7 +59,7 @@ namespace PokemonGo.RocketAPI.Login
                             new KeyValuePair<string, string>("client_secret",
                                 "w8ScCUXJQc6kXKw8FiOhd8Fixzht18Dq3PEVkUCP5ZPxtgyWsbTvWHFLm2wNY0JR"),
                             new KeyValuePair<string, string>("grant_type", "refresh_token"),
-                            new KeyValuePair<string, string>("code", ticketId)
+                            new KeyValuePair<string, string>("code", HttpUtility.ParseQueryString(loginResp.Headers.Location.Query)["ticket"])
                         }));
 
                 var tokenData = await tokenResp.Content.ReadAsStringAsync();
