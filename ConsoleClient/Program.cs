@@ -57,7 +57,7 @@ namespace PokemonGo.RocketAPI.Console
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.Yellow, "----------------------------");
                 if (_hero.ClientSettings.AuthType == AuthType.Ptc)
                 {
-                    bhelper.Main.ColoredConsoleWrite(ConsoleColor.Cyan, "Account: " + _hero.ClientSettings.PtcUsername);
+                    bhelper.Main.ColoredConsoleWrite(ConsoleColor.Cyan, "Account Name: " + _hero.ClientSettings.PtcUsername);
                     // we shouldnt show the password because data safety is always a good idea
                     //bhelper.Main.ColoredConsoleWrite(ConsoleColor.Cyan, "Password: " + _clientSettings.PtcPassword);
                 }

@@ -54,10 +54,11 @@ namespace PokemonGo.RocketAPI.GUI
                         _hero.TotalKmWalked = v.KmWalked;
 
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.Yellow, "+-------------- account info ---------------+");
-                bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, " Name: " + profile.Profile.Username);
+                bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, " Account Name: " + _hero.ClientSettings.PtcUsername);
+                bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, " Hero Name: " + profile.Profile.Username);
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, " Team: " + profile.Profile.Team);
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, " Stardust: " + profile.Profile.Currency.ToArray()[1].Amount);
-                bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, "Total km walked: " + _hero.TotalKmWalked);
+                bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, " Total km walked: " + _hero.TotalKmWalked);
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, " Latitude: " + _hero.ClientSettings.DefaultLatitude);
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, " Longitude: " + _hero.ClientSettings.DefaultLongitude);
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.Yellow, "+--------------------------------------------+");
