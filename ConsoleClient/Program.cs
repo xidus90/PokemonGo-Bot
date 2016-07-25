@@ -134,7 +134,7 @@ namespace PokemonGo.RocketAPI.Console
                 if (playerStatistic != null)
                 {
                     int XpDiff = bhelper.Game.GetXpDiff(playerStatistic.Level);
-                    System.Console.Title = string.Format(username + " | Level: {0:0} | XP/H {1:0} | POKE/H {2:0}", playerStatistic.Level, Math.Round(bLogic.Pokemon.TotalExperience / bhelper.Main.GetRuntime(_hero.TimeStarted)), Math.Round(bLogic.Pokemon.TotalPokemon / bhelper.Main.GetRuntime(_hero.TimeStarted)));
+                    System.Console.Title = string.Format(username + " | LEVEL: {0:0} | XP/H: {1:0} | POKE/H: {2:0}", playerStatistic.Level, Math.Round(bLogic.Pokemon.TotalExperience / bhelper.Main.GetRuntime(_hero.TimeStarted)), Math.Round(bLogic.Pokemon.TotalPokemon / bhelper.Main.GetRuntime(_hero.TimeStarted)));
                 }
             await Task.Delay(1000);
 
