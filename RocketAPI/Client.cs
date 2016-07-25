@@ -533,7 +533,7 @@ namespace PokemonGo.RocketAPI
                 UseItemRequest useLuckyEgg = await client.UseItem(ItemId.ItemLuckyEgg);
                 ColoredConsoleWrite(ConsoleColor.Green, $"[{DateTime.Now.ToString("HH:mm:ss")}] Used Lucky Egg. Remaining: {LuckyEgg.Count}");
             }
-            await Task.Delay(10 * 60 * 1000);
+            await Task.Delay(12 * 60 * 1000);
             UseLuckyEgg(client);
         }
 
