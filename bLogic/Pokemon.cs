@@ -14,6 +14,12 @@ namespace bLogic
 {
     public class Pokemon
     {
+        /// <summary>
+        /// iterating through a given list of pokemon we want to evolve
+        /// </summary>
+        /// <param name="hero"></param>
+        /// <param name="pokemonToEvolve"></param>
+        /// <returns></returns>
         public static async Task EvolveAllGivenPokemons(Hero hero, IEnumerable<PokemonData> pokemonToEvolve)
         {
             foreach (var pokemon in pokemonToEvolve)
@@ -64,6 +70,11 @@ namespace bLogic
                 await Task.Delay(3000);
             }
         }
+        /// <summary>
+        /// Check for hatchet eggs
+        /// </summary>
+        /// <param name="hero"></param>
+        /// <returns></returns>
         public static async Task CheckEggsHatched(Hero hero)
         {
             try
@@ -78,6 +89,11 @@ namespace bLogic
             catch (Exception) { }
         }
 
+        /// <summary>
+        /// Catch all nearby pokemon
+        /// </summary>
+        /// <param name="hero"></param>
+        /// <returns></returns>
         public static async Task ExecuteCatchAllNearbyPokemons(Hero hero)
         {
             var mapObjects = await hero.Client.GetMapObjects();
@@ -145,11 +161,40 @@ namespace bLogic
             }
         }
 
-
+        /// <summary>
+        /// Print a level related event to RichTextBox or console log
+        /// </summary>
+        /// <param name="client"></param>
+        /// <returns></returns>
+        public static async Task PrintLevel(Hero hero)
+        {
+            var inventory = await hero.Client.GetInventory();
+            var stats = inventory.InventoryDelta.InventoryItems.Select(i => i.InventoryItemData?.PlayerStats).ToArray();
+            foreach (var v in stats)
+                if (v != null)
+                {
+                    int XpDiff = bhelper.Game.GetXpDiff(v.Level);
+                    if (hero.ClientSettings.LevelOutput == "time")
+                        bhelper.Main.ColoredConsoleWrite(ConsoleColor.Yellow, $"[{DateTime.Now.ToString("HH:mm:ss")}] Current Level: " + v.Level + " (" + (v.Experience - XpDiff) + "/" + (v.NextLevelXp - XpDiff) + ")");
+                    else if (hero.ClientSettings.LevelOutput == "levelup")
+                        if (hero.Currentlevel != v.Level)
+                        {
+                            hero.Currentlevel = v.Level;
+                            bhelper.Main.ColoredConsoleWrite(ConsoleColor.Magenta, $"[{DateTime.Now.ToString("HH:mm:ss")}] Current Level: " + v.Level + ". XP needed for next Level: " + (v.NextLevelXp - v.Experience));
+                        }
+                }
+            if (hero.ClientSettings.LevelOutput == "levelup")
+                await Task.Delay(1000);
+            else
+                await Task.Delay(hero.ClientSettings.LevelTimeInterval * 1000);
+        }
+        /// <summary>
+        /// Transfer duplicate weak pokemon to the doctor
+        /// </summary>
+        /// <param name="hero"></param>
+        /// <returns></returns>
         public static async Task TransferAllButStrongestUnwantedPokemon(Hero hero)
         {
-            //ColoredConsoleWrite(ConsoleColor.White, $"[{DateTime.Now.ToString("HH:mm:ss")}] Firing up the meat grinder");
-
             PokemonId[] unwantedPokemonTypes = new[]
             {
                 PokemonId.Pidgey,
