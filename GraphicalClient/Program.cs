@@ -96,7 +96,8 @@ namespace PokemonGo.RocketAPI.GUI
             foreach (var playerStatistic in stats)
                 if (playerStatistic != null)
                 {
-                    MainWindow.main.SetMainFormTitle = string.Format(profile.Profile.Username + " | Level: {0:0} | XP/H: {1:0} | POKE/H: {2:0}", playerStatistic.Level, Math.Round(bLogic.Pokemon.TotalExperience / bhelper.Main.GetRuntime(_hero.TimeStarted)), Math.Round(bLogic.Pokemon.TotalPokemon / bhelper.Main.GetRuntime(_hero.TimeStarted)));
+                    int XpDiff = bhelper.Game.GetXpDiff(playerStatistic.Level);
+                    MainWindow.main.SetMainFormTitle = string.Format(profile.Profile.Username + " | LEVEL: {0:0} - ({1:0}) | SD: {2:0} | XP/H: {3:0} | POKE/H: {4:0}", playerStatistic.Level, string.Format("{0:#,##0}", (playerStatistic.Experience - playerStatistic.PrevLevelXp - XpDiff)) + "/" + string.Format("{0:#,##0}", (playerStatistic.NextLevelXp - playerStatistic.PrevLevelXp - XpDiff)), string.Format("{0:#,##0}", profile.Profile.Currency.ToArray()[1].Amount), string.Format("{0:#,##0}", Math.Round(bLogic.Pokemon.TotalExperience / bhelper.Main.GetRuntime(_hero.TimeStarted))), Math.Round(bLogic.Pokemon.TotalPokemon / bhelper.Main.GetRuntime(_hero.TimeStarted)));
                 }
             await Task.Delay(1000);
             UpdateFormTitle();
