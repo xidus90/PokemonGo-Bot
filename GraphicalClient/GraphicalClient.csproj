@@ -94,6 +94,10 @@
       <Project>{a4807269-d99f-48f5-9678-e9c4ee6a02d0}</Project>
       <Name>bhelper</Name>
     </ProjectReference>
+    <ProjectReference Include="..\bLogic\blogic.csproj">
+      <Project>{368a0e69-3c32-4d6b-b8cf-e2dd57f5d7a0}</Project>
+      <Name>blogic</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RocketAPI\RocketAPI.csproj">
       <Project>{05D2DA44-1B8E-4CF7-94ED-4D52451CD095}</Project>
       <Name>RocketAPI</Name>

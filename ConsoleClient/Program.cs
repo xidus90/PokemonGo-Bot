@@ -23,9 +23,7 @@ namespace PokemonGo.RocketAPI.Console
 {
     internal class Program
     {
-        private static ISettings _clientSettings = new bhelper.Settings();
         public static bhelper.Hero _hero;
-
 
         private static async Task EvolveAllGivenPokemons(Client client, IEnumerable<PokemonData> pokemonToEvolve)
         {
@@ -80,16 +78,16 @@ namespace PokemonGo.RocketAPI.Console
 
         private static async void Execute()
         {
-            var client = new Client(_clientSettings);
+            var client = new Client(_hero.ClientSettings);
             _hero = new Hero(client);
             
             try
             {
                 bhelper.Main.CheckVersion(Assembly.GetExecutingAssembly().GetName());
 
-                if (_clientSettings.AuthType == AuthType.Ptc)
-                    await client.DoPtcLogin(_clientSettings.PtcUsername, _clientSettings.PtcPassword);
-                else if (_clientSettings.AuthType == AuthType.Google)
+                if (_hero.ClientSettings.AuthType == AuthType.Ptc)
+                    await client.DoPtcLogin(_hero.ClientSettings.PtcUsername, _hero.ClientSettings.PtcPassword);
+                else if (_hero.ClientSettings.AuthType == AuthType.Google)
                     await _hero.Client.DoGoogleLogin();
 
                 await client.SetServer();
@@ -106,40 +104,40 @@ namespace PokemonGo.RocketAPI.Console
                         _hero.TotalKmWalked = v.KmWalked;
 
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.Yellow, "----------------------------");
-                if (_clientSettings.AuthType == AuthType.Ptc)
+                if (_hero.ClientSettings.AuthType == AuthType.Ptc)
                 {
-                    bhelper.Main.ColoredConsoleWrite(ConsoleColor.Cyan, "Account: " + _clientSettings.PtcUsername);
+                    bhelper.Main.ColoredConsoleWrite(ConsoleColor.Cyan, "Account: " + _hero.ClientSettings.PtcUsername);
                     // we shouldnt show the password because data safety is always a good idea
                     //bhelper.Main.ColoredConsoleWrite(ConsoleColor.Cyan, "Password: " + _clientSettings.PtcPassword);
                 }
-                bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, "Latitude: " + _clientSettings.DefaultLatitude);
-                bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, "Longitude: " + _clientSettings.DefaultLongitude);
+                bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, "Latitude: " + _hero.ClientSettings.DefaultLatitude);
+                bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, "Longitude: " + _hero.ClientSettings.DefaultLongitude);
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, "Your Account:");
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, "Name: " + profile.Profile.Username);
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, "Team: " + profile.Profile.Team);
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, "Stardust: " + profile.Profile.Currency.ToArray()[1].Amount);
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, "Total km walked: " + _hero.TotalKmWalked);
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.Yellow, "----------------------------");
-                if (_clientSettings.TransferType == "leaveStrongest")
+                if (_hero.ClientSettings.TransferType == "leaveStrongest")
                     await TransferAllButStrongestUnwantedPokemon(client);
-                else if (_clientSettings.TransferType == "all")
+                else if (_hero.ClientSettings.TransferType == "all")
                     await TransferAllGivenPokemons(client, pokemons);
-                else if (_clientSettings.TransferType == "duplicate")
+                else if (_hero.ClientSettings.TransferType == "duplicate")
                     await TransferDuplicatePokemon(client);
-                else if (_clientSettings.TransferType == "cp")
-                    await TransferAllWeakPokemon(client, _clientSettings.TransferCPThreshold);
+                else if (_hero.ClientSettings.TransferType == "cp")
+                    await TransferAllWeakPokemon(client, _hero.ClientSettings.TransferCPThreshold);
                 else
                     bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, $"[{DateTime.Now.ToString("HH:mm:ss")}] Transfering pokemon disabled");
-                if (_clientSettings.EvolveAllGivenPokemons)
+                if (_hero.ClientSettings.EvolveAllGivenPokemons)
                     await EvolveAllGivenPokemons(client, pokemons);
-                if (_clientSettings.Recycler)
+                if (_hero.ClientSettings.Recycler)
                     client.RecycleItems(client);
 
                 await Task.Delay(5000);
                 PrintLevel(client);
-                if (_clientSettings.EggHatchedOutput)
-                    await bLogic.Pokemon.CheckEggsHatched(client, _hero.TotalKmWalked);
-                if (_clientSettings.UseLuckyEggMode == "always")
+                if (_hero.ClientSettings.EggHatchedOutput)
+                    await bLogic.Pokemon.CheckEggsHatched(_hero);
+                if (_hero.ClientSettings.UseLuckyEggMode == "always")
                     await client.UseLuckyEgg(client);
                 ConsoleLevelTitle(profile.Profile.Username, client);
                 await ExecuteFarmingPokestopsAndPokemons(client);
@@ -175,12 +173,12 @@ namespace PokemonGo.RocketAPI.Console
             foreach (var pokemon in pokemons)
             {
                 string pokemonName;
-                if (_clientSettings.Language == "german")
+                if (_hero.ClientSettings.Language == "german")
                     pokemonName = Convert.ToString((PokemonId_german)(int)pokemon.PokemonId);
                 else
                     pokemonName = Convert.ToString(pokemon.PokemonId);
 
-                if (!CatchOnlyThesePokemon.Contains(pokemon.PokemonId) && _clientSettings.CatchOnlySpecific)
+                if (!CatchOnlyThesePokemon.Contains(pokemon.PokemonId) && _hero.ClientSettings.CatchOnlySpecific)
                 {
                     bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkYellow, $"[{DateTime.Now.ToString("HH:mm:ss")}] We didnt try to catch {pokemonName} because it is filtered");
                     return;
@@ -191,11 +189,11 @@ namespace PokemonGo.RocketAPI.Console
                 CatchPokemonResponse caughtPokemonResponse;
                 do
                 {
-                    if (_clientSettings.RazzBerryMode == "cp")
-                        if (pokemonCP > _clientSettings.RazzBerrySetting)
+                    if (_hero.ClientSettings.RazzBerryMode == "cp")
+                        if (pokemonCP > _hero.ClientSettings.RazzBerrySetting)
                             await client.UseRazzBerry(client, pokemon.EncounterId, pokemon.SpawnpointId);
-                    if (_clientSettings.RazzBerryMode == "probability")
-                        if (encounterPokemonResponse.CaptureProbability.CaptureProbability_.First() < _clientSettings.RazzBerrySetting)
+                    if (_hero.ClientSettings.RazzBerryMode == "probability")
+                        if (encounterPokemonResponse.CaptureProbability.CaptureProbability_.First() < _hero.ClientSettings.RazzBerrySetting)
                             await client.UseRazzBerry(client, pokemon.EncounterId, pokemon.SpawnpointId);
                     caughtPokemonResponse = await client.CatchPokemon(pokemon.EncounterId, pokemon.SpawnpointId, pokemon.Latitude, pokemon.Longitude, MiscEnums.Item.ITEM_POKE_BALL, pokemonCP); ; //note: reverted from settings because this should not be part of settings but part of logic
                 } while (caughtPokemonResponse.Status == CatchPokemonResponse.Types.CatchStatus.CatchMissed || caughtPokemonResponse.Status == CatchPokemonResponse.Types.CatchStatus.CatchEscape);
@@ -209,14 +207,14 @@ namespace PokemonGo.RocketAPI.Console
                 else
                     bhelper.Main.ColoredConsoleWrite(ConsoleColor.Red, $"[{DateTime.Now.ToString("HH:mm:ss")}] {pokemonName} with {encounterPokemonResponse?.WildPokemon?.PokemonData?.Cp} CP got away..");
 
-                if (_clientSettings.TransferType == "leaveStrongest")
+                if (_hero.ClientSettings.TransferType == "leaveStrongest")
                     await TransferAllButStrongestUnwantedPokemon(client);
-                else if (_clientSettings.TransferType == "all")
+                else if (_hero.ClientSettings.TransferType == "all")
                     await TransferAllGivenPokemons(client, pokemons2);
-                else if (_clientSettings.TransferType == "duplicate")
+                else if (_hero.ClientSettings.TransferType == "duplicate")
                     await TransferDuplicatePokemon(client);
-                else if (_clientSettings.TransferType == "cp")
-                    await TransferAllWeakPokemon(client, _clientSettings.TransferCPThreshold);
+                else if (_hero.ClientSettings.TransferType == "cp")
+                    await TransferAllWeakPokemon(client, _hero.ClientSettings.TransferCPThreshold);
 
                 await Task.Delay(3000);
             }
@@ -371,7 +369,7 @@ namespace PokemonGo.RocketAPI.Console
                         ERROR_POKEMON_IS_EGG = 4;
                     }*/
                     string pokemonName;
-                    if (_clientSettings.Language == "german")
+                    if (_hero.ClientSettings.Language == "german")
                         pokemonName = Convert.ToString((PokemonId_german)(int)pokemon.PokemonId);
                     else
                         pokemonName = Convert.ToString(pokemon.PokemonId);
@@ -414,7 +412,7 @@ namespace PokemonGo.RocketAPI.Console
                     {
                         var transfer = await client.TransferPokemon(dubpokemon.Id);
                         string pokemonName;
-                        if (_clientSettings.Language == "german")
+                        if (_hero.ClientSettings.Language == "german")
                             pokemonName = Convert.ToString((PokemonId_german)(int)dubpokemon.PokemonId);
                         else
                             pokemonName = Convert.ToString(dubpokemon.PokemonId);
@@ -486,19 +484,19 @@ namespace PokemonGo.RocketAPI.Console
                 if (v != null)
                 {
                     int XpDiff = bhelper.Game.GetXpDiff(v.Level);
-                    if (_clientSettings.LevelOutput == "time")
+                    if (_hero.ClientSettings.LevelOutput == "time")
                         bhelper.Main.ColoredConsoleWrite(ConsoleColor.Yellow, $"[{DateTime.Now.ToString("HH:mm:ss")}] Current Level: " + v.Level + " (" + (v.Experience - XpDiff) + "/" + (v.NextLevelXp - XpDiff) + ")");
-                    else if (_clientSettings.LevelOutput == "levelup")
+                    else if (_hero.ClientSettings.LevelOutput == "levelup")
                         if (_hero.Currentlevel != v.Level)
                         {
                             _hero.Currentlevel = v.Level;
                             bhelper.Main.ColoredConsoleWrite(ConsoleColor.Magenta, $"[{DateTime.Now.ToString("HH:mm:ss")}] Current Level: " + v.Level + ". XP needed for next Level: " + (v.NextLevelXp - v.Experience));
                         }
                 }
-            if (_clientSettings.LevelOutput == "levelup")
+            if (_hero.ClientSettings.LevelOutput == "levelup")
                 await Task.Delay(1000);
             else
-                await Task.Delay(_clientSettings.LevelTimeInterval * 1000);
+                await Task.Delay(_hero.ClientSettings.LevelTimeInterval * 1000);
             PrintLevel(client);
         }
         

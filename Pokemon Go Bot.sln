@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphicalClient", "Graphica
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bhelper", "bhelper\bhelper.csproj", "{A4807269-D99F-48F5-9678-E9C4EE6A02D0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "blogic", "bLogic\blogic.csproj", "{368A0E69-3C32-4D6B-B8CF-E2DD57F5D7A0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{A4807269-D99F-48F5-9678-E9C4EE6A02D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A4807269-D99F-48F5-9678-E9C4EE6A02D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A4807269-D99F-48F5-9678-E9C4EE6A02D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{368A0E69-3C32-4D6B-B8CF-E2DD57F5D7A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{368A0E69-3C32-4D6B-B8CF-E2DD57F5D7A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{368A0E69-3C32-4D6B-B8CF-E2DD57F5D7A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{368A0E69-3C32-4D6B-B8CF-E2DD57F5D7A0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
