@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RocketAPI", "PokemonGo\RocketAPI\RocketAPI.csproj", "{05D2DA44-1B8E-4CF7-94ED-4D52451CD095}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RocketAPI", "RocketAPI\RocketAPI.csproj", "{05D2DA44-1B8E-4CF7-94ED-4D52451CD095}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleClient", "PokemonGo\RocketAPI\Console\ConsoleClient.csproj", "{1FEA147E-F704-497B-A538-00B053B5F672}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleClient", "ConsoleClient\ConsoleClient.csproj", "{1FEA147E-F704-497B-A538-00B053B5F672}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphicalClient", "PokemonGo\RocketAPI\GUI\GraphicalClient.csproj", "{AFCEF13E-887C-40D8-92BD-64DD02A8DD82}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphicalClient", "GraphicalClient\GraphicalClient.csproj", "{AFCEF13E-887C-40D8-92BD-64DD02A8DD82}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bhelper", "bhelper\bhelper.csproj", "{A4807269-D99F-48F5-9678-E9C4EE6A02D0}"
 EndProject
