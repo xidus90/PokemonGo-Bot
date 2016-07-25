@@ -49,6 +49,9 @@
   <PropertyGroup>
     <StartupObject />
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>PokeBotIcon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Google.Protobuf">
       <HintPath>..\packages\Google.Protobuf.3.0.0-beta3\lib\portable-net45+netcore45+wpa81+wp8\Google.Protobuf.dll</HintPath>
@@ -127,6 +130,10 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\pogo-bot-logo.png" />
+    <Resource Include="Resources\PokeBotIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="PokeBotIcon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
