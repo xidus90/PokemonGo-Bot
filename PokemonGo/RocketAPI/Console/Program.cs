@@ -113,17 +113,8 @@ namespace PokemonGo.RocketAPI.Console
                     // we shouldnt show the password because data safety is always a good idea
                     //bhelper.Main.ColoredConsoleWrite(ConsoleColor.Cyan, "Password: " + ClientSettings.PtcPassword);
                 }
-<<<<<<< HEAD
-                ColoredConsoleWrite(ConsoleColor.Magenta, "Location: " + ClientSettings.LocationReference);
-                ColoredConsoleWrite(ConsoleColor.DarkGray, "Latitude: " + ClientSettings.DefaultLatitude);
-                ColoredConsoleWrite(ConsoleColor.DarkGray, "Longitude: " + ClientSettings.DefaultLongitude);
-                ColoredConsoleWrite(ConsoleColor.DarkGray, "Your Account:");
-                ColoredConsoleWrite(ConsoleColor.DarkGray, "Name: " + profile.Profile.Username);
-                ColoredConsoleWrite(ConsoleColor.DarkGray, "Team: " + profile.Profile.Team);
-                ColoredConsoleWrite(ConsoleColor.DarkGray, "Stardust: " + profile.Profile.Currency.ToArray()[1].Amount);
-                ColoredConsoleWrite(ConsoleColor.DarkGray, "Total km walked: " + TotalKmWalked);
-                ColoredConsoleWrite(ConsoleColor.Yellow, "----------------------------");
-=======
+
+                bhelper.Main.ColoredConsoleWrite(ConsoleColor.Magenta, "Location: " + ClientSettings.LocationReference);
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, "Latitude: " + ClientSettings.DefaultLatitude);
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, "Longitude: " + ClientSettings.DefaultLongitude);
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, "Your Account:");
@@ -132,7 +123,7 @@ namespace PokemonGo.RocketAPI.Console
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, "Stardust: " + profile.Profile.Currency.ToArray()[1].Amount);
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, "Total km walked: " + TotalKmWalked);
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.Yellow, "----------------------------");
->>>>>>> refs/remotes/Sen66/master
+
                 if (ClientSettings.TransferType == "leaveStrongest")
                     await TransferAllButStrongestUnwantedPokemon(client);
                 else if (ClientSettings.TransferType == "all")
