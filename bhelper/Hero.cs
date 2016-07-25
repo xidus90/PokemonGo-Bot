@@ -12,6 +12,7 @@ namespace bhelper
         public int TotalPokemon { get; set; }
         public double TotalKmWalked { get; set; }
         public DateTime TimeStarted { get; set; }
+        public bool AllowedToRun { get; set; }
 
         public Hero(Client client)
         {
@@ -23,6 +24,7 @@ namespace bhelper
             TotalPokemon = 1;
             TotalKmWalked = 1;
             TimeStarted = DateTime.Now;
+            AllowedToRun = true;
 
         }
     }

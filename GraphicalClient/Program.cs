@@ -26,25 +26,27 @@ namespace PokemonGo.RocketAPI.GUI
     {
         public static bhelper.Hero _hero;
         
-
         public static async void Execute()
         {
-            var client = new Client(new bhelper.Settings());
-            _hero = new Hero(client);
+            if (!_hero.AllowedToRun)
+            {
+                bhelper.Main.ColoredConsoleWrite(ConsoleColor.Yellow, "Stopping bot cyclus now!");
+                return;
+            }
 
             try
             {
                 bhelper.Main.CheckVersion(Assembly.GetExecutingAssembly().GetName());
                 if (_hero.ClientSettings.AuthType == AuthType.Ptc)
-                    await client.DoPtcLogin(_hero.ClientSettings.PtcUsername, _hero.ClientSettings.PtcPassword);
+                    await _hero.Client.DoPtcLogin(_hero.ClientSettings.PtcUsername, _hero.ClientSettings.PtcPassword);
                 else if (_hero.ClientSettings.AuthType == AuthType.Google)
-                    await client.DoGoogleLogin();
+                    await _hero.Client.DoGoogleLogin();
 
-                await client.SetServer();
-                var profile = await client.GetProfile();
-                var settings = await client.GetSettings();
-                var mapObjects = await client.GetMapObjects();
-                var inventory = await client.GetInventory();
+                await _hero.Client.SetServer();
+                var profile = await _hero.Client.GetProfile();
+                var settings = await _hero.Client.GetSettings();
+                var mapObjects = await _hero.Client.GetMapObjects();
+                var inventory = await _hero.Client.GetInventory();
                 var pokemons =
                     inventory.InventoryDelta.InventoryItems.Select(i => i.InventoryItemData?.Pokemon)
                         .Where(p => p != null && p?.PokemonId > 0);
@@ -58,7 +60,7 @@ namespace PokemonGo.RocketAPI.GUI
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, " Hero Name: " + profile.Profile.Username);
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, " Team: " + profile.Profile.Team);
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, " Stardust: " + profile.Profile.Currency.ToArray()[1].Amount);
-                bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, " Total km walked: " + _hero.TotalKmWalked);
+                bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, " distance traveled: " + String.Format("{0:0.00} km", _hero.TotalKmWalked));
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, " Latitude: " + _hero.ClientSettings.DefaultLatitude);
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, " Longitude: " + _hero.ClientSettings.DefaultLongitude);
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.Yellow, "+--------------------------------------------+");
@@ -75,18 +77,18 @@ namespace PokemonGo.RocketAPI.GUI
                 if (_hero.ClientSettings.EvolveAllGivenPokemons)
                     await bLogic.Pokemon.EvolveAllGivenPokemons(_hero, pokemons);
                 if (_hero.ClientSettings.Recycler)
-                    client.RecycleItems(client);
+                    _hero.Client.RecycleItems(_hero.Client);
                 
                 await Task.Delay(5000);
 
-                PrintLevel(client);
-                UpdateFormTitle(client);
+                PrintLevel(_hero.Client);
+                UpdateFormTitle(_hero.Client);
 
 
                 if (_hero.ClientSettings.EggHatchedOutput)
                     await bLogic.Pokemon.CheckEggsHatched(_hero);
                 if (_hero.ClientSettings.UseLuckyEggMode == "always")
-                    await client.UseLuckyEgg(client);
+                    await _hero.Client.UseLuckyEgg(_hero.Client);
 
                 await bLogic.Pokemon.ExecuteFarmingPokestopsAndPokemons(_hero);
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.Red, $"[{DateTime.Now.ToString("HH:mm:ss")}] No nearby usefull locations found. Please wait 10 seconds.");
@@ -107,16 +109,13 @@ namespace PokemonGo.RocketAPI.GUI
             var inventory = await client.GetInventory();
             var stats = inventory.InventoryDelta.InventoryItems.Select(i => i.InventoryItemData?.PlayerStats).ToArray();
             var profile = await client.GetProfile();
-            foreach (var v in stats)
-                if (v != null)
+            foreach (var playerStatistic in stats)
+                if (playerStatistic != null)
                 {
-                    int XpDiff = bhelper.Game.GetXpDiff(v.Level);
-
-                    MainWindow.main.Status = string.Format("Level: {0:0} - [{1:0}/ {2:0}] | Stardust: {3:0}", v.Level, (v.Experience - v.PrevLevelXp - XpDiff), (v.NextLevelXp - v.PrevLevelXp - XpDiff), profile.Profile.Currency.ToArray()[1].Amount);
+                    MainWindow.main.SetMainFormTitle = string.Format(_hero.ClientSettings.PtcUsername + " :: L{0:0} | {1:0} exp/h | {2:0} pok/h", playerStatistic.Level, Math.Round(_hero.TotalExperience / bhelper.Main.GetRuntime(_hero.TimeStarted)), Math.Round(_hero.TotalPokemon / bhelper.Main.GetRuntime(_hero.TimeStarted)));
                     
                 }
             await Task.Delay(1000);
-            UpdateFormTitle(client);
         }
         
 

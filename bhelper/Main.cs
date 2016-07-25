@@ -38,11 +38,11 @@ namespace bhelper
                     return true;
                 }
 
-                ColoredConsoleWrite(ConsoleColor.White, "There is a new Version available: " + cleanedServerAssemblyVersion);
+                ColoredConsoleWrite(ConsoleColor.Red, "There is a new Version available: " + cleanedServerAssemblyVersion);
             }
             catch (Exception)
             {
-                ColoredConsoleWrite(ConsoleColor.White, "Unable to check for updates now...");
+                ColoredConsoleWrite(ConsoleColor.Red, "Unable to check for updates now...");
                 return false;
             }
 

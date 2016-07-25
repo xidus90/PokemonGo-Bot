@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using bhelper;
 
 namespace PokemonGo.RocketAPI.GUI
 {
@@ -29,11 +30,33 @@ namespace PokemonGo.RocketAPI.GUI
         private static Logger logger;
 
         public static MainWindow main;
-        public string Status
+
+        #region Manipulate MainForm gui controls
+        public string SetMainFormTitle
         {
             get { return Title.ToString(); }
             set { Dispatcher.Invoke(new Action(() => { Title = value; })); }
         }
+
+        public bool SeStartButtonStatus
+        {
+            get { return buttonStart.IsEnabled; }
+            set { Dispatcher.Invoke(new Action(() => { buttonStart.IsEnabled = value; })); }
+        }
+        public bool SeStopButtonStatus
+        {
+            get { return buttonStop.IsEnabled; }
+            set { Dispatcher.Invoke(new Action(() => { buttonStop.IsEnabled = value; })); }
+        }
+
+        public string SetVersionLabel
+        {
+            get { return lbl_Version.Content.ToString(); }
+            set { Dispatcher.Invoke(new Action(() => { lbl_Version.Content = value; })); }
+        }
+        #endregion
+
+
         public MainWindow()
         {
             InitializeComponent();
@@ -42,26 +65,48 @@ namespace PokemonGo.RocketAPI.GUI
             logger = new Logger(Output);
             Console.SetOut(logger);
             Console.SetError(logger);
+            
+            SetVersionLabel = "^v." + Assembly.GetExecutingAssembly().GetName().Version.ToString();
         }
 
         private async void buttonStart_Click(object sender, RoutedEventArgs e)
         {
             await Task.Run(() =>
-             {
-                 try
-                 {
-                     bhelper.Main.CheckVersion(Assembly.GetExecutingAssembly().GetName());
-                     Program.Execute();
-                 }
-                 catch (Exceptions.PtcOfflineException)
-                 {
-                     bhelper.Main.ColoredConsoleWrite(ConsoleColor.Red, "PTC Servers are probably down OR your credentials are wrong. Try google");
-                 }
-                 catch (Exception ex)
-                 {
-                     bhelper.Main.ColoredConsoleWrite(ConsoleColor.Red, $"[{DateTime.Now.ToString("HH:mm:ss")}] Unhandled exception: {ex}");
-                 }
-             });
+            {
+                try
+                {
+                    //if we are on the newest version we should be fine running the bot
+                    if (bhelper.Main.CheckVersion(Assembly.GetExecutingAssembly().GetName()))
+                    {
+                        Program._hero.AllowedToRun = true;
+                    }
+
+                    var client = new Client(new bhelper.Settings());
+                    Program._hero = new Hero(client);
+
+                    //lets get rolling
+                    Program.Execute();
+                    //change the button status around
+                    SeStartButtonStatus = false;
+                    SeStopButtonStatus = true;
+                }
+                catch (Exceptions.PtcOfflineException)
+                {
+                    bhelper.Main.ColoredConsoleWrite(ConsoleColor.Red,
+                        "PTC Servers are probably down OR your credentials are wrong. Try google");
+                }
+                catch (Exception ex)
+                {
+                    bhelper.Main.ColoredConsoleWrite(ConsoleColor.Red,
+                        $"[{DateTime.Now.ToString("HH:mm:ss")}] Unhandled exception: {ex}");
+                }
+            });
+        }
+        private void buttonStop_Click(object sender, RoutedEventArgs e)
+        {
+            Program._hero.AllowedToRun = false;
+            SeStartButtonStatus = true;
+            SeStopButtonStatus = false;
         }
 
         private void Window_SourceInitialized(object sender, EventArgs e)
@@ -71,5 +116,6 @@ namespace PokemonGo.RocketAPI.GUI
             SetWindowLong(hwnd, GWL_STYLE, (int)(value & ~WS_MAXIMIZEBOX));
         }
 
+        
     }
 }
