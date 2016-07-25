@@ -24,13 +24,16 @@ namespace bhelper
         public string PtcUsername => GetSetting() != string.Empty ? GetSetting() : "username";
         public string PtcPassword => GetSetting() != string.Empty ? GetSetting() : "password";
 
+        public string Location
+        {
+            get { return GetSetting() != string.Empty ? GetSetting() : string.Empty; }
+            set { SetSetting(value); }
+        }
         public double DefaultLatitude
         {
             get { return GetSetting() != string.Empty ? double.Parse(GetSetting(), CultureInfo.InvariantCulture) : 51.22640; }
             set { SetSetting(value); }
         }
-
-
         public double DefaultLongitude
         {
             get { return GetSetting() != string.Empty ? double.Parse(GetSetting(), CultureInfo.InvariantCulture) : 6.77874; }
