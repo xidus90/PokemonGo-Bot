@@ -7,8 +7,8 @@
     <ProjectGuid>{1FEA147E-F704-497B-A538-00B053B5F672}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PokemonGo.RocketAPI.Console</RootNamespace>
-    <AssemblyName>PokemonGo.RocketAPI.Console</AssemblyName>
+    <RootNamespace>PokemonGo.ConsoleClient</RootNamespace>
+    <AssemblyName>PokemonGo.ConsoleClient</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
@@ -33,7 +33,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\binaries\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -86,9 +86,9 @@
       <Project>{a4807269-d99f-48f5-9678-e9c4ee6a02d0}</Project>
       <Name>bhelper</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PokemonGo.RocketAPI.csproj">
+    <ProjectReference Include="..\RocketAPI.csproj">
       <Project>{05D2DA44-1B8E-4CF7-94ED-4D52451CD095}</Project>
-      <Name>PokemonGo.RocketAPI</Name>
+      <Name>RocketAPI</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

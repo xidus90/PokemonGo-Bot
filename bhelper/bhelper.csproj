@@ -41,9 +41,9 @@
     <Compile Include="Settings.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PokemonGo\RocketAPI\PokemonGo.RocketAPI.csproj">
+    <ProjectReference Include="..\PokemonGo\RocketAPI\RocketAPI.csproj">
       <Project>{05d2da44-1b8e-4cf7-94ed-4d52451cd095}</Project>
-      <Name>PokemonGo.RocketAPI</Name>
+      <Name>RocketAPI</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
