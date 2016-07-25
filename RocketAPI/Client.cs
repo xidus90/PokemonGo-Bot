@@ -109,6 +109,7 @@ namespace PokemonGo.RocketAPI
                 _authType = AuthType.Ptc;
             }
             catch (Newtonsoft.Json.JsonReaderException) { ColoredConsoleWrite(ConsoleColor.White, "Json Reader Exception - Server down? - Restarting"); DoPtcLogin(username, password); }
+            catch (Exceptions.AccountNotVerifiedException) { ColoredConsoleWrite(ConsoleColor.Red, "ACCOUNT NOT VERIFIED - WONT WORK"); DoPtcLogin(username, password); }
             catch (Exception ex) { ColoredConsoleWrite(ConsoleColor.White, ex.ToString() + "Exception - Please report - Restarting"); DoPtcLogin(username, password); }
         }
 
