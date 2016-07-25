@@ -164,6 +164,7 @@ namespace PokemonGo.RocketAPI.Console
                     ColoredConsoleWrite(ConsoleColor.Cyan, "Account: " + ClientSettings.PtcUsername);
                     ColoredConsoleWrite(ConsoleColor.Cyan, "Password: " + ClientSettings.PtcPassword);
                 }
+                ColoredConsoleWrite(ConsoleColor.Magenta, "Location: " + ClientSettings.LocationReference);
                 ColoredConsoleWrite(ConsoleColor.DarkGray, "Latitude: " + ClientSettings.DefaultLatitude);
                 ColoredConsoleWrite(ConsoleColor.DarkGray, "Longitude: " + ClientSettings.DefaultLongitude);
                 ColoredConsoleWrite(ConsoleColor.DarkGray, "Your Account:");
