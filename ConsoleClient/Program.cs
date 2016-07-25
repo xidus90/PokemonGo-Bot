@@ -1,22 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Net;
 using System.Reflection;
-using System.Text.RegularExpressions;
-using System.Threading;
 using System.Threading.Tasks;
-using AllEnum;
 using PokemonGo.RocketAPI.Enums;
 using PokemonGo.RocketAPI.Exceptions;
-using PokemonGo.RocketAPI.Extensions;
-using PokemonGo.RocketAPI.GeneratedCode;
-using System.Net.Http;
-using System.Text;
-using Google.Protobuf;
-using PokemonGo.RocketAPI.Helpers;
-using System.IO;
 using bhelper;
 
 namespace PokemonGo.RocketAPI.Console
@@ -85,7 +72,7 @@ namespace PokemonGo.RocketAPI.Console
                 await Task.Delay(5000);
                 //time for some gui updates
                 PrintLevel(_hero.Client);
-                ConsoleLevelTitle(profile.Profile.Username, _hero.Client);
+                RefreshConsoleTitle(profile.Profile.Username, _hero.Client);
 
                 if (_hero.ClientSettings.EggHatchedOutput)
                     await bLogic.Pokemon.CheckEggsHatched(_hero);
@@ -141,7 +128,11 @@ namespace PokemonGo.RocketAPI.Console
         }
         
         
-
+        /// <summary>
+        /// Print a level related event to rtb or console log
+        /// </summary>
+        /// <param name="client"></param>
+        /// <returns></returns>
         public static async Task PrintLevel(Client client)
         {
             var inventory = await client.GetInventory();
@@ -163,23 +154,31 @@ namespace PokemonGo.RocketAPI.Console
                 await Task.Delay(1000);
             else
                 await Task.Delay(_hero.ClientSettings.LevelTimeInterval * 1000);
+
             PrintLevel(client);
         }
         
-
-        public static async Task ConsoleLevelTitle(string Username, Client client)
+        /// <summary>
+        /// Change the console title
+        /// for much info. wow
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="client"></param>
+        /// <returns></returns>
+        public static async Task RefreshConsoleTitle(string username, Client client)
         {
             var inventory = await client.GetInventory();
             var stats = inventory.InventoryDelta.InventoryItems.Select(i => i.InventoryItemData?.PlayerStats).ToArray();
             var profile = await client.GetProfile();
-            foreach (var v in stats)
-                if (v != null)
+            foreach (var playerStatistic in stats)
+                if (playerStatistic != null)
                 {
-                    int XpDiff = bhelper.Game.GetXpDiff(v.Level);
-                    System.Console.Title = string.Format(Username + " | Level: {0:0} - ({1:0} / {2:0}) | Stardust: {3:0}", v.Level, (v.Experience - v.PrevLevelXp - XpDiff), (v.NextLevelXp - v.PrevLevelXp - XpDiff), profile.Profile.Currency.ToArray()[1].Amount) + " | XP/Hour: " + Math.Round(_hero.TotalExperience / bhelper.Main.GetRuntime(_hero.TimeStarted)) + " | Pokemon/Hour: " + Math.Round(_hero.TotalPokemon / bhelper.Main.GetRuntime(_hero.TimeStarted));
+                    int XpDiff = bhelper.Game.GetXpDiff(playerStatistic.Level);
+                    System.Console.Title = string.Format(_hero.ClientSettings.PtcUsername + " :: L{0:0} | {1:0} exp/h | {2:0} pok/h", playerStatistic.Level, Math.Round(_hero.TotalExperience / bhelper.Main.GetRuntime(_hero.TimeStarted)), Math.Round(_hero.TotalPokemon / bhelper.Main.GetRuntime(_hero.TimeStarted)));
                 }
             await Task.Delay(1000);
-            ConsoleLevelTitle(Username, client);
+
+            RefreshConsoleTitle(username, client);
         }
         
     }
