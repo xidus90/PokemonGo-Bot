@@ -42,7 +42,7 @@ namespace PokemonGo.RocketAPI.Console
                     if (v != null)
                         _hero.TotalKmWalked = v.KmWalked;
 
-                bLogic.Info.StartUpPrint(_hero, profile);
+                bLogic.Info.PrintStartUp(_hero, profile);
                
                 if (_hero.ClientSettings.TransferType == "leaveStrongest")
                     await bLogic.Pokemon.TransferAllButStrongestUnwantedPokemon(_hero);
@@ -61,11 +61,11 @@ namespace PokemonGo.RocketAPI.Console
 
                 await Task.Delay(5000);
                 //time for some gui updates
-                bLogic.Pokemon.PrintLevel(_hero);
+                bLogic.Info.PrintLevel(_hero);
                 RefreshConsoleTitle(profile.Profile.Username, _hero.Client);
 
                 if (_hero.ClientSettings.EggHatchedOutput)
-                    await bLogic.Pokemon.CheckEggsHatched(_hero);
+                    await bLogic.Item.CheckEggsHatched(_hero);
                 if (_hero.ClientSettings.UseLuckyEggMode == "always")
                     await _hero.Client.UseLuckyEgg(_hero.Client);
                 await bLogic.Pokemon.ExecuteFarmingPokestopsAndPokemons(_hero);

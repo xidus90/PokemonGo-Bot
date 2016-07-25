@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using bhelper;
 using PokemonGo.RocketAPI.Enums;
 using PokemonGo.RocketAPI.GeneratedCode;
@@ -8,7 +9,7 @@ namespace bLogic
 {
     public static class Info
     {
-        public static bool StartUpPrint(Hero hero, GetPlayerResponse profileResponse)
+        public static bool PrintStartUp(Hero hero, GetPlayerResponse profileResponse)
         {
             try
             {
@@ -33,6 +34,34 @@ namespace bLogic
             }
 
             return true;
-        } 
+        }
+
+        /// <summary>
+        /// Print a level related event to RichTextBox or console log
+        /// </summary>
+        /// <param name="client"></param>
+        /// <returns></returns>
+        public static async Task PrintLevel(Hero hero)
+        {
+            var inventory = await hero.Client.GetInventory();
+            var stats = inventory.InventoryDelta.InventoryItems.Select(i => i.InventoryItemData?.PlayerStats).ToArray();
+            foreach (var v in stats)
+                if (v != null)
+                {
+                    int XpDiff = bhelper.Game.GetXpDiff(v.Level);
+                    if (hero.ClientSettings.LevelOutput == "time")
+                        bhelper.Main.ColoredConsoleWrite(ConsoleColor.Yellow, $"[{DateTime.Now.ToString("HH:mm:ss")}] Current Level: " + v.Level + " (" + (v.Experience - XpDiff) + "/" + (v.NextLevelXp - XpDiff) + ")");
+                    else if (hero.ClientSettings.LevelOutput == "levelup")
+                        if (hero.Currentlevel != v.Level)
+                        {
+                            hero.Currentlevel = v.Level;
+                            bhelper.Main.ColoredConsoleWrite(ConsoleColor.Magenta, $"[{DateTime.Now.ToString("HH:mm:ss")}] Current Level: " + v.Level + ". XP needed for next Level: " + (v.NextLevelXp - v.Experience));
+                        }
+                }
+            if (hero.ClientSettings.LevelOutput == "levelup")
+                await Task.Delay(1000);
+            else
+                await Task.Delay(hero.ClientSettings.LevelTimeInterval * 1000);
+        }
     }
 }

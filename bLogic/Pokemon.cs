@@ -70,24 +70,7 @@ namespace bLogic
                 await Task.Delay(3000);
             }
         }
-        /// <summary>
-        /// Check for hatchet eggs
-        /// </summary>
-        /// <param name="hero"></param>
-        /// <returns></returns>
-        public static async Task CheckEggsHatched(Hero hero)
-        {
-            try
-            {
-                var inventory = await hero.Client.GetInventory();
-                var eggkmwalked = inventory.InventoryDelta.InventoryItems.Select(i => i.InventoryItemData?.EggIncubators.EggIncubator).ToArray();
-                foreach (var v in eggkmwalked)
-                    if (v != null)
-                        if (v.TargetKmWalked > hero.TotalKmWalked)
-                            bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkYellow, "One of your eggs is hatched");
-            }
-            catch (Exception) { }
-        }
+        
 
         /// <summary>
         /// Catch all nearby pokemon
@@ -161,33 +144,7 @@ namespace bLogic
             }
         }
 
-        /// <summary>
-        /// Print a level related event to RichTextBox or console log
-        /// </summary>
-        /// <param name="client"></param>
-        /// <returns></returns>
-        public static async Task PrintLevel(Hero hero)
-        {
-            var inventory = await hero.Client.GetInventory();
-            var stats = inventory.InventoryDelta.InventoryItems.Select(i => i.InventoryItemData?.PlayerStats).ToArray();
-            foreach (var v in stats)
-                if (v != null)
-                {
-                    int XpDiff = bhelper.Game.GetXpDiff(v.Level);
-                    if (hero.ClientSettings.LevelOutput == "time")
-                        bhelper.Main.ColoredConsoleWrite(ConsoleColor.Yellow, $"[{DateTime.Now.ToString("HH:mm:ss")}] Current Level: " + v.Level + " (" + (v.Experience - XpDiff) + "/" + (v.NextLevelXp - XpDiff) + ")");
-                    else if (hero.ClientSettings.LevelOutput == "levelup")
-                        if (hero.Currentlevel != v.Level)
-                        {
-                            hero.Currentlevel = v.Level;
-                            bhelper.Main.ColoredConsoleWrite(ConsoleColor.Magenta, $"[{DateTime.Now.ToString("HH:mm:ss")}] Current Level: " + v.Level + ". XP needed for next Level: " + (v.NextLevelXp - v.Experience));
-                        }
-                }
-            if (hero.ClientSettings.LevelOutput == "levelup")
-                await Task.Delay(1000);
-            else
-                await Task.Delay(hero.ClientSettings.LevelTimeInterval * 1000);
-        }
+        
         /// <summary>
         /// Transfer duplicate weak pokemon to the doctor
         /// </summary>
@@ -270,8 +227,8 @@ namespace bLogic
                     PokeStopOutput.Write($", Gems: {fortSearch.GemsAwarded}");
                 if (fortSearch.PokemonDataEgg != null)
                     PokeStopOutput.Write($", Eggs: {fortSearch.PokemonDataEgg}");
-                if (GetFriendlyItemsString(fortSearch.ItemsAwarded) != string.Empty)
-                    PokeStopOutput.Write($", Items: {GetFriendlyItemsString(fortSearch.ItemsAwarded)} ");
+                if (bLogic.Item.GetFriendlyItemsString(fortSearch.ItemsAwarded) != string.Empty)
+                    PokeStopOutput.Write($", Items: {bLogic.Item.GetFriendlyItemsString(fortSearch.ItemsAwarded)} ");
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.Cyan, PokeStopOutput.ToString());
 
                 if (fortSearch.ExperienceAwarded != 0)
@@ -281,18 +238,7 @@ namespace bLogic
             }
         }
 
-        private static string GetFriendlyItemsString(IEnumerable<FortSearchResponse.Types.ItemAward> items)
-        {
-            var enumerable = items as IList<FortSearchResponse.Types.ItemAward> ?? items.ToList();
-
-            if (!enumerable.Any())
-                return string.Empty;
-
-            return enumerable.GroupBy(i => i.ItemId)
-                    .Select(kvp => new { ItemName = kvp.Key.ToString().Substring(4), Amount = kvp.Sum(x => x.ItemCount) })
-                    .Select(y => $"{y.Amount}x {y.ItemName}")
-                    .Aggregate((a, b) => $"{a}, {b}");
-        }
+        
 
         public static async Task TransferAllWeakPokemon(Hero hero)
         {
@@ -425,7 +371,5 @@ namespace bLogic
         {
             return ((float)(poke.IndividualAttack + poke.IndividualDefense + poke.IndividualStamina) / (3.0f * 15.0f)) * 100.0f;
         }
-
-
     }
 }
