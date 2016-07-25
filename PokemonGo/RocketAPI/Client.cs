@@ -109,6 +109,7 @@ namespace PokemonGo.RocketAPI
                 _authType = AuthType.Ptc;
             }
             catch (Newtonsoft.Json.JsonReaderException) { ColoredConsoleWrite(ConsoleColor.White, "Json Reader Exception - Server down? - Restarting"); DoPtcLogin(username, password); }
+            catch (Exceptions.AccountNotVerifiedException) { ColoredConsoleWrite(ConsoleColor.Red, "ACCOUNT NOT VERIFIED - WONT WORK"); DoPtcLogin(username, password); }
             catch (Exception ex) { ColoredConsoleWrite(ConsoleColor.White, ex.ToString() + "Exception - Please report - Restarting"); DoPtcLogin(username, password); }
         }
 
@@ -532,6 +533,8 @@ namespace PokemonGo.RocketAPI
                 UseItemRequest useLuckyEgg = await client.UseItem(ItemId.ItemLuckyEgg);
                 ColoredConsoleWrite(ConsoleColor.Green, $"[{DateTime.Now.ToString("HH:mm:ss")}] Used Lucky Egg. Remaining: {LuckyEgg.Count}");
             }
+            await Task.Delay(10 * 60 * 1000);
+            UseLuckyEgg(client);
         }
 
     }

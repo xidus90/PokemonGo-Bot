@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -49,16 +50,16 @@ namespace PokemonGo.RocketAPI.GUI
              {
                  try
                  {
-                     Program.CheckVersion();
+                     bhelper.Main.CheckVersion(Assembly.GetExecutingAssembly().GetName());
                      Program.Execute();
                  }
                  catch (Exceptions.PtcOfflineException)
                  {
-                     Program.ColoredConsoleWrite(ConsoleColor.Red, "PTC Servers are probably down OR your credentials are wrong. Try google");
+                     bhelper.Main.ColoredConsoleWrite(ConsoleColor.Red, "PTC Servers are probably down OR your credentials are wrong. Try google");
                  }
                  catch (Exception ex)
                  {
-                     Program.ColoredConsoleWrite(ConsoleColor.Red, $"[{DateTime.Now.ToString("HH:mm:ss")}] Unhandled exception: {ex}");
+                     bhelper.Main.ColoredConsoleWrite(ConsoleColor.Red, $"[{DateTime.Now.ToString("HH:mm:ss")}] Unhandled exception: {ex}");
                  }
              });
         }
