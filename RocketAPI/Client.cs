@@ -450,7 +450,7 @@ namespace PokemonGo.RocketAPI
 
         public async Task<Response.Types.Unknown6> RecycleItem(AllEnum.ItemId itemId, int amount)
         {
-            var customRequest = new InventoryItemData.RecycleInventoryItem
+            var customRequest = new RecycleInventoryItem
             {
                 ItemId = (AllEnum.ItemId)Enum.Parse(typeof(AllEnum.ItemId), itemId.ToString()),
                 Count = amount
@@ -535,6 +535,33 @@ namespace PokemonGo.RocketAPI
             }
             await Task.Delay(12 * 60 * 1000);
             UseLuckyEgg(client);
+        }
+
+
+
+        /// <summary>
+        /// Dunno if this works lol
+        /// </summary>
+        /// <param name="level"></param>
+        /// <returns></returns>
+        public async Task<LevelUpRewards> GetLevelUpRewards(int level)
+        {
+            var customRequest = new LevelUpRewards
+            {
+                Level = level
+            };
+
+            var GetLvlUpRewards = RequestBuilder.GetRequest(_unknownAuth, _currentLat, _currentLng, 30,
+                new Request.Types.Requests
+                {
+                    Type = (int)RequestType.LEVEL_UP_REWARDS,
+                    Message = customRequest.ToByteString()
+                });
+
+            return
+                await
+                    _httpClient.PostProtoPayload<Request, LevelUpRewards>($"https://{_apiUrl}/rpc",
+                        GetLvlUpRewards);
         }
 
     }

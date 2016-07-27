@@ -340,7 +340,32 @@ namespace bLogic
 
         public static async Task TransferDuplicatePokemon(Hero hero)
         {
-            //ColoredConsoleWrite(ConsoleColor.White, $"Check for duplicates");
+            PokemonId[] Whitelist = new[] //these will not be transferred even when duplicate
+            { 
+                //PokemonId.Pidgey,
+                //PokemonId.Rattata,
+                //PokemonId.Weedle,
+                //PokemonId.Zubat,
+                //PokemonId.Caterpie,
+                //PokemonId.Pidgeotto,
+                //PokemonId.NidoranFemale,
+                //PokemonId.Paras,
+                //PokemonId.Venonat,
+                //PokemonId.Psyduck,
+                //PokemonId.Poliwag,
+                //PokemonId.Slowpoke,
+                //PokemonId.Drowzee,
+                //PokemonId.Gastly,
+                //PokemonId.Goldeen,
+                //PokemonId.Staryu,
+                //PokemonId.Dratini
+                //PokemonId.Magikarp,
+                //PokemonId.Eevee,
+                //etc
+                PokemonId.Missingno // dont remove
+            };
+
+
             var inventory = await hero.Client.GetInventory();
             var allpokemons =
                 inventory.InventoryDelta.InventoryItems.Select(i => i.InventoryItemData?.Pokemon)
@@ -355,7 +380,7 @@ namespace bLogic
                 for (var j = 0; j < dupes.ElementAt(i).Count() - 1; j++)
                 {
                     var dubpokemon = dupes.ElementAt(i).ElementAt(j).value;
-                    if (dubpokemon.Favorite == 0)
+                    if (dubpokemon.Favorite == 0 && !Whitelist.Contains(dubpokemon.PokemonId))
                     {
                         var transfer = await hero.Client.TransferPokemon(dubpokemon.Id);
                         string pokemonName;

@@ -39,6 +39,9 @@ namespace PokemonGo.RocketAPI.Console
                 foreach (var v in stats)
                     if (v != null)
                         _hero.TotalKmWalked = v.KmWalked;
+                foreach (var v in stats)
+                    if (v != null)
+                        await _hero.Client.GetLevelUpRewards(v.Level);
                 bLogic.Info.PrintStartUp(_hero, profile);
                
                 if (_hero.ClientSettings.TransferType == "leaveStrongest")
@@ -60,6 +63,7 @@ namespace PokemonGo.RocketAPI.Console
                 //time for some gui updates
                 bLogic.Info.PrintLevel(_hero);
                 RefreshConsoleTitle(profile.Profile.Username, _hero);
+                
 
                 if (_hero.ClientSettings.EggHatchedOutput)
                     bLogic.Item.CheckEggsHatched(_hero);

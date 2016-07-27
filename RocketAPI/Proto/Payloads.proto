@@ -4,9 +4,35 @@ package PokemonGo.RocketAPI.GeneratedCode;
 
 import "AllEnum.proto";
 
+message LevelUpRewards {
+	int32 level = 1;
+}
+
+message LevelUpRewardsResponse {
+	Result result = 1;
+	repeated ItemAward items_awarded = 2;
+	repeated AllEnum.ItemId items_unlocked = 4;
+
+	message ItemAward {
+		AllEnum.ItemId item_id = 1;
+		int32 item_count = 2;
+	}
+
+	enum Result {
+		UNSET = 0;
+		SUCCESS = 1;
+		AWARDED_ALREADY = 2;
+	}
+}
+
 message GetPlayerResponse {
     int32 unknown1 = 1;
     Profile profile = 2;
+}
+
+message RecycleInventoryItem {
+	.AllEnum.ItemId item_id = 1;
+	int32 count = 2;
 }
 
 message Profile {
