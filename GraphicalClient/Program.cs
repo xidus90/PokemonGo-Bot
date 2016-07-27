@@ -61,7 +61,7 @@ namespace PokemonGo.RocketAPI.GUI
                 //time for some gui updates
                 bLogic.Info.PrintLevel(_hero);
                 UpdateFormTitle(_hero);
-                UpdatePokemonList(_hero);
+                UpdateGUIStats(_hero);
 
 
                 if (_hero.ClientSettings.EggHatchedOutput)
@@ -103,24 +103,39 @@ namespace PokemonGo.RocketAPI.GUI
             await Task.Delay(1000);
             UpdateFormTitle(_hero);
         }
-        public static async Task UpdatePokemonList(Hero _hero)
+        public static async Task UpdateGUIStats(Hero _hero)
         {
-            MainWindow.main.dataGrid_pokemon_clear();
+            MainWindow.main.dataGrid_clear();
             GeneratedCode.GetInventoryResponse inventory = await _hero.Client.GetInventory();
             GeneratedCode.PokemonData[] pokemons = inventory.InventoryDelta.InventoryItems
                 .Select(i => i.InventoryItemData?.Pokemon)
                 .Where(p => p != null && p?.PokemonId > 0)
                 .ToArray();
-
+            GeneratedCode.Item[] items = inventory.InventoryDelta.InventoryItems
+                .Select(i => i.InventoryItemData?.Item)
+                .Where(p => p != null && p?.Item_ > 0)
+                .ToArray();
             foreach (GeneratedCode.PokemonData pokemon in pokemons)
             {
-                MainWindow.main.dataGrid_pokemon_add( 
-                    new Pokemon() {
-                    Name = pokemon.PokemonId.ToString(),
-                    CP = pokemon.Cp,
-                    Perfection = Math.Round(bLogic.Pokemon.Perfect(pokemon), 2)
-                });
+                MainWindow.main.dataGrid_pokemon_add(
+                    new dataGrid_pokemon_class()
+                    {
+                        Name = pokemon.PokemonId.ToString(),
+                        CP = pokemon.Cp,
+                        Perfection = Math.Round(bLogic.Pokemon.Perfect(pokemon), 2)
+                    });
             }
+            foreach (GeneratedCode.Item item in items)
+            {
+                MainWindow.main.dataGrid_backpack_add(
+                    new dataGrid_backpack_class()
+                    {
+                        Item = item.Item_.ToString(),
+                        Amount = item.Count
+                    });
+            }
+            Task.Delay(60000);
+            UpdateGUIStats(_hero);
         }
     }
 }

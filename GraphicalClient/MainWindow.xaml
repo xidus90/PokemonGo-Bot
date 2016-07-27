@@ -36,13 +36,25 @@
                         <TabItem Header="Pokemon">
                             <DataGrid x:Name="dataGrid_pokemon">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Pokemon" Binding="{Binding Name}" IsReadOnly="True" CanUserSort="True" Width="175">
+                                    <DataGridTextColumn Header="Pokemon" Binding="{Binding Name}" IsReadOnly="True" CanUserSort="True" Width="165">
 
                                     </DataGridTextColumn>
-                                    <DataGridTextColumn Header="CP" Binding="{Binding CP}" IsReadOnly="True" CanUserSort="True" Width="175">
+                                    <DataGridTextColumn Header="CP" Binding="{Binding CP}" IsReadOnly="True" CanUserSort="True" Width="165">
 
                                     </DataGridTextColumn>
-                                    <DataGridTextColumn Header="Perfection" Binding="{Binding Perfection}" IsReadOnly="True" CanUserSort="True" Width="175">
+                                    <DataGridTextColumn Header="Perfection" Binding="{Binding Perfection}" IsReadOnly="True" CanUserSort="True" Width="165">
+
+                                    </DataGridTextColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </TabItem>
+                        <TabItem Header="Backpack">
+                            <DataGrid x:Name="dataGrid_backpack">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Item" Binding="{Binding Item}" IsReadOnly="True" CanUserSort="True" Width="250">
+
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="Amount" Binding="{Binding Amount}" IsReadOnly="True" CanUserSort="True" Width="250">
 
                                     </DataGridTextColumn>
                                 </DataGrid.Columns>

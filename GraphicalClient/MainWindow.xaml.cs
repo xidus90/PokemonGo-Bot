@@ -55,11 +55,15 @@ namespace PokemonGo.RocketAPI.GUI
             get { return lbl_Version.Content.ToString(); }
             set { Dispatcher.Invoke(new Action(() => { lbl_Version.Content = value; })); }
         }
-        public void dataGrid_pokemon_add(Pokemon pokemon)
+        public void dataGrid_pokemon_add(dataGrid_pokemon_class pokemon)
         {
             Dispatcher.Invoke(new Action(() => { dataGrid_pokemon.Items.Add(pokemon); }));
         }
-        public void dataGrid_pokemon_clear()
+        public void dataGrid_backpack_add(dataGrid_backpack_class item)
+        {
+            Dispatcher.Invoke(new Action(() => { dataGrid_backpack.Items.Add(item); }));
+        }
+        public void dataGrid_clear()
         {
             Dispatcher.Invoke(new Action(() => { dataGrid_pokemon.Items.Clear(); }));
         }
@@ -146,10 +150,15 @@ namespace PokemonGo.RocketAPI.GUI
         }
     }
 
-    public class Pokemon
+    public class dataGrid_pokemon_class
     {
         public string Name { get; set; }
         public int CP { get; set; }
         public double Perfection { get; set; }
+    }
+    public class dataGrid_backpack_class
+    {
+        public string Item { get; set; }
+        public int Amount { get; set; }
     }
 }
