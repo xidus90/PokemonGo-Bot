@@ -14,9 +14,10 @@ A Pokemon Go bot in C#
 * Auto-Recycle uneeded items
 * Output level and needed XP for levelup
 * Output Username, Level, Stardust, XP/hour, Pokemon/hour in Console Title
-* German/English pokemon names
+* German/English translation
 * Automatic use of Razzberries
 * Automatic Update checker
+* Automatic get levelup rewards
 
 ## Getting Started
 
@@ -55,8 +56,7 @@ Go to PokemonGo\RocketAPI\Console\App.config -> Edit the Settings you like -> Bu
 * *seconds* After X seconds it recycles items from the filter in *Settings.cs*.
 
 ## Language
-* *english* Outputs caught pokemons in english name.
-* *german*  Outputs caught pokemons in german name.
+* *System/en_EN/de_DE* Change bot locale.
 
 ## RazzBerryMode
 * *cp* - Use RazzBerry when Pokemon is over specific CP.
@@ -80,8 +80,9 @@ Go to PokemonGo\RocketAPI\Console\App.config -> Edit the Settings you like -> Bu
 * *true* Evolves all pokemoms.
 
 # Credits
-@ Sen66
+@Sen66
 @Fannboii
+@AeonLucid
 @DetectiveSquirrel
 @Ar1i
 @drbloody
