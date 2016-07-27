@@ -38,10 +38,10 @@ namespace PokemonGo.RocketAPI.Console
                 var stats = inventory.InventoryDelta.InventoryItems.Select(i => i.InventoryItemData.PlayerStats).ToArray();
                 foreach (var v in stats)
                     if (v != null)
+                    {
                         _hero.TotalKmWalked = v.KmWalked;
-                foreach (var v in stats)
-                    if (v != null)
                         await _hero.Client.GetLevelUpRewards(v.Level);
+                    }
                 bLogic.Info.PrintStartUp(_hero, profile);
                
                 if (_hero.ClientSettings.TransferType == "leaveStrongest")
