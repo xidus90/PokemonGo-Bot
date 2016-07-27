@@ -59,7 +59,33 @@
                 </Grid>
             </TabItem>
             <TabItem Header="Settings (WIP)">
-                <Grid HorizontalAlignment="Left" Height="22" Margin="8,6,0,0" VerticalAlignment="Top" Width="18"/>
+                <Grid HorizontalAlignment="Left" Height="477" Margin="-4,-3,-5,-4" VerticalAlignment="Top" Width="542">
+                    <GroupBox x:Name="groupBox_location" Header="Location" HorizontalAlignment="Left" Margin="181,10,0,0" VerticalAlignment="Top" Height="148" Width="238">
+                        <Grid HorizontalAlignment="Left" Height="135" Margin="0,0,-2,-12" VerticalAlignment="Top" Width="228">
+                            <CheckBox x:Name="checkBox_useCustomLocation" Content="Use Custom Location" HorizontalAlignment="Left" Margin="13,10,0,0" VerticalAlignment="Top"/>
+                            <ComboBox x:Name="comboBox_predefinedLocations" HorizontalAlignment="Left" Margin="98,31,0,0" VerticalAlignment="Top" Width="120"/>
+                            <TextBox x:Name="textBox_longitude" HorizontalAlignment="Left" Height="23" Margin="98,58,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                            <TextBox x:Name="textBox_latitude" HorizontalAlignment="Left" Height="23" Margin="98,86,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                            <Label x:Name="label_predefinedLocations" Content="Location" HorizontalAlignment="Left" Margin="13,31,0,0" VerticalAlignment="Top"/>
+                            <Label x:Name="label_longitude" Content="Longitude" HorizontalAlignment="Left" Margin="13,58,0,0" VerticalAlignment="Top"/>
+                            <Label x:Name="label_latitude" Content="Latitude" HorizontalAlignment="Left" Margin="13,84,0,0" VerticalAlignment="Top" Width="64"/>
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox x:Name="groupBox_AuthType" Header="Authentification Type" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="70" Width="166">
+                        <Grid HorizontalAlignment="Left" Height="60" Margin="0,0,-2,-12" VerticalAlignment="Top" Width="156">
+                            <RadioButton x:Name="radioButton_authTypePtc" Content="PTC" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" GroupName="AuthType"/>
+                            <RadioButton x:Name="radioButton_authTypeGoogle" Content="Google" HorizontalAlignment="Left" Margin="10,31,0,0" VerticalAlignment="Top" GroupName="AuthType"/>
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox x:Name="groupBox_Ptc" Header="Pokemon Trainer Club" HorizontalAlignment="Left" Margin="10,85,0,0" VerticalAlignment="Top" Height="73" Width="166">
+                        <Grid HorizontalAlignment="Left" Height="60" Margin="0,0,-2,-12" VerticalAlignment="Top" Width="156">
+                            <Label x:Name="label_PTCusername" Content="User:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <Label x:Name="label_PTCpassword" Content="Pass:" HorizontalAlignment="Left" Margin="0,26,0,0" VerticalAlignment="Top"/>
+                            <TextBox x:Name="textBox_PTCusername" HorizontalAlignment="Left" Height="23" Margin="41,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="105"/>
+                            <TextBox x:Name="textBox_PTCpassword" HorizontalAlignment="Left" Height="23" Margin="41,26,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="105"/>
+                        </Grid>
+                    </GroupBox>
+                </Grid>
             </TabItem>
         </TabControl>
         <Button x:Name="buttonStart" Grid.ColumnSpan="2" Content="Start" HorizontalAlignment="Left" Margin="10,611,0,0" VerticalAlignment="Top" Width="100" Height="30" Click="buttonStart_Click"/>
