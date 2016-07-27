@@ -10,12 +10,8 @@ namespace PokemonGo.RocketAPI.GUI
 {
     internal class Program
     {
-        public static bhelper.Hero _hero;
-        
-        public static async void Execute()
+        public static async void Execute(Hero _hero)
         {
-
-
             if (!_hero.AllowedToRun)
             {
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.Yellow, $"[{DateTime.Now.ToString("HH:mm:ss")}] " + Language.GetPhrases()["bot_stopping"]);
@@ -45,7 +41,7 @@ namespace PokemonGo.RocketAPI.GUI
                         _hero.TotalKmWalked = v.KmWalked;
 
                 bLogic.Info.PrintStartUp(_hero, profile);
-                
+
                 if (_hero.ClientSettings.TransferType == "leaveStrongest")
                     await bLogic.Pokemon.TransferAllButStrongestUnwantedPokemon(_hero);
                 else if (_hero.ClientSettings.TransferType == "all")
@@ -60,11 +56,12 @@ namespace PokemonGo.RocketAPI.GUI
                     await bLogic.Pokemon.EvolveAllGivenPokemons(_hero, pokemons);
                 if (_hero.ClientSettings.Recycler)
                     _hero.Client.RecycleItems(_hero.Client);
-                
+
                 await Task.Delay(5000);
                 //time for some gui updates
                 bLogic.Info.PrintLevel(_hero);
-                UpdateFormTitle();
+                UpdateFormTitle(_hero);
+                UpdatePokemonList(_hero);
 
 
                 if (_hero.ClientSettings.EggHatchedOutput)
@@ -76,15 +73,15 @@ namespace PokemonGo.RocketAPI.GUI
                 _hero.ClientSettings.DefaultLatitude = Client.GetLatitude(true);
                 _hero.ClientSettings.DefaultLongitude = Client.GetLongitude(true);
                 await Task.Delay(1000);
-                Execute();
+                Execute(_hero);
             }
-            catch (TaskCanceledException crap) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, "Task Canceled Exception - Restarting: " + crap.Message); Execute(); }
-            catch (UriFormatException crap) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, "System URI Format Exception - Restarting: " + crap.Message); Execute(); }
-            catch (ArgumentOutOfRangeException crap) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, "ArgumentOutOfRangeException - Restarting: " + crap.Message); Execute(); }
-            catch (ArgumentNullException crap) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, "Argument Null Refference - Restarting: " + crap.Message); Execute(); }
-            catch (NullReferenceException crap) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, "Null Refference - Restarting: " + crap.Message); Execute(); }
-            catch (AccountNotVerifiedException crap) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.Red, "ACCOUNT NOT VERIFIED - WONT WORK - " + crap.Message); Execute(); }
-            catch (Exception crap) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.Red, "Not Handled Exception: " + crap.Message); Execute(); }
+            catch (TaskCanceledException crap) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, "Task Canceled Exception - Restarting: " + crap.Message); Execute(_hero); }
+            catch (UriFormatException crap) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, "System URI Format Exception - Restarting: " + crap.Message); Execute(_hero); }
+            catch (ArgumentOutOfRangeException crap) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, "ArgumentOutOfRangeException - Restarting: " + crap.Message); Execute(_hero); }
+            catch (ArgumentNullException crap) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, "Argument Null Refference - Restarting: " + crap.Message); Execute(_hero); }
+            catch (NullReferenceException crap) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, "Null Refference - Restarting: " + crap.Message); Execute(_hero); }
+            catch (AccountNotVerifiedException crap) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.Red, "ACCOUNT NOT VERIFIED - WONT WORK - " + crap.Message); Execute(_hero); }
+            catch (Exception crap) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.Red, "Not Handled Exception: " + crap.Message); Execute(_hero); }
         }
 
         /// <summary>
@@ -92,7 +89,7 @@ namespace PokemonGo.RocketAPI.GUI
         /// </summary>
         /// <param name="client"></param>
         /// <returns></returns>
-        public static async Task UpdateFormTitle()
+        public static async Task UpdateFormTitle(Hero _hero)
         {
             var inventory = await _hero.Client.GetInventory();
             var stats = inventory.InventoryDelta.InventoryItems.Select(i => i.InventoryItemData?.PlayerStats).ToArray();
@@ -104,8 +101,26 @@ namespace PokemonGo.RocketAPI.GUI
                     MainWindow.main.SetMainFormTitle = string.Format(profile.Profile.Username + " | LEVEL: {0:0} - ({1:0}) | SD: {2:0} | XP/H: {3:0} | POKE/H: {4:0}", playerStatistic.Level, string.Format("{0:#,##0}", (playerStatistic.Experience - playerStatistic.PrevLevelXp - XpDiff)) + "/" + string.Format("{0:#,##0}", (playerStatistic.NextLevelXp - playerStatistic.PrevLevelXp - XpDiff)), string.Format("{0:#,##0}", profile.Profile.Currency.ToArray()[1].Amount), string.Format("{0:#,##0}", Math.Round(bLogic.Pokemon.TotalExperience / bhelper.Main.GetRuntime(_hero.TimeStarted))), Math.Round(bLogic.Pokemon.TotalPokemon / bhelper.Main.GetRuntime(_hero.TimeStarted)) + " | " + (DateTime.Now - _hero.TimeStarted).ToString(@"dd\.hh\:mm\:ss"));
                 }
             await Task.Delay(1000);
-            UpdateFormTitle();
+            UpdateFormTitle(_hero);
         }
-        
+        public static async Task UpdatePokemonList(Hero _hero)
+        {
+            MainWindow.main.dataGrid_pokemon_clear();
+            GeneratedCode.GetInventoryResponse inventory = await _hero.Client.GetInventory();
+            GeneratedCode.PokemonData[] pokemons = inventory.InventoryDelta.InventoryItems
+                .Select(i => i.InventoryItemData?.Pokemon)
+                .Where(p => p != null && p?.PokemonId > 0)
+                .ToArray();
+
+            foreach (GeneratedCode.PokemonData pokemon in pokemons)
+            {
+                MainWindow.main.dataGrid_pokemon_add( 
+                    new Pokemon() {
+                    Name = pokemon.PokemonId.ToString(),
+                    CP = pokemon.Cp,
+                    Perfection = Math.Round(bLogic.Pokemon.Perfect(pokemon), 2)
+                });
+            }
+        }
     }
 }

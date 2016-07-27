@@ -563,6 +563,5 @@ namespace PokemonGo.RocketAPI
                     _httpClient.PostProtoPayload<Request, LevelUpRewards>($"https://{_apiUrl}/rpc",
                         GetLvlUpRewards);
         }
-
     }
 }

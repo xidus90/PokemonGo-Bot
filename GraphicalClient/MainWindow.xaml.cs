@@ -31,13 +31,15 @@ namespace PokemonGo.RocketAPI.GUI
 
         public static MainWindow main;
 
+        public static Client client = new Client(new Settings());
+        public static Hero _hero = new Hero(client);
+
         #region Manipulate MainForm gui controls
         public string SetMainFormTitle
         {
             get { return Title.ToString(); }
             set { Dispatcher.Invoke(new Action(() => { Title = value; })); }
         }
-
         public bool SeStartButtonStatus
         {
             get { return buttonStart.IsEnabled; }
@@ -48,11 +50,18 @@ namespace PokemonGo.RocketAPI.GUI
             get { return buttonStop.IsEnabled; }
             set { Dispatcher.Invoke(new Action(() => { buttonStop.IsEnabled = value; })); }
         }
-
         public string SetVersionLabel
         {
             get { return lbl_Version.Content.ToString(); }
             set { Dispatcher.Invoke(new Action(() => { lbl_Version.Content = value; })); }
+        }
+        public void dataGrid_pokemon_add(Pokemon pokemon)
+        {
+            Dispatcher.Invoke(new Action(() => { dataGrid_pokemon.Items.Add(pokemon); }));
+        }
+        public void dataGrid_pokemon_clear()
+        {
+            Dispatcher.Invoke(new Action(() => { dataGrid_pokemon.Items.Clear(); }));
         }
         #endregion
 
@@ -65,7 +74,6 @@ namespace PokemonGo.RocketAPI.GUI
             logger = new Logger(Output);
             Console.SetOut(logger);
             Console.SetError(logger);
-            
             SetVersionLabel = "^v." + Assembly.GetExecutingAssembly().GetName().Version.ToString();
         }
 
@@ -75,11 +83,7 @@ namespace PokemonGo.RocketAPI.GUI
             {
                 try
                 {
-
-                    var client = new Client(new bhelper.Settings());
-                    Program._hero = new Hero(client);
-
-                    if (Program._hero.ClientSettings.Language == "System")
+                    if (_hero.ClientSettings.Language == "System")
                     {
                         switch (System.Globalization.CultureInfo.InstalledUICulture.Name)
                         {
@@ -99,17 +103,17 @@ namespace PokemonGo.RocketAPI.GUI
                         bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, $"[{DateTime.Now.ToString("HH:mm:ss")}] " + bhelper.Language.GetPhrases()["detected_sys_language"] + System.Globalization.CultureInfo.InstalledUICulture.DisplayName);
                     }
                     else
-                        bhelper.Language.LoadLanguageFile(Program._hero.ClientSettings.Language);
+                        bhelper.Language.LoadLanguageFile(_hero.ClientSettings.Language);
                     bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, $"[{DateTime.Now.ToString("HH:mm:ss")}] " + bhelper.Language.GetPhrases()["loaded_language"] + bhelper.Language.LanguageFile);
 
                     //if we are on the newest version we should be fine running the bot
                     if (bhelper.Main.CheckVersion(Assembly.GetExecutingAssembly().GetName()))
                     {
-                        Program._hero.AllowedToRun = true;
+                        _hero.AllowedToRun = true;
                     }
 
                     //lets get rolling
-                    Program.Execute();
+                    Program.Execute(_hero);
                     //change the button status around
                     SeStartButtonStatus = false;
                     SeStopButtonStatus = true;
@@ -124,7 +128,7 @@ namespace PokemonGo.RocketAPI.GUI
         }
         private void buttonStop_Click(object sender, RoutedEventArgs e)
         {
-            Program._hero.AllowedToRun = false;
+            _hero.AllowedToRun = false;
             SeStartButtonStatus = true;
             SeStopButtonStatus = false;
         }
@@ -136,6 +140,16 @@ namespace PokemonGo.RocketAPI.GUI
             SetWindowLong(hwnd, GWL_STYLE, (int)(value & ~WS_MAXIMIZEBOX));
         }
 
-        
+        private void Output_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            //MessageBox.Show("text changed");
+        }
+    }
+
+    public class Pokemon
+    {
+        public string Name { get; set; }
+        public int CP { get; set; }
+        public double Perfection { get; set; }
     }
 }
