@@ -31,7 +31,7 @@
                 </Grid>
             </TabItem>
             <TabItem Header="Stats (WIP)">
-                <Grid Background="#FFE5E5E5">
+                <Grid>
                     <TabControl x:Name="tabControl_stats" HorizontalAlignment="Left" Height="470" VerticalAlignment="Top" Width="533">
                         <TabItem Header="Pokemon">
                             <DataGrid x:Name="dataGrid_pokemon">
@@ -65,34 +65,60 @@
             </TabItem>
             <TabItem Header="Settings (NOT WORKING YET)">
                 <Grid HorizontalAlignment="Left" Height="477" Margin="-4,-3,-5,-4" VerticalAlignment="Top" Width="542">
-                    <GroupBox x:Name="groupBox_location" Header="Location" HorizontalAlignment="Left" Margin="181,10,0,0" VerticalAlignment="Top" Height="155" Width="238">
+                    <GroupBox x:Name="groupBox_location" Header="Location" HorizontalAlignment="Left" Margin="176,10,0,0" VerticalAlignment="Top" Height="155" Width="238">
                         <Grid HorizontalAlignment="Left" Height="145" Margin="0,0,-2,-12" VerticalAlignment="Top" Width="228">
-                            <CheckBox x:Name="checkBox_useCustomLocation" Content="Use Custom Location" HorizontalAlignment="Left" Margin="13,10,0,0" VerticalAlignment="Top"/>
+                            <CheckBox x:Name="checkBox_useCustomLocation" Content="Use Custom Location" HorizontalAlignment="Left" Margin="13,10,0,0" VerticalAlignment="Top" Click="checkBox_useCustomLocation_Click"/>
                             <ComboBox x:Name="comboBox_predefinedLocations" HorizontalAlignment="Left" Margin="98,31,0,0" VerticalAlignment="Top" Width="120"/>
-                            <TextBox x:Name="textBox_longitude" HorizontalAlignment="Left" Height="23" Margin="98,58,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                            <TextBox x:Name="textBox_latitude" HorizontalAlignment="Left" Height="23" Margin="98,86,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                            <TextBox x:Name="textBox_longitude" HorizontalAlignment="Left" Height="23" Margin="98,58,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" PreviewTextInput="textBox_longitude_PreviewTextInput" MaxLength="10"/>
+                            <TextBox x:Name="textBox_latitude" HorizontalAlignment="Left" Height="23" Margin="98,86,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" PreviewTextInput="textBox_latitude_PreviewTextInput" MaxLength="10"/>
                             <Label x:Name="label_predefinedLocations" Content="Location" HorizontalAlignment="Left" Margin="13,31,0,0" VerticalAlignment="Top"/>
                             <Label x:Name="label_longitude" Content="Longitude" HorizontalAlignment="Left" Margin="13,58,0,0" VerticalAlignment="Top"/>
                             <Label x:Name="label_latitude" Content="Latitude" HorizontalAlignment="Left" Margin="13,84,0,0" VerticalAlignment="Top" Width="64"/>
                             <CheckBox x:Name="checkBox_enableLiveMap" Content="Enable Live Map" HorizontalAlignment="Left" Margin="13,115,0,0" VerticalAlignment="Top"/>
                         </Grid>
                     </GroupBox>
-                    <GroupBox x:Name="groupBox_AuthType" Header="Authentification Type" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="70" Width="166">
-                        <Grid HorizontalAlignment="Left" Height="60" Margin="0,0,-2,-12" VerticalAlignment="Top" Width="156">
+                    <GroupBox x:Name="groupBox_AuthType" Header="Authentification Type" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="155" Width="166">
+                        <Grid HorizontalAlignment="Left" Height="145" Margin="0,0,-2,-12" VerticalAlignment="Top" Width="156">
                             <RadioButton x:Name="radioButton_authTypePtc" Content="PTC" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" GroupName="AuthType"/>
                             <RadioButton x:Name="radioButton_authTypeGoogle" Content="Google" HorizontalAlignment="Left" Margin="10,31,0,0" VerticalAlignment="Top" GroupName="AuthType"/>
+                            <Label x:Name="label_Authusername" Content="User:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,62,0,0"/>
+                            <Label x:Name="label_Authpassword" Content="Pass:" HorizontalAlignment="Left" Margin="0,93,0,0" VerticalAlignment="Top"/>
+                            <TextBox x:Name="textBox_Authusername" HorizontalAlignment="Left" Height="23" Margin="41,65,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="105"/>
+                            <TextBox x:Name="textBox_Authpassword" HorizontalAlignment="Left" Height="23" Margin="41,96,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="105"/>
                         </Grid>
                     </GroupBox>
-                    <GroupBox x:Name="groupBox_Ptc" Header="Pokemon Trainer Club" HorizontalAlignment="Left" Margin="10,80,0,0" VerticalAlignment="Top" Height="85" Width="166">
-                        <Grid HorizontalAlignment="Left" Height="75" Margin="0,0,-2,-12" VerticalAlignment="Top" Width="156">
-                            <Label x:Name="label_PTCusername" Content="User:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0"/>
-                            <Label x:Name="label_PTCpassword" Content="Pass:" HorizontalAlignment="Left" Margin="0,36,0,0" VerticalAlignment="Top"/>
-                            <TextBox x:Name="textBox_PTCusername" HorizontalAlignment="Left" Height="23" Margin="41,8,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="105"/>
-                            <TextBox x:Name="textBox_PTCpassword" HorizontalAlignment="Left" Height="23" Margin="41,39,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="105"/>
+                    <GroupBox x:Name="groupBox_transferSettings" Header="Transfer Rules" HorizontalAlignment="Left" Margin="10,165,0,0" VerticalAlignment="Top" Height="297" Width="166">
+                        <Grid HorizontalAlignment="Left" Height="287" VerticalAlignment="Top" Width="169" Margin="0,0,-2,-12">
+                            <TextBox x:Name="textBox_transferBelowCP" HorizontalAlignment="Left" Height="23" Margin="75,31,0,0" TextWrapping="Wrap" Text="100" VerticalAlignment="Top" Width="75" PreviewTextInput="textBox_transferBelowCP_PreviewTextInput" MaxLength="5"/>
+                            <RadioButton x:Name="radioButton_transferAll" Content="All" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="TransferRules" Margin="1,10,0,0" Height="23"/>
+                            <RadioButton x:Name="radioButton_transferBelowCP" Content="Below CP:" HorizontalAlignment="Left" Margin="1,34,0,0" VerticalAlignment="Top" GroupName="TransferRules" Height="23"/>
+                            <RadioButton x:Name="radioButton_transferDuplicate" Content="Duplicate" HorizontalAlignment="Left" Margin="1,83,0,0" VerticalAlignment="Top" GroupName="TransferRules" Height="23"/>
+                            <RadioButton x:Name="radioButton_transferBelowIV" Content="Below IV:" HorizontalAlignment="Left" Margin="1,60,0,0" VerticalAlignment="Top" GroupName="TransferRules" Height="23"/>
+                            <TextBox x:Name="textBox_transferBelowIV" HorizontalAlignment="Left" Height="23" Margin="75,57,0,0" TextWrapping="Wrap" Text="100" VerticalAlignment="Top" Width="75" PreviewTextInput="textBox_transferBelowCP_PreviewTextInput" MaxLength="5"/>
+                            <RadioButton x:Name="radioButton_transferNone" Content="None" HorizontalAlignment="Left" Margin="1,106,0,0" VerticalAlignment="Top" GroupName="TransferRules" Height="23" IsChecked="True"/>
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox x:Name="groupBox_misc" Header="Misc" HorizontalAlignment="Left" Margin="414,10,0,0" VerticalAlignment="Top" Height="160" Width="118">
+                        <Grid HorizontalAlignment="Left" Height="150" Margin="0,0,-2,-12" VerticalAlignment="Top" Width="108">
+                            <CheckBox x:Name="checkBox_enableRecycler" Content="Recycler" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
                         </Grid>
                     </GroupBox>
                 </Grid>
             </TabItem>
+            <TabItem Header="Settings">
+                <Grid HorizontalAlignment="Left" Height="477" Margin="-4,-3,-5,-4" VerticalAlignment="Top" Width="542">
+                    <TabControl x:Name="tabControl1" HorizontalAlignment="Left" Height="477" VerticalAlignment="Top" Width="542">
+                        <TabItem Header="TabItem">
+                            <Grid Background="#FFE5E5E5"/>
+                        </TabItem>
+                        <TabItem Header="Location">
+                            <Grid Background="#FFE5E5E5"/>
+                        </TabItem>
+                    </TabControl>
+
+                </Grid>
+            </TabItem>
+
         </TabControl>
         <Button x:Name="buttonStart" Grid.ColumnSpan="2" Content="Start" HorizontalAlignment="Left" Margin="10,611,0,0" VerticalAlignment="Top" Width="100" Height="30" Click="buttonStart_Click"/>
         <Image x:Name="image" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="85" Margin="0,10,0,0" VerticalAlignment="Top" Width="553" Source="/Resources/pogo-bot-logo.png"/>

@@ -148,6 +148,31 @@ namespace PokemonGo.RocketAPI.GUI
         {
             //MessageBox.Show("text changed");
         }
+
+        private void checkBox_useCustomLocation_Click(object sender, RoutedEventArgs e)
+        {
+            textBox_longitude.IsReadOnly = (bool)checkBox_useCustomLocation.IsChecked ? false : true;
+            textBox_latitude.IsReadOnly = (bool)checkBox_useCustomLocation.IsChecked ? false : true;
+            comboBox_predefinedLocations.IsEnabled = (bool)checkBox_useCustomLocation.IsChecked ? false : true;
+        }
+
+        private void textBox_longitude_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            System.Text.RegularExpressions.Regex regex = new System.Text.RegularExpressions.Regex("[0-9.]+");
+            e.Handled = !regex.IsMatch(e.Text);
+        }
+
+        private void textBox_latitude_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            System.Text.RegularExpressions.Regex regex = new System.Text.RegularExpressions.Regex("[0-9.]+");
+            e.Handled = !regex.IsMatch(e.Text);
+        }
+
+        private void textBox_transferBelowCP_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            System.Text.RegularExpressions.Regex regex = new System.Text.RegularExpressions.Regex("[0-9]+");
+            e.Handled = !regex.IsMatch(e.Text);
+        }
     }
 
     public class dataGrid_pokemon_class

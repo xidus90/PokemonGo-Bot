@@ -25,6 +25,12 @@ namespace bLogic
         public static int TotalPokemon = 0;
         public static async Task EvolveAllGivenPokemons(Hero hero, IEnumerable<PokemonData> pokemonToEvolve)
         {
+            PokemonId[] DontEvolve = new[]
+            {
+                PokemonId.Missingno
+            };
+
+
             foreach (var pokemon in pokemonToEvolve)
             {
                 /*
@@ -37,6 +43,10 @@ namespace bLogic
 	                FAILED_POKEMON_IS_DEPLOYED = 5;
                 }
                 }*/
+                if (DontEvolve.Contains(pokemon.PokemonId))
+                    continue;
+
+                
 
                 var countOfEvolvedUnits = 0;
                 var xpCount = 0;
@@ -75,7 +85,7 @@ namespace bLogic
                 await Task.Delay(3000);
             }
         }
-        
+
 
         /// <summary>
         /// Catch all nearby pokemon
@@ -85,7 +95,7 @@ namespace bLogic
         public static async Task ExecuteCatchAllNearbyPokemons(Hero hero)
         {
             var mapObjects = await hero.Client.GetMapObjects();
-            
+
             var pokemons = mapObjects.MapCells.SelectMany(i => i.CatchablePokemons);
 
             var inventory2 = await hero.Client.GetInventory();
@@ -143,13 +153,13 @@ namespace bLogic
                 else if (hero.ClientSettings.TransferType == "duplicate")
                     await TransferDuplicatePokemon(hero);
                 else if (hero.ClientSettings.TransferType == "cp")
-                    await TransferAllWeakPokemon(hero); 
+                    await TransferAllWeakPokemon(hero);
 
                 await Task.Delay(3000);
             }
         }
 
-        
+
         /// <summary>
         /// Transfer duplicate weak pokemon to the doctor
         /// </summary>
@@ -243,7 +253,7 @@ namespace bLogic
             }
         }
 
-        
+
 
         public static async Task TransferAllWeakPokemon(Hero hero)
         {
