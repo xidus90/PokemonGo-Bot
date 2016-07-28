@@ -27,9 +27,11 @@ Go to PokemonGo\RocketAPI\Console\App.config -> Edit the Settings you like -> Bu
 * *Google* - Google login via oauth2
 * *Ptc* - Pokemon Trainer Club login with username/password combination
 
-## PtcUsername
-* *username* for PTC account. No need for when using Google.
-* *password* for PTC account. No need for when using Google.
+## Username
+* *username* for PTC account. Email for Google account
+
+## Password
+* *password* for PTC account. Password for Google account
 
 ## GoogleRefreshToken
 * *GoogleRefreshToken* - You get this code when you connect the application with your Google account. You do not need to enter it.

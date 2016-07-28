@@ -65,6 +65,8 @@
     <Compile Include="Enums\MiscEnums.cs" />
     <Compile Include="Enums\RequestType.cs" />
     <Compile Include="Exceptions\AccountNotVerifiedException.cs" />
+    <Compile Include="Exceptions\GoogleException.cs" />
+    <Compile Include="Exceptions\GoogleOfflineException.cs" />
     <Compile Include="Exceptions\PtcOfflineException.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="GeneratedCode\AllEnum.cs" />
@@ -79,6 +81,7 @@
     <Compile Include="Helpers\Utils.cs" />
     <Compile Include="ISettings.cs" />
     <Compile Include="Login\GoogleLogin.cs" />
+    <Compile Include="Login\GoogleLoginGPSOAuth.cs" />
     <Compile Include="Login\PtcLogin.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="Extensions\HttpClientExtensions.cs" />
@@ -94,7 +97,12 @@
     <None Include="Proto\Response.proto" />
     <None Include="Proto\Request.proto" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\GPSOAuthSharp\GPSOAuthSharp.csproj">
+      <Project>{98c4df94-b0ec-4ab7-9f3c-1874fa803034}</Project>
+      <Name>GPSOAuthSharp</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

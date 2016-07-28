@@ -14,10 +14,7 @@ namespace bLogic
             try
             {
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.Yellow, "+-------------- account info ---------------+");
-                if (hero.ClientSettings.AuthType == AuthType.Ptc)
-                {
-                bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, " PTC Name: " + hero.ClientSettings.PtcUsername);
-                }
+                bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, " PTC Name: " + hero.ClientSettings.Username);
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, " User Name: " + profileResponse.Profile.Username);
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, " Team: " + profileResponse.Profile.Team);
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, " Stardust: " + profileResponse.Profile.Currency.ToArray()[1].Amount);

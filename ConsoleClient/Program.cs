@@ -24,11 +24,10 @@ namespace PokemonGo.RocketAPI.Console
             {
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, $"[{DateTime.Now.ToString("HH:mm:ss")}] " + Language.GetPhrases()["bot_authenticating"]);
                 if (_hero.ClientSettings.AuthType == AuthType.Ptc)
-                    await _hero.Client.DoPtcLogin(_hero.ClientSettings.PtcUsername, _hero.ClientSettings.PtcPassword);
+                    await _hero.Client.DoPtcLogin(_hero.ClientSettings.Username, _hero.ClientSettings.Password);
                 else if (_hero.ClientSettings.AuthType == AuthType.Google)
-                    await _hero.Client.DoGoogleLogin();
+                    await _hero.Client.DoGoogleLogin(_hero.ClientSettings.Username, _hero.ClientSettings.Password);
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, $"[{DateTime.Now.ToString("HH:mm:ss")}] " + Language.GetPhrases()["bot_loggedin"]);
-
                 await _hero.Client.SetServer();
                 var profile = await _hero.Client.GetProfile();
                 var inventory = await _hero.Client.GetInventory();

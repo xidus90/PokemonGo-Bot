@@ -78,27 +78,11 @@ namespace PokemonGo.RocketAPI
                         catchPokemonRequest);
         }
 
-        public async Task DoGoogleLogin()
+        public async Task DoGoogleLogin(string username, string password)
         {
             _authType = AuthType.Google;
-            GoogleLogin.TokenResponseModel tokenResponse = null;
 
-            if (_settings.GoogleRefreshToken == string.Empty && AccessToken == string.Empty)
-            {
-                var deviceCode = await GoogleLogin.GetDeviceCode();
-                tokenResponse = await GoogleLogin.GetAccessToken(deviceCode);
-                _accessToken = tokenResponse.id_token;
-                _settings.GoogleRefreshToken = tokenResponse.refresh_token;
-                AccessToken = tokenResponse.refresh_token;
-            }
-            else
-            {
-                if (_settings.GoogleRefreshToken != null)
-                    tokenResponse = await GoogleLogin.GetAccessToken(_settings.GoogleRefreshToken);
-                else
-                    tokenResponse = await GoogleLogin.GetAccessToken(AccessToken);
-                _accessToken = tokenResponse.id_token;
-            }
+            _accessToken = GoogleLoginGPSOAuth.DoLogin(username, password);
         }
 
         public async Task DoPtcLogin(string username, string password)
