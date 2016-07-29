@@ -73,4 +73,13 @@ namespace bhelper
         }
 
     }
+
+    public static class Random
+    {
+        private static readonly System.Random random = new System.Random();
+        public static async Task Delay(int min, int max)
+        {
+            await Task.Delay(random.Next(min, max));
+        }
+    }
 }

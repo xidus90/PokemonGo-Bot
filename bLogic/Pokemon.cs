@@ -82,7 +82,7 @@ namespace bLogic
                     bhelper.Main.ColoredConsoleWrite(ConsoleColor.Cyan,
                         $"[{DateTime.Now.ToString("HH:mm:ss")}] Evolved {countOfEvolvedUnits} pieces of {pokemon.PokemonId} for {xpCount}xp");
 
-                await Task.Delay(3000);
+                await bhelper.Random.Delay(200, 1500);
             }
         }
 
@@ -160,7 +160,7 @@ namespace bLogic
                 else if (hero.ClientSettings.TransferType == "cp")
                     await bLogic.Pokemon.TransferAllWeakPokemon(hero);
 
-                await Task.Delay(150);
+                await bhelper.Random.Delay(50, 300);
             }
         }
 
@@ -258,7 +258,7 @@ namespace bLogic
                     Game.softbanned_detection++;
                 if (Game.softbanned_detection > 10)
                     throw new PokemonGo.RocketAPI.Exceptions.SoftbannedException();
-                await Task.Delay(15000);
+                await bhelper.Random.Delay(10000, 15000);
                 await ExecuteCatchAllNearbyPokemons(_hero);
             }
         }

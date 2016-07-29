@@ -50,7 +50,7 @@ namespace PokemonGo.RocketAPI.Console
                     _hero.Client.UseLuckyEgg(_hero.Client, inventory);
                 _hero.Client.UseIncense(_hero.Client, inventory);
 
-                await Task.Delay(1000);
+                await bhelper.Random.Delay(200, 1500);
                 //time for some gui updates
                 bLogic.Info.PrintLevel(_hero, inventory);
                 RefreshConsoleTitle(_hero, inventory, profile);
@@ -97,7 +97,7 @@ namespace PokemonGo.RocketAPI.Console
                 if (_hero.ClientSettings.EvolveAllGivenPokemons)
                     await bLogic.Pokemon.EvolveAllGivenPokemons(_hero, pokemons);
 
-                await Task.Delay(1000);
+                await bhelper.Random.Delay(200, 1500);
 
                 await bLogic.Pokemon.ExecuteFarmingPokestopsAndPokemons(_hero, inventory);
                 _hero.ClientSettings.DefaultLatitude = Client.GetLatitude(true);
@@ -188,9 +188,9 @@ namespace PokemonGo.RocketAPI.Console
                     int XpDiff = bhelper.Game.GetXpDiff(playerStatistic.Level);
                     System.Console.Title = string.Format(profile.Profile.Username + " | LEVEL: {0:0} - ({1:0}) | SD: {2:0} | XP/H: {3:0} | POKE/H: {4:0}", playerStatistic.Level, string.Format("{0:#,##0}", (playerStatistic.Experience - playerStatistic.PrevLevelXp - XpDiff)) + "/" + string.Format("{0:#,##0}", (playerStatistic.NextLevelXp - playerStatistic.PrevLevelXp - XpDiff)), string.Format("{0:#,##0}", profile.Profile.Currency.ToArray()[1].Amount), string.Format("{0:#,##0}", Math.Round(bLogic.Pokemon.TotalExperience / bhelper.Main.GetRuntime(_hero.TimeStarted))), Math.Round(bLogic.Pokemon.TotalPokemon / bhelper.Main.GetRuntime(_hero.TimeStarted)) + " | " +(DateTime.Now - _hero.TimeStarted).ToString(@"dd\.hh\:mm\:ss"));
                 }
-            await Task.Delay(1000);
-
-            RefreshConsoleTitle(hero, inventory, profile);
+            await bhelper.Random.Delay(2000, 5000);
+            GeneratedCode.GetInventoryResponse NewInventory = await hero.Client.GetInventory();
+            RefreshConsoleTitle(hero, NewInventory, profile);
         }
     }
 }
