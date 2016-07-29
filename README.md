@@ -15,7 +15,7 @@ A Pokemon Go bot in C#
 * Output level and needed XP for levelup
 * Output Username, Level, Stardust, XP/hour, Pokemon/hour in Console Title
 * German/English translation
-* Automatic use of Razzberries
+* Automatic use of Razzberries/Lucky Eggs/Incenses
 * Automatic Update checker
 * Automatic get levelup rewards
 * Automatic unban after getting banned
