@@ -23,6 +23,19 @@ namespace bLogic
 
         public static int TotalExperience = 0;
         public static int TotalPokemon = 0;
+        public static async Task<IEnumerable<PokemonSettings>> GetPokemonSettings(Hero hero)
+        {
+            var templates = await hero.Client.GetItemTemplates();
+            return templates.ItemTemplates.Select(i => i.PokemonSettings)
+                   .Where(p => p != null && p?.FamilyId != PokemonFamilyId.FamilyUnset);
+        }
+        public static async Task<IEnumerable<PokemonFamily>> GetPokemonFamilies(Hero hero)
+        {
+            var inventory = await hero.Client.GetInventory();
+            return
+                inventory.InventoryDelta.InventoryItems.Select(i => i.InventoryItemData?.PokemonFamily)
+                    .Where(p => p != null && p?.FamilyId != PokemonFamilyId.FamilyUnset);
+        }
         public static async Task EvolveAllGivenPokemons(Hero hero, IEnumerable<PokemonData> pokemonToEvolve)
         {
             PokemonId[] DontEvolve = new[]
@@ -30,57 +43,68 @@ namespace bLogic
                 PokemonId.Missingno
             };
 
+            IEnumerable<PokemonSettings> PokeSettings = await GetPokemonSettings(hero);
+            List<PokemonSettings> PokeSettingsList = PokeSettings.ToList();
+            IEnumerable<PokemonFamily> PokeFamilies = await GetPokemonFamilies(hero);
+            PokemonFamily[] PokeFamiliesArray = PokeFamilies.ToArray();
 
-            foreach (var pokemon in pokemonToEvolve)
+
+            /*
+            enum Holoholo.Rpc.Types.EvolvePokemonOutProto.Result {
+                UNSET = 0;
+                SUCCESS = 1;
+                FAILED_POKEMON_MISSING = 2;
+                FAILED_INSUFFICIENT_RESOURCES = 3;
+                FAILED_POKEMON_CANNOT_EVOLVE = 4;
+                FAILED_POKEMON_IS_DEPLOYED = 5;
+            }
+            }*/
+            List<PokemonData> pokemonToEvolveFiltered = new List<PokemonData>();
+            foreach (var _pokemon in pokemonToEvolve)
             {
-                /*
-                enum Holoholo.Rpc.Types.EvolvePokemonOutProto.Result {
-	                UNSET = 0;
-	                SUCCESS = 1;
-	                FAILED_POKEMON_MISSING = 2;
-	                FAILED_INSUFFICIENT_RESOURCES = 3;
-	                FAILED_POKEMON_CANNOT_EVOLVE = 4;
-	                FAILED_POKEMON_IS_DEPLOYED = 5;
-                }
-                }*/
-                if (DontEvolve.Contains(pokemon.PokemonId))
+                PokemonSettings settings = PokeSettingsList.Single(i => i.PokemonId == _pokemon.PokemonId);
+                PokemonFamily FamilyCandy = PokeFamiliesArray.Single(i => settings.FamilyId == i.FamilyId);
+                var pokemonCandyNeededAlready = pokemonToEvolve.Count(p => PokeSettingsList.Single(x => x.PokemonId == p.PokemonId).FamilyId == settings.FamilyId) * settings.CandyToEvolve;
+
+                if (settings.EvolutionIds.Count == 0)
                     continue;
+                if (_pokemon.DeployedFortId != 0)
+                    continue;
+                if (DontEvolve.Contains(_pokemon.PokemonId))
+                    continue;
+                if (FamilyCandy.Candy - pokemonCandyNeededAlready > settings.CandyToEvolve)
+                {
+                    pokemonToEvolveFiltered.Add(_pokemon);
+                }
+            }
 
-                
 
-                var countOfEvolvedUnits = 0;
-                var xpCount = 0;
+            foreach (var pokemon in pokemonToEvolveFiltered)
+            {
 
                 EvolvePokemonOut evolvePokemonOutProto;
                 do
                 {
                     evolvePokemonOutProto = await hero.Client.EvolvePokemon(pokemon.Id);
-                    //todo: someone check whether this still works
+
 
                     if (evolvePokemonOutProto.Result == 1)
                     {
-                        bhelper.Main.ColoredConsoleWrite(ConsoleColor.Cyan,
-                            $"[{DateTime.Now.ToString("HH:mm:ss")}] Evolved {pokemon.PokemonId} successfully for {evolvePokemonOutProto.ExpAwarded}xp");
+                        bhelper.Main.ColoredConsoleWrite(ConsoleColor.Cyan, $"[{DateTime.Now.ToString("HH:mm:ss")}] Evolved {pokemon.PokemonId} successfully for {evolvePokemonOutProto.ExpAwarded}xp");
+
                         TotalExperience += evolvePokemonOutProto.ExpAwarded;
-
-
-                        countOfEvolvedUnits++;
-                        xpCount += evolvePokemonOutProto.ExpAwarded;
                     }
                     else
                     {
                         var result = evolvePokemonOutProto.Result;
-                        /*
-                        ColoredConsoleWrite(ConsoleColor.White, $"Failed to evolve {pokemon.PokemonId}. " +
+
+                        bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, $"Failed to evolve {pokemon.PokemonId}. " +
                                                  $"EvolvePokemonOutProto.Result was {result}");
 
-                        ColoredConsoleWrite(ConsoleColor.White, $"Due to above error, stopping evolving {pokemon.PokemonId}");
-                        */
+                        bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, $"Due to above error, stopping evolving {pokemon.PokemonId}");
+
                     }
                 } while (evolvePokemonOutProto.Result == 1);
-                if (countOfEvolvedUnits > 0)
-                    bhelper.Main.ColoredConsoleWrite(ConsoleColor.Cyan,
-                        $"[{DateTime.Now.ToString("HH:mm:ss")}] Evolved {countOfEvolvedUnits} pieces of {pokemon.PokemonId} for {xpCount}xp");
 
                 await bhelper.Random.Delay(200, 1500);
             }

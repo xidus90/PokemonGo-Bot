@@ -40,10 +40,7 @@ namespace bhelper
             set { SetSetting(value); }
         }
 
-
-        public string LevelOutput => GetSetting() != string.Empty ? GetSetting() : "time";
-
-        public int LevelTimeInterval => GetSetting() != string.Empty ? System.Convert.ToInt16(GetSetting()) : 600;
+        public bool LevelUpCheck => GetSetting() != string.Empty ? System.Convert.ToBoolean(GetSetting(), CultureInfo.InvariantCulture) : false;
 
         public bool Recycler => GetSetting() != string.Empty ? System.Convert.ToBoolean(GetSetting(), CultureInfo.InvariantCulture) : false;
 

@@ -34,7 +34,7 @@ namespace bhelper
 
                 if (cleanedServerAssemblyVersion <= localAssembly.Version)
                 {
-                    ColoredConsoleWrite(ConsoleColor.White, $"[{DateTime.Now.ToString("HH:mm:ss")}] "+ Language.GetPhrases()["updates_latest"] + Assembly.GetExecutingAssembly().GetName().Version + "!");
+                    ColoredConsoleWrite(ConsoleColor.White, $"[{DateTime.Now.ToString("HH:mm:ss")}] "+ Language.GetPhrases()["updates_latest"] + localAssembly.Version + "!");
                     return true;
                 }
 

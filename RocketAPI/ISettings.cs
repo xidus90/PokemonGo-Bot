@@ -13,8 +13,7 @@ namespace PokemonGo.RocketAPI
         string Location { get; set; }
         double DefaultLatitude { get; set; }
         double DefaultLongitude { get; set; }
-        string LevelOutput { get; }
-        int LevelTimeInterval { get; }
+        bool LevelUpCheck { get; }
         string GoogleRefreshToken { get; set; }
         string Password { get; }
         string Username { get; }

@@ -94,6 +94,7 @@ namespace PokemonGo.RocketAPI
             }
             catch (Newtonsoft.Json.JsonReaderException) { ColoredConsoleWrite(ConsoleColor.White, "Json Reader Exception - Server down? - Restarting"); DoPtcLogin(username, password); }
             catch (Exceptions.AccountNotVerifiedException) { ColoredConsoleWrite(ConsoleColor.Red, "ACCOUNT NOT VERIFIED - WONT WORK"); DoPtcLogin(username, password); }
+            catch (NullReferenceException) { ColoredConsoleWrite(ConsoleColor.Red, "Login credentials invalid? - Restarting"); DoPtcLogin(username, password); }
             catch (Exception ex) { ColoredConsoleWrite(ConsoleColor.White, ex.ToString() + "Exception - Please report - Restarting"); DoPtcLogin(username, password); }
         }
 
@@ -298,6 +299,16 @@ namespace PokemonGo.RocketAPI
                 await
                     _httpClient.PostProtoPayload<Request, DownloadSettingsResponse>($"https://{_apiUrl}/rpc",
                         settingsRequest);
+        }
+
+        public async Task<DownloadItemTemplatesResponse> GetItemTemplates()
+        {
+            var ItemTemplatesRequest = RequestBuilder.GetRequest(_unknownAuth, _currentLat, _currentLng, 30,
+                RequestType.DOWNLOAD_ITEM_TEMPLATES);
+            return
+                await
+                    _httpClient.PostProtoPayload<Request, DownloadItemTemplatesResponse>($"https://{_apiUrl}/rpc",
+                        ItemTemplatesRequest);
         }
 
         /*num Holoholo.Rpc.Types.FortSearchOutProto.Result {

@@ -44,19 +44,12 @@ namespace bLogic
                 if (v != null)
                 {
                     int XpDiff = bhelper.Game.GetXpDiff(v.Level);
-                    if (hero.ClientSettings.LevelOutput == "time")
-                        bhelper.Main.ColoredConsoleWrite(ConsoleColor.Yellow, $"[{DateTime.Now.ToString("HH:mm:ss")}] Current Level: " + v.Level + " (" + (v.Experience - XpDiff) + "/" + (v.NextLevelXp - XpDiff) + ")");
-                    else if (hero.ClientSettings.LevelOutput == "levelup")
-                        if (hero.Currentlevel != v.Level)
-                        {
-                            hero.Currentlevel = v.Level;
-                            bhelper.Main.ColoredConsoleWrite(ConsoleColor.Magenta, $"[{DateTime.Now.ToString("HH:mm:ss")}] Current Level: " + v.Level + ". XP needed for next Level: " + (v.NextLevelXp - v.Experience));
-                        }
+                    if (hero.Currentlevel != v.Level)
+                    {
+                        hero.Currentlevel = v.Level;
+                        bhelper.Main.ColoredConsoleWrite(ConsoleColor.Magenta, $"[{DateTime.Now.ToString("HH:mm:ss")}] Current Level: " + v.Level + ". XP needed for next Level: " + (v.NextLevelXp - v.Experience));
+                    }
                 }
-            if (hero.ClientSettings.LevelOutput == "levelup")
-                await Task.Delay(1000);
-            else
-                await Task.Delay(hero.ClientSettings.LevelTimeInterval * 1000);
         }
     }
 }

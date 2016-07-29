@@ -52,8 +52,7 @@ namespace PokemonGo.RocketAPI.Console
 
                 await bhelper.Random.Delay(200, 1500);
                 //time for some gui updates
-                bLogic.Info.PrintLevel(_hero, inventory);
-                RefreshConsoleTitle(_hero, inventory, profile);
+                RefreshConsoleTitle(inventory, profile);
                 
                 await bLogic.Pokemon.ExecuteFarmingPokestopsAndPokemons(_hero, inventory);
                 _hero.ClientSettings.DefaultLatitude = Client.GetLatitude(true);
@@ -159,7 +158,7 @@ namespace PokemonGo.RocketAPI.Console
                     //if we are on the newest version we should be fine running the bot
                     if (bhelper.Main.CheckVersion(Assembly.GetExecutingAssembly().GetName()))
                     {
-                        Program._hero.AllowedToRun = true;
+                        _hero.AllowedToRun = true;
                     }
 
                     //lets get rolling
@@ -179,7 +178,7 @@ namespace PokemonGo.RocketAPI.Console
         /// <param name="username"></param>
         /// <param name="client"></param>
         /// <returns></returns>
-        public static async Task RefreshConsoleTitle(Hero hero, GeneratedCode.GetInventoryResponse inventory, GeneratedCode.GetPlayerResponse profile)
+        public static async Task RefreshConsoleTitle(GeneratedCode.GetInventoryResponse inventory, GeneratedCode.GetPlayerResponse profile)
         {
             var stats = inventory.InventoryDelta.InventoryItems.Select(i => i.InventoryItemData?.PlayerStats).ToArray();
             foreach (var playerStatistic in stats)
@@ -189,8 +188,10 @@ namespace PokemonGo.RocketAPI.Console
                     System.Console.Title = string.Format(profile.Profile.Username + " | LEVEL: {0:0} - ({1:0}) | SD: {2:0} | XP/H: {3:0} | POKE/H: {4:0}", playerStatistic.Level, string.Format("{0:#,##0}", (playerStatistic.Experience - playerStatistic.PrevLevelXp - XpDiff)) + "/" + string.Format("{0:#,##0}", (playerStatistic.NextLevelXp - playerStatistic.PrevLevelXp - XpDiff)), string.Format("{0:#,##0}", profile.Profile.Currency.ToArray()[1].Amount), string.Format("{0:#,##0}", Math.Round(bLogic.Pokemon.TotalExperience / bhelper.Main.GetRuntime(_hero.TimeStarted))), Math.Round(bLogic.Pokemon.TotalPokemon / bhelper.Main.GetRuntime(_hero.TimeStarted)) + " | " +(DateTime.Now - _hero.TimeStarted).ToString(@"dd\.hh\:mm\:ss"));
                 }
             await bhelper.Random.Delay(2000, 5000);
-            GeneratedCode.GetInventoryResponse NewInventory = await hero.Client.GetInventory();
-            RefreshConsoleTitle(hero, NewInventory, profile);
+            GeneratedCode.GetInventoryResponse NewInventory = await _hero.Client.GetInventory();
+            if (_hero.ClientSettings.LevelUpCheck)
+                bLogic.Info.PrintStartUp(_hero, profile);
+            RefreshConsoleTitle(NewInventory, profile);
         }
     }
 }
