@@ -48,8 +48,9 @@ namespace PokemonGo.RocketAPI.Console
                     _hero.Client.RecycleItems(_hero.Client, items);
                 if (_hero.ClientSettings.UseLuckyEggMode == "always")
                     _hero.Client.UseLuckyEgg(_hero.Client, inventory);
+                _hero.Client.UseIncense(_hero.Client, inventory);
 
-                    await Task.Delay(1000);
+                await Task.Delay(1000);
                 //time for some gui updates
                 bLogic.Info.PrintLevel(_hero, inventory);
                 RefreshConsoleTitle(_hero, inventory, profile);

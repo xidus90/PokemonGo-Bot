@@ -142,6 +142,10 @@ namespace PokemonGo.RocketAPI.GUI
             var hwnd = new System.Windows.Interop.WindowInteropHelper((Window)sender).Handle;
             var value = GetWindowLong(hwnd, GWL_STYLE);
             SetWindowLong(hwnd, GWL_STYLE, (int)(value & ~WS_MAXIMIZEBOX));
+
+            gmap.MapProvider = GMap.NET.MapProviders.BingMapProvider.Instance;
+            GMap.NET.GMaps.Instance.Mode = GMap.NET.AccessMode.ServerAndCache;
+
         }
 
         private void Output_TextChanged(object sender, TextChangedEventArgs e)
@@ -151,20 +155,20 @@ namespace PokemonGo.RocketAPI.GUI
 
         private void checkBox_useCustomLocation_Click(object sender, RoutedEventArgs e)
         {
-            textBox_longitude.IsReadOnly = (bool)checkBox_useCustomLocation.IsChecked ? false : true;
-            textBox_latitude.IsReadOnly = (bool)checkBox_useCustomLocation.IsChecked ? false : true;
+            textBox_longitude.IsEnabled = (bool)checkBox_useCustomLocation.IsChecked ? true : false;
+            textBox_latitude.IsEnabled = (bool)checkBox_useCustomLocation.IsChecked ? true : false;
             comboBox_predefinedLocations.IsEnabled = (bool)checkBox_useCustomLocation.IsChecked ? false : true;
         }
 
         private void textBox_longitude_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            System.Text.RegularExpressions.Regex regex = new System.Text.RegularExpressions.Regex("[0-9.]+");
+            System.Text.RegularExpressions.Regex regex = new System.Text.RegularExpressions.Regex("[0-9.,]+");
             e.Handled = !regex.IsMatch(e.Text);
         }
 
         private void textBox_latitude_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            System.Text.RegularExpressions.Regex regex = new System.Text.RegularExpressions.Regex("[0-9.]+");
+            System.Text.RegularExpressions.Regex regex = new System.Text.RegularExpressions.Regex("[0-9.,]+");
             e.Handled = !regex.IsMatch(e.Text);
         }
 
@@ -172,6 +176,20 @@ namespace PokemonGo.RocketAPI.GUI
         {
             System.Text.RegularExpressions.Regex regex = new System.Text.RegularExpressions.Regex("[0-9]+");
             e.Handled = !regex.IsMatch(e.Text);
+        }
+
+        private void comboBox_predefinedLocations_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            gmap.SetPositionByKeywords(((ComboBoxItem)comboBox_predefinedLocations.SelectedItem).Content.ToString());
+            gmap.Zoom = 12;
+            textBox_longitude.Text = gmap.Position.Lng.ToString();
+            textBox_latitude.Text = gmap.Position.Lat.ToString();
+        }
+
+        private void gmap_OnMapDrag()
+        {
+            textBox_longitude.Text = (bool)checkBox_useCustomLocation.IsChecked ? textBox_longitude.Text : gmap.Position.Lng.ToString();
+            textBox_latitude.Text = (bool)checkBox_useCustomLocation.IsChecked ? textBox_latitude.Text : gmap.Position.Lat.ToString();
         }
     }
 

@@ -26,63 +26,90 @@ namespace PokemonGo.RocketAPI.GUI
                 else if (_hero.ClientSettings.AuthType == AuthType.Google)
                     await _hero.Client.DoGoogleLogin(_hero.ClientSettings.Username, _hero.ClientSettings.Password);
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, $"[{DateTime.Now.ToString("HH:mm:ss")}] " + Language.GetPhrases()["bot_loggedin"]);
-
                 await _hero.Client.SetServer();
                 var profile = await _hero.Client.GetProfile();
-                var settings = await _hero.Client.GetSettings();
-                var mapObjects = await _hero.Client.GetMapObjects();
                 var inventory = await _hero.Client.GetInventory();
-                var pokemons =
-                    inventory.InventoryDelta.InventoryItems.Select(i => i.InventoryItemData?.Pokemon)
-                        .Where(p => p != null && p?.PokemonId > 0);
+                var pokemons = inventory.InventoryDelta.InventoryItems.Select(i => i.InventoryItemData?.Pokemon).Where(p => p != null && p?.PokemonId > 0);
                 var stats = inventory.InventoryDelta.InventoryItems.Select(i => i.InventoryItemData.PlayerStats).ToArray();
+                var items = inventory.InventoryDelta.InventoryItems.Select(i => i.InventoryItemData?.Item).Where(p => p != null);
                 foreach (var v in stats)
                     if (v != null)
+                    {
                         _hero.TotalKmWalked = v.KmWalked;
-
+                        await _hero.Client.GetLevelUpRewards(v.Level);
+                    }
                 bLogic.Info.PrintStartUp(_hero, profile);
 
-                
-
-                if (_hero.ClientSettings.TransferType == "leaveStrongest")
-                    await bLogic.Pokemon.TransferAllButStrongestUnwantedPokemon(_hero);
-                else if (_hero.ClientSettings.TransferType == "all")
-                    await bLogic.Pokemon.TransferAllGivenPokemons(_hero, pokemons);
-                else if (_hero.ClientSettings.TransferType == "duplicate")
-                    await bLogic.Pokemon.TransferDuplicatePokemon(_hero);
-                else if (_hero.ClientSettings.TransferType == "cp")
-                    await bLogic.Pokemon.TransferAllWeakPokemon(_hero);
-                else
-                    bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, $"[{DateTime.Now.ToString("HH:mm:ss")}] " + Language.GetPhrases()["pokemon_transfer_disabled"]);
                 if (_hero.ClientSettings.EvolveAllGivenPokemons)
                     await bLogic.Pokemon.EvolveAllGivenPokemons(_hero, pokemons);
                 if (_hero.ClientSettings.Recycler)
-                    _hero.Client.RecycleItems(_hero.Client);
-
-                await Task.Delay(5000);
-                //time for some gui updates
-                bLogic.Info.PrintLevel(_hero);
-                UpdateFormTitle(_hero);
-                UpdateGUIStats(_hero);
-
-
-                if (_hero.ClientSettings.EggHatchedOutput)
-                    bLogic.Item.CheckEggsHatched(_hero);
+                    _hero.Client.RecycleItems(_hero.Client, items);
                 if (_hero.ClientSettings.UseLuckyEggMode == "always")
-                    _hero.Client.UseLuckyEgg(_hero.Client);
+                    _hero.Client.UseLuckyEgg(_hero.Client, inventory);
+                _hero.Client.UseIncense(_hero.Client, inventory);
 
-                await bLogic.Pokemon.ExecuteFarmingPokestopsAndPokemons(_hero);
+                await Task.Delay(1000);
+                //time for some gui updates
+                bLogic.Info.PrintLevel(_hero, inventory);
+
+                await bLogic.Pokemon.ExecuteFarmingPokestopsAndPokemons(_hero, inventory);
                 _hero.ClientSettings.DefaultLatitude = Client.GetLatitude(true);
                 _hero.ClientSettings.DefaultLongitude = Client.GetLongitude(true);
                 await Task.Delay(1000);
-                Execute(_hero);
+                ExecuteWithoutStackOverflow(_hero);
             }
             catch (TaskCanceledException crap) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, "Task Canceled Exception - Restarting: " + crap.Message); Execute(_hero); }
             catch (UriFormatException crap) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, "System URI Format Exception - Restarting: " + crap.Message); Execute(_hero); }
             catch (ArgumentOutOfRangeException crap) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, "ArgumentOutOfRangeException - Restarting: " + crap.Message); Execute(_hero); }
             catch (ArgumentNullException crap) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, "Argument Null Refference - Restarting: " + crap.Message); Execute(_hero); }
             catch (NullReferenceException crap) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, "Null Refference - Restarting: " + crap.Message); Execute(_hero); }
-            catch (AccountNotVerifiedException crap) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.Red, "ACCOUNT NOT VERIFIED - WONT WORK - " + crap.Message); Execute(_hero); }
+            catch (AccountNotVerifiedException crap) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.Red, "ACCOUNT NOT VERIFIED - WONT WORK - "); }
+            catch (System.IO.FileNotFoundException) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.Red, $" Use an existing language!"); }
+            catch (SoftbannedException) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.Red, $" Softbanned! Please wait while I unban you!"); await Game.Unban(_hero); ExecuteWithoutStackOverflow(_hero); }
+            catch (Exception crap) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.Red, "Not Handled Exception: " + crap.Message); Execute(_hero); }
+        }
+
+        public static async void ExecuteWithoutStackOverflow(Hero _hero)
+        {
+            if (!_hero.AllowedToRun)
+            {
+                bhelper.Main.ColoredConsoleWrite(ConsoleColor.Yellow, $"[{DateTime.Now.ToString("HH:mm:ss")}] " + Language.GetPhrases()["bot_stopping"]);
+                return;
+            }
+            try
+            {
+                var profile = await _hero.Client.GetProfile();
+                var inventory = await _hero.Client.GetInventory();
+                var pokemons = inventory.InventoryDelta.InventoryItems.Select(i => i.InventoryItemData?.Pokemon).Where(p => p != null && p?.PokemonId > 0);
+                var stats = inventory.InventoryDelta.InventoryItems.Select(i => i.InventoryItemData.PlayerStats).ToArray();
+                var items = inventory.InventoryDelta.InventoryItems.Select(i => i.InventoryItemData?.Item).Where(p => p != null);
+                foreach (var v in stats)
+                    if (v != null)
+                    {
+                        _hero.TotalKmWalked = v.KmWalked;
+                        await _hero.Client.GetLevelUpRewards(v.Level);
+                    }
+                bLogic.Info.PrintStartUp(_hero, profile);
+
+                if (_hero.ClientSettings.EvolveAllGivenPokemons)
+                    await bLogic.Pokemon.EvolveAllGivenPokemons(_hero, pokemons);
+
+                await Task.Delay(1000);
+
+                await bLogic.Pokemon.ExecuteFarmingPokestopsAndPokemons(_hero, inventory);
+                _hero.ClientSettings.DefaultLatitude = Client.GetLatitude(true);
+                _hero.ClientSettings.DefaultLongitude = Client.GetLongitude(true);
+                await Task.Delay(1000);
+                ExecuteWithoutStackOverflow(_hero);
+            }
+            catch (TaskCanceledException crap) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, "Task Canceled Exception - Restarting: " + crap.Message); Execute(_hero); }
+            catch (UriFormatException crap) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, "System URI Format Exception - Restarting: " + crap.Message); Execute(_hero); }
+            catch (ArgumentOutOfRangeException crap) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, "ArgumentOutOfRangeException - Restarting: " + crap.Message); Execute(_hero); }
+            catch (ArgumentNullException crap) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, "Argument Null Refference - Restarting: " + crap.Message); Execute(_hero); }
+            catch (NullReferenceException crap) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, "Null Refference - Restarting: " + crap.Message); Execute(_hero); }
+            catch (AccountNotVerifiedException crap) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.Red, "ACCOUNT NOT VERIFIED - WONT WORK - "); }
+            catch (System.IO.FileNotFoundException) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.Red, $" Use an existing language!"); }
+            catch (SoftbannedException) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.Red, $" Softbanned! Please wait while I unban you!"); await Game.Unban(_hero); ExecuteWithoutStackOverflow(_hero); }
             catch (Exception crap) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.Red, "Not Handled Exception: " + crap.Message); Execute(_hero); }
         }
 

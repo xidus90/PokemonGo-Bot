@@ -1,9 +1,10 @@
-﻿<Window x:Class="PokemonGo.RocketAPI.GUI.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PokemonGo.RocketAPI.GUI"
+        xmlns:WindowsPresentation="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation" x:Class="PokemonGo.RocketAPI.GUI.MainWindow"
         mc:Ignorable="d"
         Title="[PoGO Bot]" Height="682" Width="571" SourceInitialized="Window_SourceInitialized" Icon="Resources/PokeBotIcon.png" ResizeMode="CanMinimize">
     <Grid>
@@ -21,42 +22,32 @@
                     </Grid.ColumnDefinitions>
 
                     <RichTextBox x:Name="Output" HorizontalAlignment="Left" Height="470" VerticalAlignment="Top" Width="533" IsReadOnly="True" SelectionBrush="#FFF6FF33" Grid.ColumnSpan="3" TextChanged="Output_TextChanged">
-                        <FlowDocument/>
                         <RichTextBox.Resources>
                             <Style TargetType="{x:Type Paragraph}">
                                 <Setter Property="Margin" Value="0"/>
                             </Style>
                         </RichTextBox.Resources>
+                        <FlowDocument/>
                     </RichTextBox>
                 </Grid>
             </TabItem>
-            <TabItem Header="Stats (WIP)">
+            <TabItem Header="Stats">
                 <Grid>
                     <TabControl x:Name="tabControl_stats" HorizontalAlignment="Left" Height="470" VerticalAlignment="Top" Width="533">
                         <TabItem Header="Pokemon">
                             <DataGrid x:Name="dataGrid_pokemon">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Pokemon" Binding="{Binding Name}" IsReadOnly="True" CanUserSort="True" Width="165">
-
-                                    </DataGridTextColumn>
-                                    <DataGridTextColumn Header="CP" Binding="{Binding CP}" IsReadOnly="True" CanUserSort="True" Width="165">
-
-                                    </DataGridTextColumn>
-                                    <DataGridTextColumn Header="Perfection" Binding="{Binding Perfection}" IsReadOnly="True" CanUserSort="True" Width="165">
-
-                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="Pokemon" Binding="{Binding Name}" IsReadOnly="True" CanUserSort="True" Width="165"/>
+                                    <DataGridTextColumn Header="CP" Binding="{Binding CP}" IsReadOnly="True" CanUserSort="True" Width="165"/>
+                                    <DataGridTextColumn Header="Perfection" Binding="{Binding Perfection}" IsReadOnly="True" CanUserSort="True" Width="165"/>
                                 </DataGrid.Columns>
                             </DataGrid>
                         </TabItem>
                         <TabItem Header="Backpack">
                             <DataGrid x:Name="dataGrid_backpack">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Item" Binding="{Binding Item}" IsReadOnly="True" CanUserSort="True" Width="250">
-
-                                    </DataGridTextColumn>
-                                    <DataGridTextColumn Header="Amount" Binding="{Binding Amount}" IsReadOnly="True" CanUserSort="True" Width="250">
-
-                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="Item" Binding="{Binding Item}" IsReadOnly="True" CanUserSort="True" Width="250"/>
+                                    <DataGridTextColumn Header="Amount" Binding="{Binding Amount}" IsReadOnly="True" CanUserSort="True" Width="250"/>
                                 </DataGrid.Columns>
                             </DataGrid>
                         </TabItem>
@@ -65,18 +56,6 @@
             </TabItem>
             <TabItem Header="Settings (NOT WORKING YET)">
                 <Grid HorizontalAlignment="Left" Height="477" Margin="-4,-3,-5,-4" VerticalAlignment="Top" Width="542">
-                    <GroupBox x:Name="groupBox_location" Header="Location" HorizontalAlignment="Left" Margin="176,10,0,0" VerticalAlignment="Top" Height="155" Width="238">
-                        <Grid HorizontalAlignment="Left" Height="145" Margin="0,0,-2,-12" VerticalAlignment="Top" Width="228">
-                            <CheckBox x:Name="checkBox_useCustomLocation" Content="Use Custom Location" HorizontalAlignment="Left" Margin="13,10,0,0" VerticalAlignment="Top" Click="checkBox_useCustomLocation_Click"/>
-                            <ComboBox x:Name="comboBox_predefinedLocations" HorizontalAlignment="Left" Margin="98,31,0,0" VerticalAlignment="Top" Width="120"/>
-                            <TextBox x:Name="textBox_longitude" HorizontalAlignment="Left" Height="23" Margin="98,58,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" PreviewTextInput="textBox_longitude_PreviewTextInput" MaxLength="10"/>
-                            <TextBox x:Name="textBox_latitude" HorizontalAlignment="Left" Height="23" Margin="98,86,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" PreviewTextInput="textBox_latitude_PreviewTextInput" MaxLength="10"/>
-                            <Label x:Name="label_predefinedLocations" Content="Location" HorizontalAlignment="Left" Margin="13,31,0,0" VerticalAlignment="Top"/>
-                            <Label x:Name="label_longitude" Content="Longitude" HorizontalAlignment="Left" Margin="13,58,0,0" VerticalAlignment="Top"/>
-                            <Label x:Name="label_latitude" Content="Latitude" HorizontalAlignment="Left" Margin="13,84,0,0" VerticalAlignment="Top" Width="64"/>
-                            <CheckBox x:Name="checkBox_enableLiveMap" Content="Enable Live Map" HorizontalAlignment="Left" Margin="13,115,0,0" VerticalAlignment="Top"/>
-                        </Grid>
-                    </GroupBox>
                     <GroupBox x:Name="groupBox_AuthType" Header="Authentification Type" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="155" Width="166">
                         <Grid HorizontalAlignment="Left" Height="145" Margin="0,0,-2,-12" VerticalAlignment="Top" Width="156">
                             <RadioButton x:Name="radioButton_authTypePtc" Content="PTC" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" GroupName="AuthType"/>
@@ -112,7 +91,28 @@
                             <Grid Background="#FFE5E5E5"/>
                         </TabItem>
                         <TabItem Header="Location">
-                            <Grid Background="#FFE5E5E5"/>
+                            <Grid Background="#FFE5E5E5">
+
+                                <WindowsPresentation:GMapControl x:Name="gmap" HorizontalAlignment="Left" Height="445" Margin="144,0,0,0" VerticalAlignment="Top" Width="388" MinZoom="1" MaxZoom="18" Bearing="0" Zoom="-1" MouseWheelZoomType="MousePositionWithoutCenter" OnMapDrag="gmap_OnMapDrag"/>
+                                <CheckBox x:Name="checkBox_useCustomLocation" Content="Use Custom Location" HorizontalAlignment="Left" Margin="10,26,0,0" VerticalAlignment="Top" Click="checkBox_useCustomLocation_Click" IsEnabled="False"/>
+                                <ComboBox x:Name="comboBox_predefinedLocations" HorizontalAlignment="Left" Margin="10,73,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="comboBox_predefinedLocations_SelectionChanged">
+                                    <ComboBoxItem>New York Central Park</ComboBoxItem>
+                                    <ComboBoxItem>Sydney, Australia</ComboBoxItem>
+                                    <ComboBoxItem>Lilydale, Melbourne</ComboBoxItem>
+                                    <ComboBoxItem>Berlin Old Town Spandau</ComboBoxItem>
+                                    <ComboBoxItem>Den Helder</ComboBoxItem>
+                                    <ComboBoxItem>Piazza Sempione, Milano, Italien</ComboBoxItem>
+                                    <ComboBoxItem>Myrtle Beachn</ComboBoxItem>
+                                    <ComboBoxItem>Brimbank Park, Melbourne</ComboBoxItem>
+                                </ComboBox>
+                                <TextBox x:Name="textBox_longitude" HorizontalAlignment="Left" Height="23" Margin="10,147,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" PreviewTextInput="textBox_longitude_PreviewTextInput" MaxLength="10" IsEnabled="False"/>
+                                <TextBox x:Name="textBox_latitude" HorizontalAlignment="Left" Height="23" Margin="10,210,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" PreviewTextInput="textBox_latitude_PreviewTextInput" MaxLength="10" IsEnabled="False"/>
+                                <Label x:Name="label_predefinedLocations_Copy" Content="Location" HorizontalAlignment="Left" Margin="10,47,0,0" VerticalAlignment="Top"/>
+                                <Label x:Name="label_longitude" Content="Longitude" HorizontalAlignment="Left" Margin="10,121,0,0" VerticalAlignment="Top"/>
+                                <Label x:Name="label_latitude" Content="Latitude" HorizontalAlignment="Left" Margin="10,184,0,0" VerticalAlignment="Top" Width="64"/>
+                                <CheckBox x:Name="checkBox_enableLiveMap_Copy" Content="Enable Live Map" HorizontalAlignment="Left" Margin="13,419,0,0" VerticalAlignment="Top" IsChecked="True" IsEnabled="False"/>
+
+                            </Grid>
                         </TabItem>
                     </TabControl>
 

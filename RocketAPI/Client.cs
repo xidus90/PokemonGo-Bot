@@ -335,8 +335,8 @@ namespace PokemonGo.RocketAPI
         {
             _currentLat = lat;
             _currentLng = lng;
-//            _settings.DefaultLatitude = lat;
-//            _settings.DefaultLongitude = lng;
+            //            _settings.DefaultLatitude = lat;
+            //            _settings.DefaultLongitude = lng;
         }
 
         public static double GetLatitude(bool current)
@@ -484,10 +484,21 @@ namespace PokemonGo.RocketAPI
                 ItemId = itemId,
             };
 
+            PokemonGo.RocketAPI.Enums.RequestType type = RequestType.METHOD_UNSET;
+            switch (itemId)
+            {
+                case ItemId.ItemLuckyEgg:
+                    type = RequestType.USE_ITEM_XP_BOOST;
+                    break;
+                case ItemId.ItemIncenseOrdinary:
+                    type = RequestType.USE_INCENSE;
+                    break;
+            }
+
             var useItemRequest = RequestBuilder.GetRequest(_unknownAuth, _currentLat, _currentLng, 30,
                 new Request.Types.Requests
                 {
-                    Type = (int)RequestType.USE_ITEM_XP_BOOST,
+                    Type = (int)type,
                     Message = customRequest.ToByteString()
                 });
             return
@@ -522,6 +533,20 @@ namespace PokemonGo.RocketAPI
             await Task.Delay(11 * 60 * 1000);
             GetInventoryResponse newInventory = await client.GetInventory();
             UseLuckyEgg(client, newInventory);
+        }
+        public async Task UseIncense(Client client, GetInventoryResponse inventory)
+        {
+            IEnumerable<Item> myItems = inventory.InventoryDelta.InventoryItems.Select(i => i.InventoryItemData?.Item).Where(p => p != null);
+            IEnumerable<Item> Incenses = myItems.Where(i => (ItemId)i.Item_ == ItemId.ItemIncenseOrdinary);
+            Item Incense = Incenses.FirstOrDefault();
+            if (Incense != null && Incense.Count > 0)
+            {
+                UseItemRequest useIncense = await client.UseItem(ItemId.ItemLuckyEgg);
+                ColoredConsoleWrite(ConsoleColor.Green, $"[{DateTime.Now.ToString("HH:mm:ss")}] Used Incense. Remaining: {Incense.Count}");
+            }
+            await Task.Delay(11 * 60 * 1000);
+            GetInventoryResponse newInventory = await client.GetInventory();
+            UseIncense(client, newInventory);
         }
 
 
