@@ -18,6 +18,7 @@ A Pokemon Go bot in C#
 * Automatic use of Razzberries
 * Automatic Update checker
 * Automatic get levelup rewards
+* Automatic unban after getting banned
 
 ## Getting Started
 
