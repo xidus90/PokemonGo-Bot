@@ -11,7 +11,7 @@ namespace PokemonGo.RocketAPI.Console
     internal class Program
     {
         public static bhelper.Hero _hero;
-        
+
         private static async void Execute()
         {
             if (!_hero.AllowedToRun)
@@ -27,8 +27,8 @@ namespace PokemonGo.RocketAPI.Console
                     await _hero.Client.DoPtcLogin(_hero.ClientSettings.Username, _hero.ClientSettings.Password);
                 else if (_hero.ClientSettings.AuthType == AuthType.Google)
                     await _hero.Client.DoGoogleLogin(_hero.ClientSettings.Username, _hero.ClientSettings.Password);
-                bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, $"[{DateTime.Now.ToString("HH:mm:ss")}] " + Language.GetPhrases()["bot_loggedin"]);
                 await _hero.Client.SetServer();
+                bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, $"[{DateTime.Now.ToString("HH:mm:ss")}] " + Language.GetPhrases()["bot_loggedin"]);
                 var profile = await _hero.Client.GetProfile();
                 var inventory = await _hero.Client.GetInventory();
                 var pokemons = inventory.InventoryDelta.InventoryItems.Select(i => i.InventoryItemData?.Pokemon).Where(p => p != null && p?.PokemonId > 0);
@@ -41,7 +41,7 @@ namespace PokemonGo.RocketAPI.Console
                         await _hero.Client.GetLevelUpRewards(v.Level);
                     }
                 bLogic.Info.PrintStartUp(_hero, profile);
-              
+
                 if (_hero.ClientSettings.EvolveAllGivenPokemons)
                     await bLogic.Pokemon.EvolveAllGivenPokemons(_hero, pokemons);
                 if (_hero.ClientSettings.Recycler)
@@ -53,7 +53,7 @@ namespace PokemonGo.RocketAPI.Console
                 await bhelper.Random.Delay(200, 1500);
                 //time for some gui updates
                 RefreshConsoleTitle(inventory, profile);
-                
+
                 await bLogic.Pokemon.ExecuteFarmingPokestopsAndPokemons(_hero, inventory);
                 _hero.ClientSettings.DefaultLatitude = Client.GetLatitude(true);
                 _hero.ClientSettings.DefaultLongitude = Client.GetLongitude(true);
@@ -91,7 +91,7 @@ namespace PokemonGo.RocketAPI.Console
                         _hero.TotalKmWalked = v.KmWalked;
                         await _hero.Client.GetLevelUpRewards(v.Level);
                     }
-                bLogic.Info.PrintStartUp(_hero, profile);
+                //bLogic.Info.PrintStartUp(_hero, profile);
 
                 if (_hero.ClientSettings.EvolveAllGivenPokemons)
                     await bLogic.Pokemon.EvolveAllGivenPokemons(_hero, pokemons);
@@ -113,7 +113,7 @@ namespace PokemonGo.RocketAPI.Console
             catch (System.IO.FileNotFoundException) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.Red, $" Use an existing language!"); }
             catch (Exception crap) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.Red, "Not Handled Exception: " + crap.Message); Execute(); }
         }
-        
+
         /// <summary>
         /// console client main entry point
         /// No start parameter possible currently
@@ -169,8 +169,8 @@ namespace PokemonGo.RocketAPI.Console
             });
             System.Console.ReadLine();
         }
-        
-        
+
+
         /// <summary>
         /// Change the console title
         /// for much info. wow
@@ -185,12 +185,15 @@ namespace PokemonGo.RocketAPI.Console
                 if (playerStatistic != null)
                 {
                     int XpDiff = bhelper.Game.GetXpDiff(playerStatistic.Level);
-                    System.Console.Title = string.Format(profile.Profile.Username + " | LEVEL: {0:0} - ({1:0}) | SD: {2:0} | XP/H: {3:0} | POKE/H: {4:0}", playerStatistic.Level, string.Format("{0:#,##0}", (playerStatistic.Experience - playerStatistic.PrevLevelXp - XpDiff)) + "/" + string.Format("{0:#,##0}", (playerStatistic.NextLevelXp - playerStatistic.PrevLevelXp - XpDiff)), string.Format("{0:#,##0}", profile.Profile.Currency.ToArray()[1].Amount), string.Format("{0:#,##0}", Math.Round(bLogic.Pokemon.TotalExperience / bhelper.Main.GetRuntime(_hero.TimeStarted))), Math.Round(bLogic.Pokemon.TotalPokemon / bhelper.Main.GetRuntime(_hero.TimeStarted)) + " | " +(DateTime.Now - _hero.TimeStarted).ToString(@"dd\.hh\:mm\:ss"));
+                    System.Console.Title = string.Format(profile.Profile.Username + " | LEVEL: {0:0} - ({1:0}) | SD: {2:0} | XP/H: {3:0} | POKE/H: {4:0}", playerStatistic.Level, string.Format("{0:#,##0}", (playerStatistic.Experience - playerStatistic.PrevLevelXp - XpDiff)) + "/" + string.Format("{0:#,##0}", (playerStatistic.NextLevelXp - playerStatistic.PrevLevelXp - XpDiff)), string.Format("{0:#,##0}", profile.Profile.Currency.ToArray()[1].Amount), string.Format("{0:#,##0}", Math.Round(bLogic.Pokemon.TotalExperience / bhelper.Main.GetRuntime(_hero.TimeStarted))), Math.Round(bLogic.Pokemon.TotalPokemon / bhelper.Main.GetRuntime(_hero.TimeStarted)) + " | " + (DateTime.Now - _hero.TimeStarted).ToString(@"dd\.hh\:mm\:ss"));
+                    if (_hero.ClientSettings.LevelUpCheck && _hero.Currentlevel != playerStatistic.Level)
+                    {
+                        _hero.Currentlevel = playerStatistic.Level;
+                        bhelper.Main.ColoredConsoleWrite(ConsoleColor.Magenta, $"[{DateTime.Now.ToString("HH:mm:ss")}] Current Level: " + playerStatistic.Level + ". XP needed for next Level: " + (playerStatistic.NextLevelXp - playerStatistic.Experience));
+                    }
                 }
             await bhelper.Random.Delay(2000, 5000);
             GeneratedCode.GetInventoryResponse NewInventory = await _hero.Client.GetInventory();
-            if (_hero.ClientSettings.LevelUpCheck)
-                bLogic.Info.PrintStartUp(_hero, profile);
             RefreshConsoleTitle(NewInventory, profile);
         }
     }

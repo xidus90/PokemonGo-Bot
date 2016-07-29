@@ -12,8 +12,8 @@ A Pokemon Go bot in C#
 * Evolve Pokémon
 * Transfer Pokémon
 * Auto-Recycle uneeded items
-* Output level and needed XP for levelup
-* Output Username, Level, Stardust, XP/hour, Pokemon/hour in Console Title
+* Output levelups and needed XP for levelup
+* Output Username, Level, Stardust, XP/hour, Pokemon/hour, Runtime in Console Title
 * German/English translation
 * Automatic use of Razzberries/Lucky Eggs/Incenses
 * Automatic Update checker
@@ -22,11 +22,11 @@ A Pokemon Go bot in C#
 
 ## Getting Started
 
-Go to PokemonGo\RocketAPI\Console\App.config -> Edit the Settings you like -> Build and Run (CTRL+F5)
+Go to App.config -> Edit the Settings you like -> Build and Run (CTRL+F5)
 
 # Settings
 ## AuthType
-* *Google* - Google login via oauth2
+* *Google* - Google login via GPSoauth2
 * *Ptc* - Pokemon Trainer Club login with username/password combination
 
 ## Username
@@ -36,7 +36,7 @@ Go to PokemonGo\RocketAPI\Console\App.config -> Edit the Settings you like -> Bu
 * *password* for PTC account. Password for Google account
 
 ## GoogleRefreshToken
-* *GoogleRefreshToken* - You get this code when you connect the application with your Google account. You do not need to enter it.
+* *GoogleRefreshToken* - Dont touch this
 
 ## DefaultLatitude
 * *12.345678* - Latitude of your location you want to use the bot in. Number between -90 and +90. Doesn't matter how many numbers stand after the comma.
@@ -45,11 +45,8 @@ Go to PokemonGo\RocketAPI\Console\App.config -> Edit the Settings you like -> Bu
 * *123.456789* - Longitude of your location you want to use the bot in. Number between -180 and +180. Doesn't matter how many numbers stand after the comma.
 
 ## LevelOutput
-* *time* - Every X amount of time it prints the current level and experience needed for the next level.
-* *levelup* - Only outputs the level and needed experience for next level on levelup.
-
-## LevelTimeInterval
-* *seconds* - After X seconds it will print the current level and experience needed for levelup when using *time* mode.
+* *true* - Give a purple output at every levelup
+* *false* - Dont notify on levelups
 
 ## Recycler
 * *false* Recycler not active.

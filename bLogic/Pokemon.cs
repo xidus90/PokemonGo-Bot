@@ -98,10 +98,9 @@ namespace bLogic
                     {
                         var result = evolvePokemonOutProto.Result;
 
-                        bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, $"Failed to evolve {pokemon.PokemonId}. " +
-                                                 $"EvolvePokemonOutProto.Result was {result}");
+                        //bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, $"Failed to evolve {pokemon.PokemonId}. " + $"EvolvePokemonOutProto.Result was {result}");
 
-                        bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, $"Due to above error, stopping evolving {pokemon.PokemonId}");
+                        //bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, $"Due to above error, stopping evolving {pokemon.PokemonId}");
 
                     }
                 } while (evolvePokemonOutProto.Result == 1);

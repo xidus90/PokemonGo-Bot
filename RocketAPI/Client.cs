@@ -92,9 +92,9 @@ namespace PokemonGo.RocketAPI
                 _accessToken = await PtcLogin.GetAccessToken(username, password);
                 _authType = AuthType.Ptc;
             }
-            catch (Newtonsoft.Json.JsonReaderException) { ColoredConsoleWrite(ConsoleColor.White, "Json Reader Exception - Server down? - Restarting"); DoPtcLogin(username, password); }
-            catch (Exceptions.AccountNotVerifiedException) { ColoredConsoleWrite(ConsoleColor.Red, "ACCOUNT NOT VERIFIED - WONT WORK"); DoPtcLogin(username, password); }
-            catch (NullReferenceException) { ColoredConsoleWrite(ConsoleColor.Red, "Login credentials invalid? - Restarting"); DoPtcLogin(username, password); }
+            catch (Newtonsoft.Json.JsonReaderException) { ColoredConsoleWrite(ConsoleColor.White, "JsonReaderException: Server down? - Restarting!"); DoPtcLogin(username, password); }
+            catch (Exceptions.AccountNotVerifiedException) { ColoredConsoleWrite(ConsoleColor.Red, "AccountNotVerifiedException: ACCOUNT NOT VERIFIED"); }
+            catch (NullReferenceException) { ColoredConsoleWrite(ConsoleColor.Red, "NullReferenceException: Login credentials invalid?"); }
             catch (Exception ex) { ColoredConsoleWrite(ConsoleColor.White, ex.ToString() + "Exception - Please report - Restarting"); DoPtcLogin(username, password); }
         }
 
@@ -363,6 +363,8 @@ namespace PokemonGo.RocketAPI
 
         public async Task SetServer()
         {
+            if (_accessToken == null || (_authType != AuthType.Google && _authType != AuthType.Ptc))
+                return;
             var serverRequest = RequestBuilder.GetInitialRequest(_accessToken, _authType, _currentLat, _currentLng, 10,
                 RequestType.GET_PLAYER, RequestType.GET_HATCHED_OBJECTS, RequestType.GET_INVENTORY,
                 RequestType.CHECK_AWARDED_BADGES, RequestType.DOWNLOAD_SETTINGS);

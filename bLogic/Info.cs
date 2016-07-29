@@ -37,19 +37,5 @@ namespace bLogic
         /// </summary>
         /// <param name="client"></param>
         /// <returns></returns>
-        public static async Task PrintLevel(Hero hero, GetInventoryResponse inventory)
-        {
-            PlayerStats[] stats = inventory.InventoryDelta.InventoryItems.Select(i => i.InventoryItemData?.PlayerStats).ToArray();
-            foreach (PlayerStats v in stats)
-                if (v != null)
-                {
-                    int XpDiff = bhelper.Game.GetXpDiff(v.Level);
-                    if (hero.Currentlevel != v.Level)
-                    {
-                        hero.Currentlevel = v.Level;
-                        bhelper.Main.ColoredConsoleWrite(ConsoleColor.Magenta, $"[{DateTime.Now.ToString("HH:mm:ss")}] Current Level: " + v.Level + ". XP needed for next Level: " + (v.NextLevelXp - v.Experience));
-                    }
-                }
-        }
     }
 }
