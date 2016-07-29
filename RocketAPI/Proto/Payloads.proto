@@ -285,7 +285,7 @@ message FortData {
 
   // Might represent the type of item applied to the pokestop, right now only lures can be applied
   bytes active_fort_modifier = 12;
-  FortLureInfo lure_info = 13;
+  MapPokemon map_pokemon = 13;
 }
 
 message FortLureInfo {

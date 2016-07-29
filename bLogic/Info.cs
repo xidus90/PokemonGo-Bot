@@ -37,11 +37,10 @@ namespace bLogic
         /// </summary>
         /// <param name="client"></param>
         /// <returns></returns>
-        public static async Task PrintLevel(Hero hero)
+        public static async Task PrintLevel(Hero hero, GetInventoryResponse inventory)
         {
-            var inventory = await hero.Client.GetInventory();
-            var stats = inventory.InventoryDelta.InventoryItems.Select(i => i.InventoryItemData?.PlayerStats).ToArray();
-            foreach (var v in stats)
+            PlayerStats[] stats = inventory.InventoryDelta.InventoryItems.Select(i => i.InventoryItemData?.PlayerStats).ToArray();
+            foreach (PlayerStats v in stats)
                 if (v != null)
                 {
                     int XpDiff = bhelper.Game.GetXpDiff(v.Level);

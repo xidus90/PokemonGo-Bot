@@ -31,10 +31,9 @@ namespace PokemonGo.RocketAPI.Console
                 await _hero.Client.SetServer();
                 var profile = await _hero.Client.GetProfile();
                 var inventory = await _hero.Client.GetInventory();
-                var pokemons =
-                    inventory.InventoryDelta.InventoryItems.Select(i => i.InventoryItemData?.Pokemon)
-                        .Where(p => p != null && p?.PokemonId > 0);
+                var pokemons = inventory.InventoryDelta.InventoryItems.Select(i => i.InventoryItemData?.Pokemon).Where(p => p != null && p?.PokemonId > 0);
                 var stats = inventory.InventoryDelta.InventoryItems.Select(i => i.InventoryItemData.PlayerStats).ToArray();
+                var items = inventory.InventoryDelta.InventoryItems.Select(i => i.InventoryItemData?.Item).Where(p => p != null);
                 foreach (var v in stats)
                     if (v != null)
                     {
@@ -42,37 +41,68 @@ namespace PokemonGo.RocketAPI.Console
                         await _hero.Client.GetLevelUpRewards(v.Level);
                     }
                 bLogic.Info.PrintStartUp(_hero, profile);
-               
-                if (_hero.ClientSettings.TransferType == "leaveStrongest")
-                    await bLogic.Pokemon.TransferAllButStrongestUnwantedPokemon(_hero);
-                else if (_hero.ClientSettings.TransferType == "all")
-                    await bLogic.Pokemon.TransferAllGivenPokemons(_hero, pokemons);
-                else if (_hero.ClientSettings.TransferType == "duplicate")
-                    await bLogic.Pokemon.TransferDuplicatePokemon(_hero);
-                else if (_hero.ClientSettings.TransferType == "cp")
-                    await bLogic.Pokemon.TransferAllWeakPokemon(_hero);
-                else
-                    bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGray, $"[{DateTime.Now.ToString("HH:mm:ss")}] " + Language.GetPhrases()["pokemon_transfer_disabled"]);
+              
                 if (_hero.ClientSettings.EvolveAllGivenPokemons)
                     await bLogic.Pokemon.EvolveAllGivenPokemons(_hero, pokemons);
                 if (_hero.ClientSettings.Recycler)
-                    _hero.Client.RecycleItems(_hero.Client);
-
-                await Task.Delay(1000);
-                //time for some gui updates
-                bLogic.Info.PrintLevel(_hero);
-                RefreshConsoleTitle(profile.Profile.Username, _hero);
-                
-
-                if (_hero.ClientSettings.EggHatchedOutput)
-                    bLogic.Item.CheckEggsHatched(_hero);
+                    _hero.Client.RecycleItems(_hero.Client, items);
                 if (_hero.ClientSettings.UseLuckyEggMode == "always")
-                    _hero.Client.UseLuckyEgg(_hero.Client);
-                await bLogic.Pokemon.ExecuteFarmingPokestopsAndPokemons(_hero);
+                    _hero.Client.UseLuckyEgg(_hero.Client, inventory);
+
+                    await Task.Delay(1000);
+                //time for some gui updates
+                bLogic.Info.PrintLevel(_hero, inventory);
+                RefreshConsoleTitle(_hero, inventory, profile);
+                
+                await bLogic.Pokemon.ExecuteFarmingPokestopsAndPokemons(_hero, inventory);
                 _hero.ClientSettings.DefaultLatitude = Client.GetLatitude(true);
                 _hero.ClientSettings.DefaultLongitude = Client.GetLongitude(true);
                 await Task.Delay(1000);
-                Execute();
+                ExecuteWithoutStackOverflow();
+            }
+            catch (TaskCanceledException crap) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, "Task Canceled Exception - Restarting: " + crap.Message); Execute(); }
+            catch (UriFormatException crap) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, "System URI Format Exception - Restarting: " + crap.Message); Execute(); }
+            catch (ArgumentOutOfRangeException crap) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, "ArgumentOutOfRangeException - Restarting: " + crap.Message); Execute(); }
+            catch (ArgumentNullException crap) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, "Argument Null Refference - Restarting: " + crap.Message); Execute(); }
+            catch (NullReferenceException crap) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, "Null Refference - Restarting: " + crap.Message); Execute(); }
+            catch (AccountNotVerifiedException crap) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.Red, "ACCOUNT NOT VERIFIED - WONT WORK - "); }
+            catch (System.IO.FileNotFoundException) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.Red, $" Use an existing language!"); }
+            catch (SoftbannedException) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.Red, $" Softbanned! Please wait while I unban you!"); await Game.Unban(_hero); ExecuteWithoutStackOverflow(); }
+            catch (Exception crap) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.Red, "Not Handled Exception: " + crap.Message); Execute(); }
+        }
+
+        public static async void ExecuteWithoutStackOverflow()
+        {
+            if (!_hero.AllowedToRun)
+            {
+                bhelper.Main.ColoredConsoleWrite(ConsoleColor.Yellow, $"[{DateTime.Now.ToString("HH:mm:ss")}] " + Language.GetPhrases()["bot_stopping"]);
+                return;
+            }
+            try
+            {
+                var profile = await _hero.Client.GetProfile();
+                var inventory = await _hero.Client.GetInventory();
+                var pokemons = inventory.InventoryDelta.InventoryItems.Select(i => i.InventoryItemData?.Pokemon).Where(p => p != null && p?.PokemonId > 0);
+                var stats = inventory.InventoryDelta.InventoryItems.Select(i => i.InventoryItemData.PlayerStats).ToArray();
+                var items = inventory.InventoryDelta.InventoryItems.Select(i => i.InventoryItemData?.Item).Where(p => p != null);
+                foreach (var v in stats)
+                    if (v != null)
+                    {
+                        _hero.TotalKmWalked = v.KmWalked;
+                        await _hero.Client.GetLevelUpRewards(v.Level);
+                    }
+                bLogic.Info.PrintStartUp(_hero, profile);
+
+                if (_hero.ClientSettings.EvolveAllGivenPokemons)
+                    await bLogic.Pokemon.EvolveAllGivenPokemons(_hero, pokemons);
+
+                await Task.Delay(1000);
+
+                await bLogic.Pokemon.ExecuteFarmingPokestopsAndPokemons(_hero, inventory);
+                _hero.ClientSettings.DefaultLatitude = Client.GetLatitude(true);
+                _hero.ClientSettings.DefaultLongitude = Client.GetLongitude(true);
+                await Task.Delay(1000);
+                ExecuteWithoutStackOverflow();
             }
             catch (TaskCanceledException crap) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, "Task Canceled Exception - Restarting: " + crap.Message); Execute(); }
             catch (UriFormatException crap) { bhelper.Main.ColoredConsoleWrite(ConsoleColor.White, "System URI Format Exception - Restarting: " + crap.Message); Execute(); }
@@ -106,6 +136,9 @@ namespace PokemonGo.RocketAPI.Console
                             case "de_DE":
                             case "de_AT":
                             case "de_CH":
+                            case "de-DE":
+                            case "de-AT":
+                            case "de-CH":
                                 {
                                     Language.LoadLanguageFile("de_DE");
                                     break;
@@ -145,20 +178,18 @@ namespace PokemonGo.RocketAPI.Console
         /// <param name="username"></param>
         /// <param name="client"></param>
         /// <returns></returns>
-        public static async Task RefreshConsoleTitle(string username, Hero hero)
+        public static async Task RefreshConsoleTitle(Hero hero, GeneratedCode.GetInventoryResponse inventory, GeneratedCode.GetPlayerResponse profile)
         {
-            var inventory = await hero.Client.GetInventory();
             var stats = inventory.InventoryDelta.InventoryItems.Select(i => i.InventoryItemData?.PlayerStats).ToArray();
-            var profile = await hero.Client.GetProfile();
             foreach (var playerStatistic in stats)
                 if (playerStatistic != null)
                 {
                     int XpDiff = bhelper.Game.GetXpDiff(playerStatistic.Level);
-                    System.Console.Title = string.Format(username + " | LEVEL: {0:0} - ({1:0}) | SD: {2:0} | XP/H: {3:0} | POKE/H: {4:0}", playerStatistic.Level, string.Format("{0:#,##0}", (playerStatistic.Experience - playerStatistic.PrevLevelXp - XpDiff)) + "/" + string.Format("{0:#,##0}", (playerStatistic.NextLevelXp - playerStatistic.PrevLevelXp - XpDiff)), string.Format("{0:#,##0}", profile.Profile.Currency.ToArray()[1].Amount), string.Format("{0:#,##0}", Math.Round(bLogic.Pokemon.TotalExperience / bhelper.Main.GetRuntime(_hero.TimeStarted))), Math.Round(bLogic.Pokemon.TotalPokemon / bhelper.Main.GetRuntime(_hero.TimeStarted)) + " | " +(DateTime.Now - _hero.TimeStarted).ToString(@"dd\.hh\:mm\:ss"));
+                    System.Console.Title = string.Format(profile.Profile.Username + " | LEVEL: {0:0} - ({1:0}) | SD: {2:0} | XP/H: {3:0} | POKE/H: {4:0}", playerStatistic.Level, string.Format("{0:#,##0}", (playerStatistic.Experience - playerStatistic.PrevLevelXp - XpDiff)) + "/" + string.Format("{0:#,##0}", (playerStatistic.NextLevelXp - playerStatistic.PrevLevelXp - XpDiff)), string.Format("{0:#,##0}", profile.Profile.Currency.ToArray()[1].Amount), string.Format("{0:#,##0}", Math.Round(bLogic.Pokemon.TotalExperience / bhelper.Main.GetRuntime(_hero.TimeStarted))), Math.Round(bLogic.Pokemon.TotalPokemon / bhelper.Main.GetRuntime(_hero.TimeStarted)) + " | " +(DateTime.Now - _hero.TimeStarted).ToString(@"dd\.hh\:mm\:ss"));
                 }
             await Task.Delay(1000);
 
-            RefreshConsoleTitle(username, hero);
+            RefreshConsoleTitle(hero, inventory, profile);
         }
     }
 }

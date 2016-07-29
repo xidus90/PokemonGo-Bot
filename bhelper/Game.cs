@@ -1,7 +1,13 @@
-﻿namespace bhelper
+﻿using PokemonGo.RocketAPI.Extensions;
+using System.Linq;
+
+namespace bhelper
 {
     public class Game
     {
+        public static short softbanned_detection;
+
+
         /// <summary>
         ///     returns xp needed to the next level
         /// </summary>
@@ -93,6 +99,20 @@
                     return 1000000;
             }
             return 0;
+        }
+
+        public static async System.Threading.Tasks.Task Unban(Hero hero)
+        {
+            var mapObjects = await hero.Client.GetMapObjects();
+            var pokeStops = mapObjects.MapCells.SelectMany(i => i.Forts).Where(i => i.Type == AllEnum.FortType.Checkpoint && i.CooldownCompleteTimestampMs < System.DateTime.UtcNow.ToUnixTime());
+            foreach (var pokeStop in pokeStops)
+                for (int i = 0; i < 1000; i++)
+                {
+                    PokemonGo.RocketAPI.GeneratedCode.FortSearchResponse unban = await hero.Client.SearchFort(pokeStop.Id, pokeStop.Latitude, pokeStop.Longitude);
+                    if (unban.ExperienceAwarded > 0)
+                        break;
+                    await System.Threading.Tasks.Task.Delay(30);
+                }
         }
     }
 }

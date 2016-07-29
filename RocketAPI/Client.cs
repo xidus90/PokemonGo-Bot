@@ -418,18 +418,20 @@ namespace PokemonGo.RocketAPI
                 .Select(x => new Item { Item_ = x.Item_, Count = x.Count - settings.ItemRecycleFilter.Single(f => f.Key == (AllEnum.ItemId)x.Item_).Value, Unseen = x.Unseen });
         }
 
-        public async Task RecycleItems(Client client)
+        public async Task RecycleItems(Client client, IEnumerable<Item> items)
         {
-            var items = await GetItemsToRecycle(_settings, client);
 
-            foreach (var item in items)
+            var itemsToRecycle = items.Where(x => _settings.ItemRecycleFilter.Any(f => f.Key == ((ItemId)x.Item_) && x.Count > f.Value)).Select(x => new Item { Item_ = x.Item_, Count = x.Count - _settings.ItemRecycleFilter.Single(f => f.Key == (AllEnum.ItemId)x.Item_).Value, Unseen = x.Unseen });
+
+            foreach (var item in itemsToRecycle)
             {
                 var transfer = await RecycleItem((AllEnum.ItemId)item.Item_, item.Count);
                 ColoredConsoleWrite(ConsoleColor.DarkCyan, $"[{DateTime.Now.ToString("HH:mm:ss")}] Recycled {item.Count}x {((AllEnum.ItemId)item.Item_).ToString().Substring(4)}");
                 await Task.Delay(500);
             }
             await Task.Delay(_settings.RecycleItemsInterval * 1000);
-            RecycleItems(client);
+            var newItems = await GetItemsToRecycle(_settings, client);
+            RecycleItems(client, newItems);
         }
 
         public async Task<Response.Types.Unknown6> RecycleItem(AllEnum.ItemId itemId, int amount)
@@ -507,9 +509,9 @@ namespace PokemonGo.RocketAPI
             }
         }
 
-        public async Task UseLuckyEgg(Client client)
+        public async Task UseLuckyEgg(Client client, GetInventoryResponse inventory)
         {
-            IEnumerable<Item> myItems = await GetItems(client);
+            IEnumerable<Item> myItems = inventory.InventoryDelta.InventoryItems.Select(i => i.InventoryItemData?.Item).Where(p => p != null);
             IEnumerable<Item> LuckyEggs = myItems.Where(i => (ItemId)i.Item_ == ItemId.ItemLuckyEgg);
             Item LuckyEgg = LuckyEggs.FirstOrDefault();
             if (LuckyEgg != null && LuckyEgg.Count > 0)
@@ -517,8 +519,9 @@ namespace PokemonGo.RocketAPI
                 UseItemRequest useLuckyEgg = await client.UseItem(ItemId.ItemLuckyEgg);
                 ColoredConsoleWrite(ConsoleColor.Green, $"[{DateTime.Now.ToString("HH:mm:ss")}] Used Lucky Egg. Remaining: {LuckyEgg.Count}");
             }
-            await Task.Delay(12 * 60 * 1000);
-            UseLuckyEgg(client);
+            await Task.Delay(11 * 60 * 1000);
+            GetInventoryResponse newInventory = await client.GetInventory();
+            UseLuckyEgg(client, newInventory);
         }
 
 

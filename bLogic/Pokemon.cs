@@ -94,12 +94,12 @@ namespace bLogic
         /// <returns></returns>
         public static async Task ExecuteCatchAllNearbyPokemons(Hero hero)
         {
+            var inventory = await hero.Client.GetInventory();
             var mapObjects = await hero.Client.GetMapObjects();
 
             var pokemons = mapObjects.MapCells.SelectMany(i => i.CatchablePokemons);
 
-            var inventory2 = await hero.Client.GetInventory();
-            var pokemons2 = inventory2.InventoryDelta.InventoryItems
+            var pokemons2 = inventory.InventoryDelta.InventoryItems
                 .Select(i => i.InventoryItemData?.Pokemon)
                 .Where(p => p != null && p?.PokemonId > 0)
                 .ToArray();
@@ -134,7 +134,9 @@ namespace bLogic
                     if (hero.ClientSettings.RazzBerryMode == "probability")
                         if (encounterPokemonResponse.CaptureProbability.CaptureProbability_.First() < hero.ClientSettings.RazzBerrySetting)
                             await hero.Client.UseRazzBerry(hero.Client, pokemon.EncounterId, pokemon.SpawnpointId);
-                    caughtPokemonResponse = await hero.Client.CatchPokemon(pokemon.EncounterId, pokemon.SpawnpointId, pokemon.Latitude, pokemon.Longitude, MiscEnums.Item.ITEM_POKE_BALL, pokemonCP); ; //note: reverted from settings because this should not be part of settings but part of logic
+                    caughtPokemonResponse = await hero.Client.CatchPokemon(pokemon.EncounterId, pokemon.SpawnpointId, pokemon.Latitude, pokemon.Longitude, MiscEnums.Item.ITEM_POKE_BALL, pokemonCP);
+                    if (caughtPokemonResponse.Status == CatchPokemonResponse.Types.CatchStatus.CatchEscape)
+                        Game.softbanned_detection++;
                 } while (caughtPokemonResponse.Status == CatchPokemonResponse.Types.CatchStatus.CatchMissed || caughtPokemonResponse.Status == CatchPokemonResponse.Types.CatchStatus.CatchEscape);
                 if (caughtPokemonResponse.Status == CatchPokemonResponse.Types.CatchStatus.CatchSuccess)
                 {
@@ -142,20 +144,23 @@ namespace bLogic
                     foreach (int xp in caughtPokemonResponse.Scores.Xp)
                         TotalExperience += xp;
                     TotalPokemon += 1;
+                    Game.softbanned_detection = 0;
                 }
                 else
                     bhelper.Main.ColoredConsoleWrite(ConsoleColor.Red, $"[{DateTime.Now.ToString("HH:mm:ss")}] " + Language.GetPhrases()["pokemon_away"].Replace("[POKEMON]", pokemonName).Replace("[CP]", Convert.ToString(encounterPokemonResponse?.WildPokemon?.PokemonData?.Cp)));
 
+                if (Game.softbanned_detection > 10)
+                    throw new PokemonGo.RocketAPI.Exceptions.SoftbannedException();
                 if (hero.ClientSettings.TransferType == "leaveStrongest")
-                    await TransferAllButStrongestUnwantedPokemon(hero);
+                    await bLogic.Pokemon.TransferAllButStrongestUnwantedPokemon(hero);
                 else if (hero.ClientSettings.TransferType == "all")
-                    await TransferAllGivenPokemons(hero, pokemons2);
+                    await bLogic.Pokemon.TransferAllGivenPokemons(hero, pokemons2);
                 else if (hero.ClientSettings.TransferType == "duplicate")
-                    await TransferDuplicatePokemon(hero);
+                    await bLogic.Pokemon.TransferDuplicatePokemon(hero);
                 else if (hero.ClientSettings.TransferType == "cp")
-                    await TransferAllWeakPokemon(hero);
+                    await bLogic.Pokemon.TransferAllWeakPokemon(hero);
 
-                await Task.Delay(3000);
+                await Task.Delay(150);
             }
         }
 
@@ -196,8 +201,7 @@ namespace bLogic
                 PokemonId.NidoranFemale,
                 PokemonId.NidoranMale
             };
-
-            var inventory = await hero.Client.GetInventory();
+            GetInventoryResponse inventory = await hero.Client.GetInventory();
             var pokemons = inventory.InventoryDelta.InventoryItems
                 .Select(i => i.InventoryItemData?.Pokemon)
                 .Where(p => p != null && p?.PokemonId > 0)
@@ -219,8 +223,7 @@ namespace bLogic
 
             //ColoredConsoleWrite(ConsoleColor.White, $"[{DateTime.Now.ToString("HH:mm:ss")}] Finished grinding all the meat");
         }
-
-        public static async Task ExecuteFarmingPokestopsAndPokemons(Hero _hero)
+        public static async Task ExecuteFarmingPokestopsAndPokemons(Hero _hero, PokemonGo.RocketAPI.GeneratedCode.GetInventoryResponse inventory)
         {
             var mapObjects = await _hero.Client.GetMapObjects();
 
@@ -246,8 +249,15 @@ namespace bLogic
                     PokeStopOutput.Write($", Items: {bLogic.Item.GetFriendlyItemsString(fortSearch.ItemsAwarded)} ");
                 bhelper.Main.ColoredConsoleWrite(ConsoleColor.Cyan, PokeStopOutput.ToString());
 
-                if (fortSearch.ExperienceAwarded != 0)
+                if (fortSearch.ExperienceAwarded > 0)
+                {
                     TotalExperience += (fortSearch.ExperienceAwarded);
+                    Game.softbanned_detection = 0;
+                }
+                else
+                    Game.softbanned_detection++;
+                if (Game.softbanned_detection > 10)
+                    throw new PokemonGo.RocketAPI.Exceptions.SoftbannedException();
                 await Task.Delay(15000);
                 await ExecuteCatchAllNearbyPokemons(_hero);
             }
@@ -281,8 +291,7 @@ namespace bLogic
                 PokemonId.Magikarp,
                 PokemonId.Eevee
             };
-
-            var inventory = await hero.Client.GetInventory();
+            GetInventoryResponse inventory = await hero.Client.GetInventory();
             var pokemons = inventory.InventoryDelta.InventoryItems
                                 .Select(i => i.InventoryItemData?.Pokemon)
                                 .Where(p => p != null && p?.PokemonId > 0)
@@ -316,7 +325,7 @@ namespace bLogic
 
                 if (pokemon.Favorite == 0)
                 {
-                    var transferPokemonResponse = await hero.Client.TransferPokemon(pokemon.Id);
+                    var transferPokemonResponse = await hero.Client.TransferPokemon(pokemon.Id);        // REQUEST: TRANSFER POKEMON
 
                     /*
                     ReleasePokemonOutProto.Status {
@@ -350,6 +359,7 @@ namespace bLogic
 
         public static async Task TransferDuplicatePokemon(Hero hero)
         {
+
             PokemonId[] Whitelist = new[] //these will not be transferred even when duplicate
             { 
                 //PokemonId.Pidgey,
@@ -374,9 +384,7 @@ namespace bLogic
                 //etc
                 PokemonId.Missingno // dont remove
             };
-
-
-            var inventory = await hero.Client.GetInventory();
+            GetInventoryResponse inventory = await hero.Client.GetInventory();
             var allpokemons =
                 inventory.InventoryDelta.InventoryItems.Select(i => i.InventoryItemData?.Pokemon)
                     .Where(p => p != null && p?.PokemonId > 0);
@@ -392,7 +400,8 @@ namespace bLogic
                     var dubpokemon = dupes.ElementAt(i).ElementAt(j).value;
                     if (dubpokemon.Favorite == 0 && !Whitelist.Contains(dubpokemon.PokemonId))
                     {
-                        var transfer = await hero.Client.TransferPokemon(dubpokemon.Id);
+                        var transfer = await hero.Client.TransferPokemon(dubpokemon.Id);    // REQUEST: TRANSFER POKEMON
+                        await Task.Delay(333);
                         string pokemonName;
                         if (hero.ClientSettings.Language == "german")
                             pokemonName = Convert.ToString((PokemonId_german)(int)dubpokemon.PokemonId);

@@ -68,6 +68,7 @@
     <Compile Include="Exceptions\GoogleException.cs" />
     <Compile Include="Exceptions\GoogleOfflineException.cs" />
     <Compile Include="Exceptions\PtcOfflineException.cs" />
+    <Compile Include="Exceptions\SoftbannedException.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="GeneratedCode\AllEnum.cs" />
     <Compile Include="GeneratedCode\Payloads.cs" />

@@ -27,22 +27,35 @@ namespace PokemonGo.RocketAPI.Extensions
 
             return decodedResponse;
         }
-
+        private static bool waitingForResponse = false;
         public static async Task<TResponsePayload> PostProtoPayload<TRequest, TResponsePayload>(this HttpClient client,
             string url, TRequest request) where TRequest : IMessage<TRequest>
             where TResponsePayload : IMessage<TResponsePayload>, new()
         {
-      //      ColoredConsoleWrite(ConsoleColor.Red, ($"[DEBUG] [{DateTime.Now.ToString("HH:mm:ss")}] requesting {typeof(TResponsePayload).Name}"));
-            var response = await PostProto(client, url, request);
+            ByteString payload = null;
 
-            //Decode payload
-            //todo: multi-payload support
-            var payload = response.Payload[0];
+            while (waitingForResponse)
+                await Task.Delay(15);
+            waitingForResponse = true;
+
+            Response response = null;
+            int count = 0;
+            do
+            {
+                count++;
+                response = await PostProto(client, url, request);
+                waitingForResponse = false;
+
+                await Task.Delay(15);
+            } while (response.Payload.Count < 1 && count < 17);
+            payload = response.Payload[0];
+
             var parsedPayload = new TResponsePayload();
             parsedPayload.MergeFrom(payload);
 
             return parsedPayload;
         }
+        
         public static void ColoredConsoleWrite(ConsoleColor color, string text)
         {
             ConsoleColor originalColor = System.Console.ForegroundColor;
