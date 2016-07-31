@@ -12,11 +12,9 @@
   <phrase key ="pokemon_transfer_disabled" value="Pokemon verschicken ist ausgeschaltet!"></phrase>
   <phrase key ="pokemon_caught" value="Wir haben ein [POKEMON] mit [CP] WP gefangen."></phrase>
   <phrase key ="pokemon_away" value="Ein [POKEMON] mit [CP] WP ist entkommen."></phrase>
-  
-  
-  
-  
-  
+  <phrase key ="pokemon_transferred" value="[POKEMON] mit [CP] WP verschickt."></phrase>
+  <phrase key ="pokemon_transferred_leaveStrongest" value="[POKEMON] mit [CP] WP verschickt (höchstes ist [MAXCP] WP)."></phrase>
+  <phrase key ="item_recycled" value="[PICE]x [ITEM] weggeworfen"></phrase>
   
   
   

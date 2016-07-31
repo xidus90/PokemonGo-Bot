@@ -12,32 +12,14 @@
   <phrase key ="pokemon_transfer_disabled" value="Transfering Pokemon is disabled!"></phrase>
   <phrase key ="pokemon_caught" value="We caught a [POKEMON] with [CP] CP."></phrase>
   <phrase key ="pokemon_away" value="A [POKEMON] with [CP] CP ran away. "></phrase>
-  
-  <phrase key ="aa1aaaaaaaaaaaaaaa" value="aaaaaaaaaaaaaaaaa "></phrase>
-  <phrase key ="aaaaaa2aaaaaaaaaaa" value="aaaaaaaaaaaaaaaaa "></phrase>
-  <phrase key ="aaaaaaa3aaaaaaaaaa" value="aaaaaaaaaaaaaaaaa "></phrase>
-  <phrase key ="aaaaaaaa4aaaaaaaaa" value="aaaaaaaaaaaaaaaaa "></phrase>
-  <phrase key ="aaaaaaaaa5aaaaaaaa" value="aaaaaaaaaaaaaaaaa "></phrase>
-  <phrase key ="aaaaaaaaaa6aaaaaaa" value="aaaaaaaaaaaaaaaaa "></phrase>
-  <phrase key ="aaaaaaaaaaa7aaaaaa" value="aaaaaaaaaaaaaaaaa "></phrase>
-  <phrase key ="aaaaaaaaaaaa8aaaaa" value="aaaaaaaaaaaaaaaaa "></phrase>
-  <phrase key ="aaaaaaaaaaaaa9aaaa" value="aaaaaaaaaaaaaaaaa "></phrase>
-  <phrase key ="aaaaaaaaaaaaaa0aaa" value="aaaaaaaaaaaaaaaaa "></phrase>
-  <phrase key ="aaaa12aaaaaaaaaaaaa" value="aaaaaaaaaaaaaaaaa "></phrase>
-  <phrase key ="aaaaaa12aaaaaaaaaaa" value="aaaaaaaaaaaaaaaaa "></phrase>
-  <phrase key ="aaaaaaaa12aaaaaaaaa" value="aaaaaaaaaaaaaaaaa "></phrase>
-  <phrase key ="aaaaaaaaaa12aaaaaaa" value="aaaaaaaaaaaaaaaaa "></phrase>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <phrase key ="pokemon_transferred" value="Transferred [POKEMON] with [CP] CP."></phrase>
+  <phrase key ="pokemon_transferred_leaveStrongest" value="Transferred [POKEMON] with [CP] CP (Highest is [MAXCP] CP)."></phrase>
+  <phrase key ="item_recycled" value="Recycled [PICE]x [ITEM]"></phrase>
+
+
+
+
+
+
+
 </English>

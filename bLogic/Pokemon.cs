@@ -365,7 +365,7 @@ namespace bLogic
                         pokemonName = Convert.ToString(pokemon.PokemonId);
                     if (transferPokemonResponse.Status == 1)
                     {
-                        bhelper.Main.ColoredConsoleWrite(ConsoleColor.Magenta, $"[{DateTime.Now.ToString("HH:mm:ss")}] Transferred {pokemonName} with {pokemon.Cp} CP");
+                        bhelper.Main.ColoredConsoleWrite(ConsoleColor.Magenta, $"[{DateTime.Now.ToString("HH:mm:ss")}] " + Language.GetPhrases()["pokemon_transferred"].Replace("[POKEMON]", pokemonName).Replace("[CP]", pokemon.Cp.ToString()));
                     }
                     else
                     {
@@ -427,11 +427,14 @@ namespace bLogic
                         await Task.Delay(333);
                         string pokemonName;
                         if (hero.ClientSettings.Language == "german")
+                        {
                             pokemonName = Convert.ToString((PokemonId_german)(int)dubpokemon.PokemonId);
+                        }
                         else
+                        {
                             pokemonName = Convert.ToString(dubpokemon.PokemonId);
-                        bhelper.Main.ColoredConsoleWrite(ConsoleColor.DarkGreen,
-                            $"[{DateTime.Now.ToString("HH:mm:ss")}] Transferred {pokemonName} with {dubpokemon.Cp} CP (Highest is {dupes.ElementAt(i).Last().value.Cp})");
+                        }
+                        bhelper.Main.ColoredConsoleWrite(ConsoleColor.Magenta, $"[{DateTime.Now.ToString("HH:mm:ss")}] " + Language.GetPhrases()["pokemon_transferred_leaveStrongest"].Replace("[POKEMON]", pokemonName).Replace("[CP]", dubpokemon.Cp.ToString()).Replace("[MAXCP]", dupes.ElementAt(i).Last().value.Cp.ToString()));
 
                     }
                 }

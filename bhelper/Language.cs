@@ -16,7 +16,7 @@ namespace bhelper
 
         private static Dictionary<string, string> GetLanguageDictionary(string lang, string type)
         {
-            XDocument doc = XDocument.Load(lang + ".xml");
+            XDocument doc = XDocument.Load("Languages/" + lang + ".xml");
             var dic = doc.Root.Elements(type)
                    .ToDictionary(c => (string)c.Attribute("key").Value,
                                  c => (string)c.Attribute("value").Value);
